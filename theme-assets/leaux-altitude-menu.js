@@ -82,7 +82,7 @@
     var bctx = back.getContext("2d"), fctx = front.getContext("2d");
     if (!bctx || !fctx) return;
     var noise = noiseMaker();
-    var W = 0, H = 0, lines = 44, cut = 24, samples = 150;
+    var W = 0, H = 0, horizon = .56, lines = 44, cut = 24, samples = 150;
     var far = [91, 61, 245], mid = [214, 76, 170], near = [255, 107, 61];
     var pointer = { x: -9, y: -9, sx: -9, sy: -9 };
     var start = performance.now(), visible = true, raf = 0;
@@ -93,6 +93,9 @@
       [back, front].forEach(function (c) { c.width = W * ratio; c.height = H * ratio; });
       bctx.setTransform(ratio, 0, 0, ratio, 0, 0);
       fctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+      // The ridges start just above the foot of the title, wherever it sits.
+      var name = hero.querySelector(".lx-hero__name");
+      if (name && H) horizon = Math.min(.7, Math.max(.3, (name.getBoundingClientRect().bottom - hero.getBoundingClientRect().top) / H - .03));
     }
     function ridged(x, z) {
       var n = noise(x, z);
@@ -123,7 +126,7 @@
       for (i = 0; i < lines; i++) {
         var ctx = i < cut ? bctx : fctx;
         var d = i / (lines - 1);
-        var base = H * (.56 + .54 * Math.pow(d, 1.25));
+        var base = H * (horizon + (1.1 - horizon) * Math.pow(d, 1.25));
         var amp = H * (.1 + .34 * d) * rise;
         var z = d * 2.6 - travel;
         ctx.beginPath();
@@ -156,14 +159,17 @@
     if (calm) {
       start = performance.now() - 4000;
       draw(performance.now());
-      window.addEventListener("resize", function () { size(); draw(performance.now()); });
+      var still = function () { size(); draw(performance.now()); };
+      window.addEventListener("resize", still);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(still);
       return;
     }
     window.addEventListener("resize", size);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(size);
     hero.addEventListener("pointermove", function (e) {
       var box = hero.getBoundingClientRect();
       pointer.x = (e.clientX - box.left) / box.width;
-      pointer.y = Math.pow(Math.max(0, ((e.clientY - box.top) / box.height - .56) / .54), 1 / 1.25);
+      pointer.y = Math.pow(Math.max(0, ((e.clientY - box.top) / box.height - horizon) / (1.1 - horizon)), 1 / 1.25);
     });
     hero.addEventListener("pointerleave", function () { pointer.x = pointer.y = -9; });
     document.addEventListener("visibilitychange", kick);
@@ -264,7 +270,26 @@
     }).catch(function () {});
   }
 
+  /* Page transition: the clicked post's map grows into the article header.
+     The article side is named in the CSS, the head script names the card
+     when coming back. Here we name the card we are leaving from. */
+  function wireTransition() {
+    window.addEventListener("pageswap", function (e) {
+      if (!e.viewTransition || !e.activation || !e.activation.entry) return;
+      var path = new URL(e.activation.entry.url).pathname;
+      var arts = document.querySelectorAll(".lx-way__art");
+      for (var i = 0; i < arts.length; i++) {
+        if (arts[i].pathname !== path) continue;
+        var title = arts[i].parentNode.querySelector("h3");
+        arts[i].style.viewTransitionName = "lx-art";
+        if (title) title.style.viewTransitionName = "lx-title";
+        break;
+      }
+    });
+  }
+
   function start() {
+    wireTransition();
     wireBurger();
     data("/data/menu.json").then(fill).catch(function () {});
     var hero = document.querySelector("[data-lx-hero]");

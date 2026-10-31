@@ -85,6 +85,7 @@ body.lx { margin: 0; background: var(--lx-bg); color: var(--lx-text); font: 400 
 .lx-hero.is-live .lx-hero__static { display: none; }
 @media (max-width: 640px) {
   .lx-hero { height: min(calc(100svh - 68px), 150vw); }
+  .lx-hero__copy { inset: 20px 0 auto; }
   .lx-hero__name { font-size: 16vw; }
   .lx-hero__name span:last-child { padding-left: 0; }
 }
@@ -247,3 +248,21 @@ main:has(.lx-lost) + .lx-footer .lx-footer__ridge { display: none; }
 .lx-article--about .lx-prose h3 { position: relative; margin: 0; padding: 26px 0 4px 34px; border-left: 3px solid #ff6b3d; font-size: clamp(1.45rem, 2.6vw, 2.1rem); font-weight: 800; font-stretch: 108%; }
 .lx-article--about .lx-prose h3::before { content: ""; position: absolute; left: -12px; top: 34px; width: 21px; height: 21px; border-radius: 50%; border: 5px solid var(--lx-bg); background: #ff6b3d; }
 .lx-article--about .lx-prose h3 + p { margin: 0; padding: 0 0 12px 34px; border-left: 3px solid #ff6b3d; }
+
+/* Page transition: same-origin navigations only. Browsers without support
+   simply load the page. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+  .lx-header { view-transition-name: lx-header; }
+  .lx-band--article { view-transition-name: lx-art; }
+  .lx-band--article h1 { view-transition-name: lx-title; }
+  ::view-transition-group(lx-header) { z-index: 5; }
+  ::view-transition-group(lx-art), ::view-transition-group(lx-title) { animation-duration: .6s; animation-timing-function: cubic-bezier(.65, 0, .2, 1); }
+  ::view-transition-group(lx-art) { overflow: clip; }
+  ::view-transition-old(lx-art), ::view-transition-new(lx-art) { width: 100%; height: 100%; object-fit: cover; animation-duration: .6s; }
+  ::view-transition-old(lx-title), ::view-transition-new(lx-title) { width: auto; height: 100%; object-fit: contain; object-position: left top; animation-duration: .45s; }
+  ::view-transition-old(root) { animation: lx-out .3s ease both; }
+  ::view-transition-new(root) { animation: lx-in .45s .12s ease both; }
+  @keyframes lx-out { to { opacity: 0; } }
+  @keyframes lx-in { from { opacity: 0; transform: translateY(24px); } }
+}
