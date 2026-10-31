@@ -5,9 +5,9 @@
   <xsl:output method="html" version="1.0" encoding="UTF-8" indent="yes"
               doctype-system="about:legacy-compat"/>
   <xsl:template match="/">
-    <html lang="en">
+    <html lang="fr">
       <head>
-        <title>RSS feed — <xsl:value-of select="/rss/channel/title"/></title>
+        <title>Flux RSS — <xsl:value-of select="/rss/channel/title"/></title>
         <meta charset="utf-8"/>
         <meta name="robots" content="noindex,follow"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -31,14 +31,14 @@ a:hover { text-decoration: underline; }
       </head>
       <body>
         <main>
-          <h1>RSS feed — <xsl:value-of select="/rss/channel/title"/></h1>
-          <p class="meta">This RSS feed is meant for RSS readers. Subscribe by copying this page's URL into your reader.</p>
-          <p class="count">This feed contains <xsl:value-of select="count(/rss/channel/item)"/> articles.</p>
+          <h1>Flux RSS — <xsl:value-of select="/rss/channel/title"/></h1>
+          <p class="meta">Ce flux RSS est destiné aux lecteurs RSS. Abonnez-vous en copiant l'URL de cette page dans votre lecteur.</p>
+          <p class="count">Ce flux contient <xsl:value-of select="count(/rss/channel/item)"/> articles.</p>
           <table>
             <thead>
               <tr>
-                <th class="title">Title</th>
-                <th class="pubdate">Published</th>
+                <th class="title">Titre</th>
+                <th class="pubdate">Publié</th>
                 <th class="description">Description</th>
               </tr>
             </thead>

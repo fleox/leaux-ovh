@@ -6,9 +6,9 @@
   <xsl:output method="html" version="1.0" encoding="UTF-8" indent="yes"
               doctype-system="about:legacy-compat"/>
   <xsl:template match="/">
-    <html lang="en">
+    <html lang="fr">
       <head>
-        <title>XML Sitemap</title>
+        <title>Plan du site XML</title>
         <meta charset="utf-8"/>
         <meta name="robots" content="noindex,follow"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -31,13 +31,13 @@ a:hover { text-decoration: underline; }
       </head>
       <body>
         <main>
-          <h1>XML Sitemap</h1>
-          <p class="meta">This XML sitemap is meant for consumption by search engines.</p>
+          <h1>Plan du site XML</h1>
+          <p class="meta">Ce sitemap XML est destiné aux moteurs de recherche.</p>
           <xsl:choose>
             <xsl:when test="s:sitemapindex">
-              <p class="count">This index references <xsl:value-of select="count(s:sitemapindex/s:sitemap)"/> sitemaps.</p>
+              <p class="count">Cet index référence <xsl:value-of select="count(s:sitemapindex/s:sitemap)"/> sitemaps.</p>
               <table>
-                <thead><tr><th>Sitemap URL</th><th>Last modified</th></tr></thead>
+                <thead><tr><th>URL du sitemap</th><th>Dernière modification</th></tr></thead>
                 <tbody>
                   <xsl:for-each select="s:sitemapindex/s:sitemap">
                     <tr>
@@ -49,9 +49,9 @@ a:hover { text-decoration: underline; }
               </table>
             </xsl:when>
             <xsl:when test="s:urlset">
-              <p class="count">This sitemap contains <xsl:value-of select="count(s:urlset/s:url)"/> URLs.</p>
+              <p class="count">Ce sitemap contient <xsl:value-of select="count(s:urlset/s:url)"/> URLs.</p>
               <table>
-                <thead><tr><th>URL</th><th>Last modified</th></tr></thead>
+                <thead><tr><th>URL</th><th>Dernière modification</th></tr></thead>
                 <tbody>
                   <xsl:for-each select="s:urlset/s:url">
                     <tr>
