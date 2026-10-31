@@ -1,0 +1,8 @@
+{
+  "id": "leaux-altitude",
+  "name": "Leaux Altitude",
+  "version": "1.0.0",
+  "apiVersion": "1.6.0",
+  "entry": "bundle.js",
+  "kind": "theme"
+}
