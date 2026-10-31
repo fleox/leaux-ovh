@@ -1,6 +1,6 @@
 import { jsxs as l, jsx as e, Fragment as F } from "react/jsx-runtime";
-import { i18n as ee, pickPublicLocale as te, canonicalUrl as ne, pickFormat as R, postSortMillis as ae, buildTermUrl as ie, SocialIcon as re, socialLabel as le, toast as oe } from "@agent-cms/runtime";
-import { useState as X, useEffect as se } from "react";
+import { i18n as ee, pickPublicLocale as te, canonicalUrl as ne, pickFormat as q, postSortMillis as ae, buildTermUrl as ie, SocialIcon as re, socialLabel as le, toast as oe } from "@agent-cms/runtime";
+import { useState as Q, useEffect as se } from "react";
 import { useTranslation as ce } from "react-i18next";
 const de = `@import url("https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&display=swap");
 
@@ -245,6 +245,12 @@ a:hover > .lx-peak { transform: translateY(-16px); }
 
 main:has(.lx-lost) + .lx-footer { margin-top: 0; }
 main:has(.lx-lost) + .lx-footer .lx-footer__ridge { display: none; }
+
+/* Qui suis-je: the career as a climb, a pin per stage */
+.lx-article--about .lx-prose > p:first-child { font-size: 1.28em; line-height: 1.42; font-weight: 500; }
+.lx-article--about .lx-prose h3 { position: relative; margin: 0; padding: 26px 0 4px 34px; border-left: 3px solid #ff6b3d; font-size: clamp(1.45rem, 2.6vw, 2.1rem); font-weight: 800; font-stretch: 108%; }
+.lx-article--about .lx-prose h3::before { content: ""; position: absolute; left: -12px; top: 34px; width: 21px; height: 21px; border-radius: 50%; border: 5px solid var(--lx-bg); background: #ff6b3d; }
+.lx-article--about .lx-prose h3 + p { margin: 0; padding: 0 0 12px 34px; border-left: 3px solid #ff6b3d; }
 `, he = `// Leaux Altitude runtime, uploaded as theme-assets/leaux-altitude-menu.js.
 // Menus, burger, the hero ridgelines, the trail, the reading climb and
 // related posts. Every part fails silently: the static page stays usable.
@@ -531,12 +537,12 @@ function N(a, n) {
   const t = ee.getFixedT(te(n || a.settings.language || "en"), "theme-leaux-altitude");
   return (i) => t(`public.${i}`);
 }
-function q({ items: a, currentPath: n }) {
+function R({ items: a, currentPath: n }) {
   return /* @__PURE__ */ e("ul", { children: a.map((t) => {
     const i = n !== void 0 && t.href === `/${n}`;
     return /* @__PURE__ */ l("li", { children: [
       /* @__PURE__ */ e("a", { href: t.href, "aria-current": i ? "page" : void 0, children: t.label }),
-      t.children && t.children.length > 0 && /* @__PURE__ */ e(q, { items: t.children, currentPath: n })
+      t.children && t.children.length > 0 && /* @__PURE__ */ e(R, { items: t.children, currentPath: n })
     ] }, t.id);
   }) });
 }
@@ -548,7 +554,7 @@ function xe({ site: a, currentPath: n, locale: t }) {
       /* @__PURE__ */ e("svg", { viewBox: "0 0 34 22", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: "M1 21 12 4l6 9 4-6 11 14z" }) }),
       /* @__PURE__ */ e("span", { children: a.settings.title })
     ] }),
-    /* @__PURE__ */ e("nav", { id: "lx-nav", className: "lx-nav", "aria-label": i("mainNav"), "data-cms-menu": "header", children: /* @__PURE__ */ e(q, { items: a.resolvedMenus.header, currentPath: n }) }),
+    /* @__PURE__ */ e("nav", { id: "lx-nav", className: "lx-nav", "aria-label": i("mainNav"), "data-cms-menu": "header", children: /* @__PURE__ */ e(R, { items: a.resolvedMenus.header, currentPath: n }) }),
     /* @__PURE__ */ l("div", { className: "lx-header__tools", children: [
       /* @__PURE__ */ e("div", { "data-cms-langswitch": "header" }),
       r && /* @__PURE__ */ e("button", { className: "lx-iconbtn", type: "button", "data-cms-search": !0, "aria-label": i("search"), children: /* @__PURE__ */ l("svg", { viewBox: "0 0 24 24", "aria-hidden": "true", children: [
@@ -611,7 +617,7 @@ function me(a, n, t, i, r = 14) {
   }
   return { minor: f.join(""), major: T.join("") };
 }
-function J(a, n, t, i = 90) {
+function X(a, n, t, i = 90) {
   const r = W(a);
   let o = "";
   for (let s = 0; s <= i; s++) {
@@ -652,7 +658,7 @@ function ge({ site: a, locale: n }) {
     /* @__PURE__ */ e("svg", { className: "lx-footer__ridge", viewBox: "0 0 1600 120", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: j(k("footer"), 1600, 120) }) }),
     /* @__PURE__ */ l("div", { className: "lx-footer__body", children: [
       /* @__PURE__ */ e("p", { className: "lx-footer__name", children: a.settings.title }),
-      /* @__PURE__ */ e("nav", { "aria-label": t("footerNav"), "data-cms-menu": "footer", children: /* @__PURE__ */ e(q, { items: a.resolvedMenus.footer }) }),
+      /* @__PURE__ */ e("nav", { "aria-label": t("footerNav"), "data-cms-menu": "footer", children: /* @__PURE__ */ e(R, { items: a.resolvedMenus.footer }) }),
       /* @__PURE__ */ e("div", { "data-cms-langswitch": "footer" }),
       /* @__PURE__ */ e("p", { className: "lx-footer__note", children: /* @__PURE__ */ e("a", { href: "https://github.com/fleox/agentcms", rel: "noopener", children: t("publishedWith") }) })
     ] })
@@ -684,7 +690,7 @@ function fe({ site: a, pageTitle: n, pageDescription: t, ogImage: i, currentPath
     ] })
   ] });
 }
-const Q = {
+const J = {
   hero: {
     firstLine: "Frédéric",
     secondLine: "Leaux",
@@ -696,7 +702,7 @@ const Q = {
   "hero.tagline": { description: "Sentence shown above the home title." }
 };
 function I(a) {
-  return { ...Q.hero, ...(a == null ? void 0 : a.hero) ?? {} };
+  return { ...J.hero, ...(a == null ? void 0 : a.hero) ?? {} };
 }
 const $ = [
   { slug: "edito", name: "Édito", x: 90, height: 0.62 },
@@ -741,7 +747,7 @@ function D({ posts: a, site: n }) {
   const t = N(n);
   return a.length === 0 ? /* @__PURE__ */ e("p", { className: "lx-empty", children: t("empty") }) : /* @__PURE__ */ e("div", { className: "lx-trail", "data-lx-trail": !0, children: a.map((i, r) => {
     var c;
-    const o = be((c = i.category) == null ? void 0 : c.url), s = R(i.hero, r === 0 ? "large" : "medium");
+    const o = be((c = i.category) == null ? void 0 : c.url), s = q(i.hero, r === 0 ? "large" : "medium");
     return /* @__PURE__ */ l("article", { className: `lx-way${r === 0 ? " lx-way--first" : ""}`, "data-rubric": o, children: [
       /* @__PURE__ */ e("span", { className: "lx-way__pin", "aria-hidden": "true" }),
       /* @__PURE__ */ e("a", { className: "lx-way__art", href: "/" + i.url, tabIndex: -1, "aria-hidden": "true", children: s ? /* @__PURE__ */ e("img", { src: s, alt: "", loading: "lazy" }) : /* @__PURE__ */ e(H, { seed: i.slug, cols: r === 0 ? 64 : 44 }) }),
@@ -786,7 +792,7 @@ function ye({ site: a, posts: n, staticPage: t, archivesLink: i }) {
 }
 function ke({ site: a, post: n, bodyHtml: t, author: i, hero: r, primaryTerm: o, tags: s }) {
   var g;
-  const c = N(a), d = R(r, "large"), h = n.type === "post", m = (g = $.find((f) => f.slug === (o == null ? void 0 : o.slug))) == null ? void 0 : g.slug, v = new Date(ae(n));
+  const c = N(a), d = q(r, "large"), h = n.type === "post", m = (g = $.find((f) => f.slug === (o == null ? void 0 : o.slug))) == null ? void 0 : g.slug, v = new Date(ae(n));
   let b = "";
   try {
     b = new Intl.DateTimeFormat(a.settings.language || "fr", { dateStyle: "long" }).format(v);
@@ -794,7 +800,7 @@ function ke({ site: a, post: n, bodyHtml: t, author: i, hero: r, primaryTerm: o,
     b = v.toDateString();
   }
   const M = n.contentMarkdown.trim().split(/\s+/).length, A = Math.max(1, Math.round(M / 220));
-  return /* @__PURE__ */ l("article", { "data-rubric": m, className: h ? "lx-article" : "lx-article lx-article--page", children: [
+  return /* @__PURE__ */ l("article", { "data-rubric": m, className: `lx-article${h ? "" : " lx-article--page"}${n.slug === "qui-suis-je" ? " lx-article--about" : ""}`, children: [
     /* @__PURE__ */ l("header", { className: "lx-band lx-band--article", children: [
       /* @__PURE__ */ e(H, { seed: n.slug, width: 1600, height: 720, cols: 110, className: "lx-band__art" }),
       /* @__PURE__ */ l("div", { className: "lx-band__inner", children: [
@@ -826,8 +832,8 @@ function ke({ site: a, post: n, bodyHtml: t, author: i, hero: r, primaryTerm: o,
       ] }),
       /* @__PURE__ */ l("div", { className: "lx-climb", "data-lx-climb": !0, hidden: !0, "aria-hidden": "true", children: [
         /* @__PURE__ */ l("svg", { viewBox: "0 0 1600 60", preserveAspectRatio: "none", children: [
-          /* @__PURE__ */ e("path", { className: "lx-climb__base", d: J(k(n.slug), 1600, 60) }),
-          /* @__PURE__ */ e("path", { className: "lx-climb__done", d: J(k(n.slug), 1600, 60) })
+          /* @__PURE__ */ e("path", { className: "lx-climb__base", d: X(k(n.slug), 1600, 60) }),
+          /* @__PURE__ */ e("path", { className: "lx-climb__done", d: X(k(n.slug), 1600, 60) })
         ] }),
         /* @__PURE__ */ e("span", { className: "lx-climb__dot" })
       ] })
@@ -858,7 +864,7 @@ function Ne({ site: a, term: n, posts: t, archivesLink: i }) {
   ] });
 }
 function Me({ site: a, author: n, posts: t }) {
-  const i = R(n.avatar, "small");
+  const i = q(n.avatar, "small");
   return /* @__PURE__ */ l(F, { children: [
     /* @__PURE__ */ l("header", { className: "lx-band lx-band--author", children: [
       /* @__PURE__ */ e(H, { seed: n.displayName, width: 1600, height: 620, cols: 110, className: "lx-band__art" }),
@@ -887,7 +893,7 @@ function ze({ site: a, message: n }) {
   ] });
 }
 function Se({ config: a, save: n }) {
-  const { t } = ce("theme-leaux-altitude"), [i, r] = X(I(a)), [o, s] = X(!1);
+  const { t } = ce("theme-leaux-altitude"), [i, r] = Q(I(a)), [o, s] = Q(!1);
   se(() => r(I(a)), [a]);
   async function c(d) {
     d.preventDefault(), s(!0);
@@ -958,7 +964,7 @@ const Le = {
 }, $e = {
   id: "leaux-altitude",
   name: "Leaux Altitude",
-  version: "1.0.3",
+  version: "1.0.4",
   description: "Dedicated theme for leaux.ovh: generative topographic art, one trail per section.",
   readme: pe,
   scssEntry: "theme.css",
@@ -987,7 +993,7 @@ const Le = {
     notFound: ze
   },
   // /theme-settings page: hero texts.
-  settings: { navLabelKey: "settings.navLabel", defaultConfig: Q, component: Se, schema: ve },
+  settings: { navLabelKey: "settings.navLabel", defaultConfig: J, component: Se, schema: ve },
   // Translations, namespace "theme-leaux-altitude" (admin UI + public labels).
   i18n: Le
 };
