@@ -11,6 +11,7 @@
   --lx-line: #c6d2dc;
   --lx-bg: var(--lx-glacier);
   --lx-text: var(--lx-ink);
+  --lx-code: var(--lx-night);
   --lx-tint: #6d4dff;
   --lx-deep: #4a2fd0;
   --lx-display: "Archivo", "Arial Narrow", sans-serif;
@@ -25,6 +26,7 @@
     --lx-muted: #a7afd6;
     --lx-line: #333c7a;
     --lx-snow: var(--lx-night-2);
+    --lx-code: var(--lx-night-2);
   }
 }
 [data-rubric="transition-ia"] { --lx-tint: #8467ff; --lx-deep: #4a2fd0; }
@@ -70,9 +72,10 @@ body.lx { margin: 0; background: var(--lx-bg); color: var(--lx-text); font: 400 
 .lx-hero { position: relative; isolation: isolate; height: calc(100svh - 68px); min-height: 560px; max-height: 1100px; overflow: hidden; background: var(--lx-night); color: var(--lx-snow); }
 .lx-hero__canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
 .lx-hero__canvas--front { z-index: 3; pointer-events: none; }
-.lx-hero__copy { position: relative; z-index: 1; padding: clamp(20px, 5vh, 56px) var(--lx-gutter) 0; }
+.lx-hero__copy { position: absolute; inset: auto 0 41%; z-index: 1; padding: 0 var(--lx-gutter); }
+.lx-hero::after { content: ""; position: absolute; inset: auto 0 0; height: 22%; z-index: 4; pointer-events: none; background: linear-gradient(transparent, var(--lx-night)); }
 .lx-hero__tagline { max-width: 34ch; margin: 0 0 clamp(16px, 3vh, 32px); font: italic 400 clamp(1.15rem, 1.7vw, 1.6rem)/1.3 var(--lx-serif); color: #cdd6f4; }
-.lx-hero__name { font-size: min(15.4vw, 27vh, 22rem); font-weight: 900; font-stretch: 125%; line-height: .84; letter-spacing: -.035em; color: var(--lx-glacier); }
+.lx-hero__name { font-size: min(15.4vw, 24vh, 22rem); font-weight: 900; font-stretch: 125%; line-height: .84; letter-spacing: -.035em; color: var(--lx-glacier); }
 .lx-hero__name span { display: block; }
 .lx-hero__name span:last-child { padding-left: .62em; }
 .lx-hero__static { position: absolute; inset: auto 0 0; width: 100%; height: 42%; z-index: 2; }
@@ -164,7 +167,7 @@ a:hover > .lx-peak { transform: translateY(-16px); }
 .lx-band--category h1 { font-size: clamp(3.4rem, 13.5vw, 13rem); font-stretch: 125%; line-height: .88; letter-spacing: -.035em; }
 .lx-band--author h1 { font-size: clamp(3rem, 10vw, 9rem); font-stretch: 120%; }
 .lx-band__rubric { display: inline-block; margin-bottom: 18px; padding: 5px 12px 6px; background: var(--lx-night); color: var(--lx-glacier) !important; font-weight: 700; text-decoration: none; }
-.lx-band__lead { max-width: 40ch; margin: 22px 0 0; font: 500 clamp(1.3rem, 2.2vw, 1.85rem)/1.25 var(--lx-serif); }
+.lx-band__lead { max-width: 40ch; margin: 30px 0 0; font: 500 clamp(1.3rem, 2.2vw, 1.85rem)/1.25 var(--lx-serif); }
 .lx-band__bio { max-width: 58ch; margin: 14px 0 0; font: 400 1.25rem/1.45 var(--lx-serif); }
 .lx-band__count { display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 22px 0 0; font-weight: 600; }
 .lx-band__edge { position: absolute; inset: auto 0 -1px; width: 100%; height: clamp(44px, 7vw, 90px); }
@@ -191,7 +194,7 @@ a:hover > .lx-peak { transform: translateY(-16px); }
 .lx-prose blockquote { margin: 1.8em 0; padding: .1em 0 .1em clamp(18px, 3vw, 32px); border-left: 8px solid var(--lx-tint); font-size: 1.28em; font-style: italic; line-height: 1.34; }
 .lx-prose blockquote p:last-child { margin-bottom: 0; }
 .lx-prose code { padding: .1em .3em; background: color-mix(in srgb, var(--lx-tint) 22%, transparent); font-size: .84em; font-family: ui-monospace, "SF Mono", Menlo, monospace; }
-.lx-prose pre { margin: 1.7em calc(-1 * min(var(--lx-gutter), 32px)); padding: 22px 26px; overflow-x: auto; background: var(--lx-night); color: var(--lx-glacier); font-size: .82em; line-height: 1.6; }
+.lx-prose pre { margin: 1.7em calc(-1 * min(var(--lx-gutter), 32px)); padding: 22px 26px; overflow-x: auto; background: var(--lx-code); color: var(--lx-glacier); font-size: .82em; line-height: 1.6; }
 .lx-prose pre code { padding: 0; background: none; font-size: inherit; }
 .lx-prose table { width: 100%; margin: 0 0 1.4em; border-collapse: collapse; font-size: .9em; }
 .lx-prose th, .lx-prose td { padding: 10px 12px; border-bottom: 1px solid var(--lx-line); text-align: left; }
@@ -234,3 +237,6 @@ a:hover > .lx-peak { transform: translateY(-16px); }
 @media (prefers-reduced-motion: reduce) {
   .lx *, .lx *::before, .lx *::after { transition: none !important; animation: none !important; }
 }
+
+main:has(.lx-lost) + .lx-footer { margin-top: 0; }
+main:has(.lx-lost) + .lx-footer .lx-footer__ridge { display: none; }

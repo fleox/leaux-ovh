@@ -123,8 +123,8 @@
       for (i = 0; i < lines; i++) {
         var ctx = i < cut ? bctx : fctx;
         var d = i / (lines - 1);
-        var base = H * (.6 + .5 * Math.pow(d, 1.25));
-        var amp = H * (.1 + .27 * d) * rise;
+        var base = H * (.56 + .54 * Math.pow(d, 1.25));
+        var amp = H * (.1 + .34 * d) * rise;
         var z = d * 2.6 - travel;
         ctx.beginPath();
         ctx.moveTo(-2, H + 2);
@@ -163,7 +163,7 @@
     hero.addEventListener("pointermove", function (e) {
       var box = hero.getBoundingClientRect();
       pointer.x = (e.clientX - box.left) / box.width;
-      pointer.y = Math.pow(Math.max(0, ((e.clientY - box.top) / box.height - .6) / .5), 1 / 1.25);
+      pointer.y = Math.pow(Math.max(0, ((e.clientY - box.top) / box.height - .56) / .54), 1 / 1.25);
     });
     hero.addEventListener("pointerleave", function () { pointer.x = pointer.y = -9; });
     document.addEventListener("visibilitychange", kick);
