@@ -264,10 +264,14 @@ main:has(.lx-lost) + .lx-footer .lx-footer__ridge { display: none; }
   ::view-transition-group(lx-art), ::view-transition-group(lx-title) { animation-duration: .6s; animation-timing-function: cubic-bezier(.65, 0, .2, 1); }
   ::view-transition-group(lx-art) { overflow: clip; }
   ::view-transition-old(lx-art), ::view-transition-new(lx-art) { width: 100%; height: 100%; object-fit: cover; animation-duration: .6s; }
-  ::view-transition-old(lx-title), ::view-transition-new(lx-title) { width: auto; height: 100%; object-fit: contain; object-position: left top; animation-duration: .45s; }
+  ::view-transition-image-pair(lx-title) { isolation: auto; }
+  ::view-transition-old(lx-title), ::view-transition-new(lx-title) { width: auto; height: 100%; object-fit: contain; object-position: left top; mix-blend-mode: normal; }
+  ::view-transition-old(lx-title) { animation: lx-out .14s ease both; }
+  ::view-transition-new(lx-title) { animation: lx-fade .3s .34s ease both; }
   ::view-transition-old(root) { animation: lx-out .3s ease both; }
   ::view-transition-new(root) { animation: lx-in .45s .12s ease both; }
   @keyframes lx-out { to { opacity: 0; } }
+  @keyframes lx-fade { from { opacity: 0; } }
   @keyframes lx-in { from { opacity: 0; transform: translateY(24px); } }
 }
 `, he = `// Leaux Altitude runtime, uploaded as theme-assets/leaux-altitude-menu.js.
@@ -1012,7 +1016,7 @@ const Ae = {
 }, He = {
   id: "leaux-altitude",
   name: "Leaux Altitude",
-  version: "1.0.5",
+  version: "1.0.6",
   description: "Dedicated theme for leaux.ovh: generative topographic art, one trail per section.",
   readme: pe,
   scssEntry: "theme.css",
