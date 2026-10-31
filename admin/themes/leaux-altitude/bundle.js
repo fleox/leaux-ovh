@@ -88,6 +88,7 @@ body.lx { margin: 0; background: var(--lx-bg); color: var(--lx-text); font: 400 
 .lx-hero__static path:nth-child(3) { fill: #ff6b3d; }
 .lx-hero.is-live .lx-hero__static { display: none; }
 @media (max-width: 640px) {
+  .lx-hero { height: min(calc(100svh - 68px), 150vw); }
   .lx-hero__name { font-size: 16vw; }
   .lx-hero__name span:last-child { padding-left: 0; }
 }
@@ -957,7 +958,7 @@ const Le = {
 }, $e = {
   id: "leaux-altitude",
   name: "Leaux Altitude",
-  version: "1.0.2",
+  version: "1.0.3",
   description: "Dedicated theme for leaux.ovh: generative topographic art, one trail per section.",
   readme: pe,
   scssEntry: "theme.css",
