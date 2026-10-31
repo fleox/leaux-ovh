@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
-Disallow: /leaux-ovh/admin/
+Disallow: /admin/
 
-Sitemap: https://fleox.github.io/leaux-ovh/sitemaps/sitemap-index.xml
+Sitemap: https://leaux.ovh/sitemaps/sitemap-index.xml
