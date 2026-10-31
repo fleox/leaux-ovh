@@ -270,6 +270,33 @@
     }).catch(function () {});
   }
 
+  /* Section pages: the map drifts slower than the page and the title sinks
+     behind the ridge edge, as if they sat at different depths. */
+  function parallax(band) {
+    var art = band.querySelector(".lx-band__art");
+    var inner = band.querySelector(".lx-band__inner");
+    if (!art || !inner) return;
+    var queued = false;
+    function apply() {
+      queued = false;
+      var box = band.getBoundingClientRect();
+      var top = band.offsetTop;
+      var moved = Math.max(0, (window.scrollY || 0) - top + 68);
+      if (box.bottom < 0) return;
+      art.style.transform = "translate3d(0," + (moved * .42).toFixed(1) + "px,0) scale(" + (1 + moved * .00022).toFixed(4) + ")";
+      inner.style.transform = "translate3d(0," + (moved * .2).toFixed(1) + "px,0)";
+      inner.style.opacity = String(Math.max(0, 1 - moved / (box.height * .95)).toFixed(3));
+    }
+    function queue() {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(apply);
+    }
+    window.addEventListener("scroll", queue, { passive: true });
+    window.addEventListener("resize", queue);
+    apply();
+  }
+
   /* Page transition: the clicked post's map grows into the article header.
      The article side is named in the CSS, the head script names the card
      when coming back. Here we name the card we are leaving from. */
@@ -298,6 +325,8 @@
     if (trailHost) try { trail(trailHost); } catch (e) {}
     var climbHost = document.querySelector("[data-lx-climb]");
     if (climbHost) try { climb(climbHost); } catch (e) {}
+    var band = document.querySelector(".lx-band--category");
+    if (band && !calm) try { parallax(band); } catch (e) {}
     var relatedHost = document.querySelector("[data-lx-related]");
     if (relatedHost) related(relatedHost);
   }

@@ -1,6 +1,6 @@
-import { jsxs as l, jsx as e, Fragment as q } from "react/jsx-runtime";
+import { jsxs as l, jsx as e, Fragment as B } from "react/jsx-runtime";
 import { i18n as ee, pickPublicLocale as te, canonicalUrl as ne, pickFormat as R, postSortMillis as ae, buildTermUrl as ie, SocialIcon as re, socialLabel as le, toast as oe } from "@agent-cms/runtime";
-import { useState as Q, useEffect as se } from "react";
+import { useState as Y, useEffect as se } from "react";
 import { useTranslation as ce } from "react-i18next";
 const de = `@import url("https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&display=swap");
 
@@ -166,7 +166,8 @@ a:hover > .lx-peak { transform: translateY(-16px); }
 /* Color bands: top of article, category and author pages */
 .lx-band { position: relative; overflow: hidden; isolation: isolate; background: var(--lx-tint); color: var(--lx-night); }
 .lx-article:not([data-rubric]) .lx-band, .lx-band--author { background: var(--lx-night-2); color: var(--lx-glacier); }
-.lx-band__art { position: absolute; inset: 0; z-index: -1; opacity: .5; }
+.lx-band__art { position: absolute; inset: 0; z-index: -1; opacity: .5; transform-origin: 50% 0; }
+.lx-band--category .lx-band__art, .lx-band--category .lx-band__inner { will-change: transform; }
 .lx-band__inner { max-width: 1320px; margin: 0 auto; padding: clamp(40px, 7vw, 96px) var(--lx-gutter) clamp(80px, 11vw, 150px); }
 .lx-band h1 { font-weight: 900; letter-spacing: -.025em; line-height: .96; }
 .lx-band--article h1 { max-width: 19ch; font-size: clamp(2.5rem, 7.2vw, 7rem); font-stretch: 112%; }
@@ -546,6 +547,33 @@ main:has(.lx-lost) + .lx-footer .lx-footer__ridge { display: none; }
     }).catch(function () {});
   }
 
+  /* Section pages: the map drifts slower than the page and the title sinks
+     behind the ridge edge, as if they sat at different depths. */
+  function parallax(band) {
+    var art = band.querySelector(".lx-band__art");
+    var inner = band.querySelector(".lx-band__inner");
+    if (!art || !inner) return;
+    var queued = false;
+    function apply() {
+      queued = false;
+      var box = band.getBoundingClientRect();
+      var top = band.offsetTop;
+      var moved = Math.max(0, (window.scrollY || 0) - top + 68);
+      if (box.bottom < 0) return;
+      art.style.transform = "translate3d(0," + (moved * .42).toFixed(1) + "px,0) scale(" + (1 + moved * .00022).toFixed(4) + ")";
+      inner.style.transform = "translate3d(0," + (moved * .2).toFixed(1) + "px,0)";
+      inner.style.opacity = String(Math.max(0, 1 - moved / (box.height * .95)).toFixed(3));
+    }
+    function queue() {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(apply);
+    }
+    window.addEventListener("scroll", queue, { passive: true });
+    window.addEventListener("resize", queue);
+    apply();
+  }
+
   /* Page transition: the clicked post's map grows into the article header.
      The article side is named in the CSS, the head script names the card
      when coming back. Here we name the card we are leaving from. */
@@ -574,6 +602,8 @@ main:has(.lx-lost) + .lx-footer .lx-footer__ridge { display: none; }
     if (trailHost) try { trail(trailHost); } catch (e) {}
     var climbHost = document.querySelector("[data-lx-climb]");
     if (climbHost) try { climb(climbHost); } catch (e) {}
+    var band = document.querySelector(".lx-band--category");
+    if (band && !calm) try { parallax(band); } catch (e) {}
     var relatedHost = document.querySelector("[data-lx-related]");
     if (relatedHost) related(relatedHost);
   }
@@ -652,20 +682,20 @@ function me(a, n, t, i, r = 14) {
     const w = v + (b - v) * u / r, z = u % 4 === 0 ? T : f;
     for (let x = 0; x < c; x++)
       for (let p = 0; p < i; p++) {
-        const S = g(p, x), E = g(p + 1, x), C = g(p + 1, x + 1), U = g(p, x + 1), L = [], B = (y, O, G, Z, Y, J) => {
+        const S = g(p, x), E = g(p + 1, x), C = g(p + 1, x + 1), U = g(p, x + 1), L = [], $ = (y, O, G, Z, X, J) => {
           if (y < w != O < w) {
             const K = (w - y) / (O - y);
-            L.push([(G + (Y - G) * K) * M, (Z + (J - Z) * K) * A]);
+            L.push([(G + (X - G) * K) * M, (Z + (J - Z) * K) * A]);
           }
         };
-        B(S, E, p, x, p + 1, x), B(E, C, p + 1, x, p + 1, x + 1), B(U, C, p, x + 1, p + 1, x + 1), B(S, U, p, x, p, x + 1);
+        $(S, E, p, x, p + 1, x), $(E, C, p + 1, x, p + 1, x + 1), $(U, C, p, x + 1, p + 1, x + 1), $(S, U, p, x, p, x + 1);
         for (let y = 0; y + 1 < L.length; y += 2)
           z.push(`M${_(L[y][0])} ${_(L[y][1])}L${_(L[y + 1][0])} ${_(L[y + 1][1])}`);
       }
   }
   return { minor: f.join(""), major: T.join("") };
 }
-function V(a, n, t, i = 90) {
+function Q(a, n, t, i = 90) {
   const r = W(a);
   let o = "";
   for (let s = 0; s <= i; s++) {
@@ -674,7 +704,7 @@ function V(a, n, t, i = 90) {
   }
   return o;
 }
-function H(a, n, t, i = 70) {
+function q(a, n, t, i = 70) {
   const r = W(a);
   let o = `M0 ${t}`;
   for (let s = 0; s <= i; s++) {
@@ -703,7 +733,7 @@ function ue(a, n, t, i, r) {
 function ge({ site: a, locale: n }) {
   const t = N(a, n);
   return /* @__PURE__ */ l("footer", { className: "lx-footer", children: [
-    /* @__PURE__ */ e("svg", { className: "lx-footer__ridge", viewBox: "0 0 1600 120", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: H(k("footer"), 1600, 120) }) }),
+    /* @__PURE__ */ e("svg", { className: "lx-footer__ridge", viewBox: "0 0 1600 120", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: q(k("footer"), 1600, 120) }) }),
     /* @__PURE__ */ l("div", { className: "lx-footer__body", children: [
       /* @__PURE__ */ e("p", { className: "lx-footer__name", children: a.settings.title }),
       /* @__PURE__ */ e("nav", { "aria-label": t("footerNav"), "data-cms-menu": "footer", children: /* @__PURE__ */ e(I, { items: a.resolvedMenus.footer }) }),
@@ -742,7 +772,7 @@ function ve({ site: a, pageTitle: n, pageDescription: t, ogImage: i, currentPath
     ] })
   ] });
 }
-const X = {
+const V = {
   hero: {
     firstLine: "Frédéric",
     secondLine: "Leaux",
@@ -754,7 +784,7 @@ const X = {
   "hero.tagline": { description: "Sentence shown above the home title." }
 };
 function F(a) {
-  return { ...X.hero, ...(a == null ? void 0 : a.hero) ?? {} };
+  return { ...V.hero, ...(a == null ? void 0 : a.hero) ?? {} };
 }
 const j = [
   { slug: "edito", name: "Édito", x: 90, height: 0.62 },
@@ -788,7 +818,7 @@ function ye({ site: a }) {
     ] })
   ] });
 }
-function $({ seed: a, width: n = 480, height: t = 300, cols: i = 44, className: r }) {
+function H({ seed: a, width: n = 480, height: t = 300, cols: i = 44, className: r }) {
   const o = me(k(a), n, t, i);
   return /* @__PURE__ */ l("svg", { className: `lx-topo ${r ?? ""}`, viewBox: `0 0 ${n} ${t}`, preserveAspectRatio: "xMidYMid slice", "aria-hidden": "true", children: [
     /* @__PURE__ */ e("path", { className: "lx-topo__minor", d: o.minor }),
@@ -802,7 +832,7 @@ function D({ posts: a, site: n }) {
     const o = we((c = i.category) == null ? void 0 : c.url), s = R(i.hero, r === 0 ? "large" : "medium");
     return /* @__PURE__ */ l("article", { className: `lx-way${r === 0 ? " lx-way--first" : ""}`, "data-rubric": o, children: [
       /* @__PURE__ */ e("span", { className: "lx-way__pin", "aria-hidden": "true" }),
-      /* @__PURE__ */ e("a", { className: "lx-way__art", href: "/" + i.url, tabIndex: -1, "aria-hidden": "true", children: s ? /* @__PURE__ */ e("img", { src: s, alt: "", loading: "lazy" }) : /* @__PURE__ */ e($, { seed: i.slug, cols: r === 0 ? 64 : 44 }) }),
+      /* @__PURE__ */ e("a", { className: "lx-way__art", href: "/" + i.url, tabIndex: -1, "aria-hidden": "true", children: s ? /* @__PURE__ */ e("img", { src: s, alt: "", loading: "lazy" }) : /* @__PURE__ */ e(H, { seed: i.slug, cols: r === 0 ? 64 : 44 }) }),
       /* @__PURE__ */ l("div", { className: "lx-way__text", children: [
         /* @__PURE__ */ l("p", { className: "lx-way__meta", children: [
           i.dateLabel && /* @__PURE__ */ e("span", { children: i.dateLabel }),
@@ -826,13 +856,13 @@ function _e({ site: a }) {
         /* @__PURE__ */ e("span", { children: n.secondLine })
       ] })
     ] }),
-    /* @__PURE__ */ e("svg", { className: "lx-hero__static", viewBox: "0 0 1600 300", preserveAspectRatio: "none", "aria-hidden": "true", children: [0, 1, 2].map((t) => /* @__PURE__ */ e("path", { d: H(k("hero" + t), 1600, 300 - t * 70), transform: `translate(0 ${t * 70})` }, t)) }),
+    /* @__PURE__ */ e("svg", { className: "lx-hero__static", viewBox: "0 0 1600 300", preserveAspectRatio: "none", "aria-hidden": "true", children: [0, 1, 2].map((t) => /* @__PURE__ */ e("path", { d: q(k("hero" + t), 1600, 300 - t * 70), transform: `translate(0 ${t * 70})` }, t)) }),
     /* @__PURE__ */ e("canvas", { className: "lx-hero__canvas lx-hero__canvas--front", "data-lx-front": !0, "aria-hidden": "true" })
   ] });
 }
 function ke({ site: a, posts: n, staticPage: t, archivesLink: i }) {
   const r = N(a);
-  return t ? /* @__PURE__ */ e("div", { className: "lx-prose lx-prose--page", dangerouslySetInnerHTML: { __html: t.bodyHtml } }) : /* @__PURE__ */ l(q, { children: [
+  return t ? /* @__PURE__ */ e("div", { className: "lx-prose lx-prose--page", dangerouslySetInnerHTML: { __html: t.bodyHtml } }) : /* @__PURE__ */ l(B, { children: [
     /* @__PURE__ */ e(_e, { site: a }),
     /* @__PURE__ */ e(ye, { site: a }),
     /* @__PURE__ */ l("section", { className: "lx-section", "aria-labelledby": "lx-latest", children: [
@@ -854,7 +884,7 @@ function Ne({ site: a, post: n, bodyHtml: t, author: i, hero: r, primaryTerm: o,
   const M = n.contentMarkdown.trim().split(/\s+/).length, A = Math.max(1, Math.round(M / 220));
   return /* @__PURE__ */ l("article", { "data-rubric": m, className: `lx-article${h ? "" : " lx-article--page"}${n.slug === "qui-suis-je" ? " lx-article--about" : ""}`, children: [
     /* @__PURE__ */ l("header", { className: "lx-band lx-band--article", children: [
-      /* @__PURE__ */ e($, { seed: n.slug, width: 1600, height: 720, cols: 110, className: "lx-band__art" }),
+      /* @__PURE__ */ e(H, { seed: n.slug, width: 1600, height: 720, cols: 110, className: "lx-band__art" }),
       /* @__PURE__ */ l("div", { className: "lx-band__inner", children: [
         h && o && /* @__PURE__ */ e("a", { className: "lx-band__rubric", href: `/${ie(o)}`, children: o.name }),
         /* @__PURE__ */ e("h1", { children: n.title }),
@@ -869,7 +899,7 @@ function Ne({ site: a, post: n, bodyHtml: t, author: i, hero: r, primaryTerm: o,
           ] })
         ] })
       ] }),
-      /* @__PURE__ */ e("svg", { className: "lx-band__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: H(k(n.slug), 1600, 90) }) })
+      /* @__PURE__ */ e("svg", { className: "lx-band__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: q(k(n.slug), 1600, 90) }) })
     ] }),
     d && /* @__PURE__ */ l("figure", { className: "lx-figure", children: [
       /* @__PURE__ */ e("img", { src: d, alt: (r == null ? void 0 : r.alt) ?? "" }),
@@ -877,15 +907,15 @@ function Ne({ site: a, post: n, bodyHtml: t, author: i, hero: r, primaryTerm: o,
     ] }),
     /* @__PURE__ */ e("div", { className: "lx-prose", "data-lx-prose": !0, dangerouslySetInnerHTML: { __html: t } }),
     h && s.length > 0 && /* @__PURE__ */ e("ul", { className: "lx-tags", "aria-label": c("tags"), children: s.map((f) => /* @__PURE__ */ e("li", { children: f.name }, f.id)) }),
-    h && /* @__PURE__ */ l(q, { children: [
+    h && /* @__PURE__ */ l(B, { children: [
       /* @__PURE__ */ l("section", { className: "lx-related", "data-lx-related": !0, "data-current": n.id, "data-term": n.primaryTermId, hidden: !0, children: [
         /* @__PURE__ */ e("h2", { children: c("continue") }),
         /* @__PURE__ */ e("div", { className: "lx-related__list" })
       ] }),
       /* @__PURE__ */ l("div", { className: "lx-climb", "data-lx-climb": !0, hidden: !0, "aria-hidden": "true", children: [
         /* @__PURE__ */ l("svg", { viewBox: "0 0 1600 60", preserveAspectRatio: "none", children: [
-          /* @__PURE__ */ e("path", { className: "lx-climb__base", d: V(k(n.slug), 1600, 60) }),
-          /* @__PURE__ */ e("path", { className: "lx-climb__done", d: V(k(n.slug), 1600, 60) })
+          /* @__PURE__ */ e("path", { className: "lx-climb__base", d: Q(k(n.slug), 1600, 60) }),
+          /* @__PURE__ */ e("path", { className: "lx-climb__done", d: Q(k(n.slug), 1600, 60) })
         ] }),
         /* @__PURE__ */ e("span", { className: "lx-climb__dot" })
       ] })
@@ -895,9 +925,9 @@ function Ne({ site: a, post: n, bodyHtml: t, author: i, hero: r, primaryTerm: o,
 function Me({ site: a, term: n, posts: t, archivesLink: i }) {
   var c;
   const r = N(a), o = (c = j.find((d) => d.slug === n.slug)) == null ? void 0 : c.slug, s = n.description || (o ? r(`r.${o}`) : "");
-  return /* @__PURE__ */ l(q, { children: [
+  return /* @__PURE__ */ l(B, { children: [
     /* @__PURE__ */ l("header", { className: "lx-band lx-band--category", "data-rubric": o, children: [
-      /* @__PURE__ */ e($, { seed: n.slug, width: 1600, height: 620, cols: 110, className: "lx-band__art" }),
+      /* @__PURE__ */ e(H, { seed: n.slug, width: 1600, height: 620, cols: 110, className: "lx-band__art" }),
       /* @__PURE__ */ l("div", { className: "lx-band__inner", children: [
         /* @__PURE__ */ e("h1", { children: n.name }),
         s && /* @__PURE__ */ e("p", { className: "lx-band__lead", children: s }),
@@ -907,7 +937,7 @@ function Me({ site: a, term: n, posts: t, archivesLink: i }) {
           r(t.length > 1 ? "articles" : "article")
         ] })
       ] }),
-      /* @__PURE__ */ e("svg", { className: "lx-band__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: H(k(n.slug), 1600, 90) }) })
+      /* @__PURE__ */ e("svg", { className: "lx-band__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: q(k(n.slug), 1600, 90) }) })
     ] }),
     /* @__PURE__ */ l("section", { className: "lx-section lx-section--flush", "data-rubric": o, children: [
       /* @__PURE__ */ e(D, { posts: t, site: a }),
@@ -917,9 +947,9 @@ function Me({ site: a, term: n, posts: t, archivesLink: i }) {
 }
 function ze({ site: a, author: n, posts: t }) {
   const i = R(n.avatar, "small");
-  return /* @__PURE__ */ l(q, { children: [
+  return /* @__PURE__ */ l(B, { children: [
     /* @__PURE__ */ l("header", { className: "lx-band lx-band--author", children: [
-      /* @__PURE__ */ e($, { seed: n.displayName, width: 1600, height: 620, cols: 110, className: "lx-band__art" }),
+      /* @__PURE__ */ e(H, { seed: n.displayName, width: 1600, height: 620, cols: 110, className: "lx-band__art" }),
       /* @__PURE__ */ l("div", { className: "lx-band__inner", children: [
         i && /* @__PURE__ */ e("img", { className: "lx-avatar", src: i, alt: "", width: 120, height: 120 }),
         /* @__PURE__ */ e("h1", { children: n.displayName }),
@@ -927,7 +957,7 @@ function ze({ site: a, author: n, posts: t }) {
         n.bio && /* @__PURE__ */ e("p", { className: "lx-band__bio", children: n.bio }),
         n.socials && n.socials.length > 0 && /* @__PURE__ */ e("ul", { className: "lx-socials", children: n.socials.map((r) => /* @__PURE__ */ e("li", { children: /* @__PURE__ */ e("a", { href: r.url, rel: "me noopener", "aria-label": le(r.network), children: /* @__PURE__ */ e(re, { network: r.network }) }) }, r.network)) })
       ] }),
-      /* @__PURE__ */ e("svg", { className: "lx-band__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: H(k(n.id), 1600, 90) }) })
+      /* @__PURE__ */ e("svg", { className: "lx-band__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: q(k(n.id), 1600, 90) }) })
     ] }),
     /* @__PURE__ */ e("section", { className: "lx-section lx-section--flush", children: /* @__PURE__ */ e(D, { posts: t, site: a }) })
   ] });
@@ -935,7 +965,7 @@ function ze({ site: a, author: n, posts: t }) {
 function Se({ site: a, message: n }) {
   const t = N(a);
   return /* @__PURE__ */ l("section", { className: "lx-lost", children: [
-    /* @__PURE__ */ e($, { seed: "hors-sentier", width: 1600, height: 900, cols: 120, className: "lx-lost__art" }),
+    /* @__PURE__ */ e(H, { seed: "hors-sentier", width: 1600, height: 900, cols: 120, className: "lx-lost__art" }),
     /* @__PURE__ */ l("div", { className: "lx-lost__copy", children: [
       /* @__PURE__ */ e("p", { className: "lx-lost__code", children: "404" }),
       /* @__PURE__ */ e("h1", { children: t("notFoundTitle") }),
@@ -945,7 +975,7 @@ function Se({ site: a, message: n }) {
   ] });
 }
 function Le({ config: a, save: n }) {
-  const { t } = ce("theme-leaux-altitude"), [i, r] = Q(F(a)), [o, s] = Q(!1);
+  const { t } = ce("theme-leaux-altitude"), [i, r] = Y(F(a)), [o, s] = Y(!1);
   se(() => r(F(a)), [a]);
   async function c(d) {
     d.preventDefault(), s(!0);
@@ -1013,10 +1043,10 @@ const Ae = {
     },
     settings: { navLabel: "Leaux Altitude", title: "Réglages Leaux Altitude", firstLine: "Titre, première ligne", secondLine: "Titre, deuxième ligne", tagline: "Accroche", save: "Enregistrer", saved: "Enregistré. Lancez Régénérer → Accueil pour publier." }
   }
-}, He = {
+}, qe = {
   id: "leaux-altitude",
   name: "Leaux Altitude",
-  version: "1.0.6",
+  version: "1.0.7",
   description: "Dedicated theme for leaux.ovh: generative topographic art, one trail per section.",
   readme: pe,
   scssEntry: "theme.css",
@@ -1045,10 +1075,10 @@ const Ae = {
     notFound: Se
   },
   // /theme-settings page: hero texts.
-  settings: { navLabelKey: "settings.navLabel", defaultConfig: X, component: Le, schema: be },
+  settings: { navLabelKey: "settings.navLabel", defaultConfig: V, component: Le, schema: be },
   // Translations, namespace "theme-leaux-altitude" (admin UI + public labels).
   i18n: Ae
 };
 export {
-  He as default
+  qe as default
 };

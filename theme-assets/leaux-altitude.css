@@ -162,7 +162,8 @@ a:hover > .lx-peak { transform: translateY(-16px); }
 /* Color bands: top of article, category and author pages */
 .lx-band { position: relative; overflow: hidden; isolation: isolate; background: var(--lx-tint); color: var(--lx-night); }
 .lx-article:not([data-rubric]) .lx-band, .lx-band--author { background: var(--lx-night-2); color: var(--lx-glacier); }
-.lx-band__art { position: absolute; inset: 0; z-index: -1; opacity: .5; }
+.lx-band__art { position: absolute; inset: 0; z-index: -1; opacity: .5; transform-origin: 50% 0; }
+.lx-band--category .lx-band__art, .lx-band--category .lx-band__inner { will-change: transform; }
 .lx-band__inner { max-width: 1320px; margin: 0 auto; padding: clamp(40px, 7vw, 96px) var(--lx-gutter) clamp(80px, 11vw, 150px); }
 .lx-band h1 { font-weight: 900; letter-spacing: -.025em; line-height: .96; }
 .lx-band--article h1 { max-width: 19ch; font-size: clamp(2.5rem, 7.2vw, 7rem); font-stretch: 112%; }
