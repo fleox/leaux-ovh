@@ -1,8 +1,8 @@
 import { jsxs as l, jsx as e, Fragment as B } from "react/jsx-runtime";
 import { i18n as ee, pickPublicLocale as te, canonicalUrl as ne, pickFormat as R, postSortMillis as ae, buildTermUrl as ie, SocialIcon as re, socialLabel as le, toast as oe } from "@agent-cms/runtime";
 import { useState as Y, useEffect as se } from "react";
-import { useTranslation as ce } from "react-i18next";
-const de = `@import url("https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&display=swap");
+import { useTranslation as de } from "react-i18next";
+const ce = `@import url("https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&display=swap");
 
 /* Palette: a relief map at dusk. Every section owns a hypsometric tint. */
 :root {
@@ -253,6 +253,8 @@ main:has(.lx-lost) + .lx-footer .lx-footer__ridge { display: none; }
 .lx-article--about .lx-prose h3 { position: relative; margin: 0; padding: 26px 0 4px 34px; border-left: 3px solid #ff6b3d; font-size: clamp(1.45rem, 2.6vw, 2.1rem); font-weight: 800; font-stretch: 108%; }
 .lx-article--about .lx-prose h3::before { content: ""; position: absolute; left: -12px; top: 34px; width: 21px; height: 21px; border-radius: 50%; border: 5px solid var(--lx-bg); background: #ff6b3d; }
 .lx-article--about .lx-prose h3 + p { margin: 0; padding: 0 0 12px 34px; border-left: 3px solid #ff6b3d; }
+.lx-article--about .lx-prose h3 + p + p:has(> img) { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 0; padding: 4px 0 16px 34px; border-left: 3px solid #ff6b3d; }
+.lx-article--about .lx-prose h3 + p + p:has(> img) img { box-sizing: border-box; width: auto; max-width: 100%; height: 52px; margin: 0; padding: 7px 11px; border-radius: 8px; background: #fff; box-shadow: 0 1px 3px rgba(16, 22, 63, .18); object-fit: contain; }
 
 /* Page transition: same-origin navigations only. Browsers without support
    simply load the page. */
@@ -657,30 +659,30 @@ function P(a) {
   };
 }
 function W(a) {
-  const n = P(a), t = 64, i = Array.from({ length: t * t }, () => n()), r = (s, c) => i[(c % t + t) % t * t + (s % t + t) % t], o = (s) => s * s * (3 - 2 * s);
-  return (s, c) => {
-    const d = Math.floor(s), h = Math.floor(c), m = o(s - d), v = o(c - h), b = r(d, h) * (1 - m) + r(d + 1, h) * m, M = r(d, h + 1) * (1 - m) + r(d + 1, h + 1) * m;
+  const n = P(a), t = 64, i = Array.from({ length: t * t }, () => n()), r = (s, d) => i[(d % t + t) % t * t + (s % t + t) % t], o = (s) => s * s * (3 - 2 * s);
+  return (s, d) => {
+    const c = Math.floor(s), h = Math.floor(d), m = o(s - c), v = o(d - h), b = r(c, h) * (1 - m) + r(c + 1, h) * m, M = r(c, h + 1) * (1 - m) + r(c + 1, h + 1) * m;
     return b * (1 - v) + M * v;
   };
 }
 const _ = (a) => Math.round(a * 10) / 10;
 function me(a, n, t, i, r = 14) {
-  const o = W(a), s = P(a ^ 2654435769), c = Math.round(i * t / n), d = [0, 1, 2].map(() => ({ x: 0.15 + s() * 0.7, y: 0.15 + s() * 0.7, s: 0.03 + s() * 0.07, a: 0.5 + s() * 0.7 })), h = n / t, m = [];
+  const o = W(a), s = P(a ^ 2654435769), d = Math.round(i * t / n), c = [0, 1, 2].map(() => ({ x: 0.15 + s() * 0.7, y: 0.15 + s() * 0.7, s: 0.03 + s() * 0.07, a: 0.5 + s() * 0.7 })), h = n / t, m = [];
   let v = 1 / 0, b = -1 / 0;
-  for (let u = 0; u <= c; u++)
+  for (let u = 0; u <= d; u++)
     for (let w = 0; w <= i; w++) {
-      const z = w / i, x = u / c;
+      const z = w / i, x = u / d;
       let p = o(z * 3 * h, x * 3) * 0.6 + o(z * 7 * h, x * 7) * 0.18;
-      for (const S of d) {
+      for (const S of c) {
         const E = (z - S.x) * h, C = x - S.y;
         p += S.a * Math.exp(-(E * E + C * C) / (2 * S.s));
       }
       m.push(p), p < v && (v = p), p > b && (b = p);
     }
-  const M = n / i, A = t / c, g = (u, w) => m[w * (i + 1) + u], f = [], T = [];
+  const M = n / i, A = t / d, g = (u, w) => m[w * (i + 1) + u], f = [], T = [];
   for (let u = 1; u < r; u++) {
     const w = v + (b - v) * u / r, z = u % 4 === 0 ? T : f;
-    for (let x = 0; x < c; x++)
+    for (let x = 0; x < d; x++)
       for (let p = 0; p < i; p++) {
         const S = g(p, x), E = g(p + 1, x), C = g(p + 1, x + 1), U = g(p, x + 1), L = [], $ = (y, O, G, Z, X, J) => {
           if (y < w != O < w) {
@@ -699,8 +701,8 @@ function Q(a, n, t, i = 90) {
   const r = W(a);
   let o = "";
   for (let s = 0; s <= i; s++) {
-    const c = s / i, d = t * (0.92 - 0.78 * Math.pow(c, 1.3) + (r(c * 7, 3) - 0.5) * 0.34 * Math.sin(Math.PI * c) + (r(c * 19, 8) - 0.5) * 0.1 * Math.sin(Math.PI * c));
-    o += `${s ? "L" : "M"}${_(c * n)} ${_(Math.max(2, Math.min(t - 2, d)))}`;
+    const d = s / i, c = t * (0.92 - 0.78 * Math.pow(d, 1.3) + (r(d * 7, 3) - 0.5) * 0.34 * Math.sin(Math.PI * d) + (r(d * 19, 8) - 0.5) * 0.1 * Math.sin(Math.PI * d));
+    o += `${s ? "L" : "M"}${_(d * n)} ${_(Math.max(2, Math.min(t - 2, c)))}`;
   }
   return o;
 }
@@ -708,8 +710,8 @@ function q(a, n, t, i = 70) {
   const r = W(a);
   let o = `M0 ${t}`;
   for (let s = 0; s <= i; s++) {
-    const c = s / i, d = r(c * 5, 2) * 0.7 + r(c * 17, 5) * 0.3;
-    o += `L${_(c * n)} ${_(t * (1 - d))}`;
+    const d = s / i, c = r(d * 5, 2) * 0.7 + r(d * 17, 5) * 0.3;
+    o += `L${_(d * n)} ${_(t * (1 - c))}`;
   }
   return `${o}L${n} ${t}Z`;
 }
@@ -721,13 +723,13 @@ function ue(a, n, t, i, r) {
       f.push([n + g * r * (w + z * 1.2), t + (i - t) * Math.pow(w, 1.1) + (o() - 0.5) * 14 * (u === 9 ? 0 : 1)]);
     }
     return f;
-  }, c = s(-1), d = s(1), h = [], m = 8;
+  }, d = s(-1), c = s(1), h = [], m = 8;
   let v = n;
   for (let g = 1; g <= m; g++) {
     const f = g / m;
     v += (o() - 0.32) * r * 0.16, h.push([v, t + (i - t) * f]);
   }
-  const b = (g) => g.map((f, T) => `${T ? "L" : "M"}${_(f[0])} ${_(f[1])}`).join(""), M = [...c.slice().reverse(), [n, t], ...d], A = [[n, t], ...d, ...h.slice().reverse()];
+  const b = (g) => g.map((f, T) => `${T ? "L" : "M"}${_(f[0])} ${_(f[1])}`).join(""), M = [...d.slice().reverse(), [n, t], ...c], A = [[n, t], ...c, ...h.slice().reverse()];
   return { lit: `${b(M)}Z`, shade: `${b(A)}Z` };
 }
 function ge({ site: a, locale: n }) {
@@ -744,8 +746,8 @@ function ge({ site: a, locale: n }) {
 }
 const fe = 'addEventListener("pagereveal",function(e){var n=window.navigation,f=n&&n.activation&&n.activation.from;if(!e.viewTransition||!f||!f.url)return;var p=new URL(f.url).pathname,a=document.querySelectorAll(".lx-way__art");for(var i=0;i<a.length;i++)if(a[i].pathname===p){var t=a[i].parentNode.querySelector("h3");a[i].style.viewTransitionName="lx-art";if(t)t.style.viewTransitionName="lx-title";e.viewTransition.finished.finally(function(){a[i].style.viewTransitionName="";if(t)t.style.viewTransitionName=""});break}})';
 function ve({ site: a, pageTitle: n, pageDescription: t, ogImage: i, currentPath: r, currentLocale: o, children: s }) {
-  const c = o || a.settings.language || "en", d = a.settings.title || "", h = n ? n.includes(d) ? n : `${n} — ${d}` : d, m = a.settings.baseUrl && r ? ne(a.settings.baseUrl, r) : void 0;
-  return /* @__PURE__ */ l("html", { lang: c, children: [
+  const d = o || a.settings.language || "en", c = a.settings.title || "", h = n ? n.includes(c) ? n : `${n} — ${c}` : c, m = a.settings.baseUrl && r ? ne(a.settings.baseUrl, r) : void 0;
+  return /* @__PURE__ */ l("html", { lang: d, children: [
     /* @__PURE__ */ l("head", { children: [
       /* @__PURE__ */ e("meta", { charSet: "utf-8" }),
       /* @__PURE__ */ e("meta", { name: "viewport", content: "width=device-width, initial-scale=1" }),
@@ -764,10 +766,10 @@ function ve({ site: a, pageTitle: n, pageDescription: t, ogImage: i, currentPath
       /* @__PURE__ */ e("meta", { name: "x-cms-head-extra" })
     ] }),
     /* @__PURE__ */ l("body", { className: "lx", children: [
-      /* @__PURE__ */ e(xe, { site: a, currentPath: r, locale: c }),
+      /* @__PURE__ */ e(xe, { site: a, currentPath: r, locale: d }),
       /* @__PURE__ */ e("main", { children: s }),
       /* @__PURE__ */ e("span", { id: "lx-end" }),
-      /* @__PURE__ */ e(ge, { site: a, locale: c }),
+      /* @__PURE__ */ e(ge, { site: a, locale: d }),
       /* @__PURE__ */ e("script", { type: "application/x-cms-body-end" })
     ] })
   ] });
@@ -828,8 +830,8 @@ function H({ seed: a, width: n = 480, height: t = 300, cols: i = 44, className: 
 function D({ posts: a, site: n }) {
   const t = N(n);
   return a.length === 0 ? /* @__PURE__ */ e("p", { className: "lx-empty", children: t("empty") }) : /* @__PURE__ */ e("div", { className: "lx-trail", "data-lx-trail": !0, children: a.map((i, r) => {
-    var c;
-    const o = we((c = i.category) == null ? void 0 : c.url), s = R(i.hero, r === 0 ? "large" : "medium");
+    var d;
+    const o = we((d = i.category) == null ? void 0 : d.url), s = R(i.hero, r === 0 ? "large" : "medium");
     return /* @__PURE__ */ l("article", { className: `lx-way${r === 0 ? " lx-way--first" : ""}`, "data-rubric": o, children: [
       /* @__PURE__ */ e("span", { className: "lx-way__pin", "aria-hidden": "true" }),
       /* @__PURE__ */ e("a", { className: "lx-way__art", href: "/" + i.url, tabIndex: -1, "aria-hidden": "true", children: s ? /* @__PURE__ */ e("img", { src: s, alt: "", loading: "lazy" }) : /* @__PURE__ */ e(H, { seed: i.slug, cols: r === 0 ? 64 : 44 }) }),
@@ -874,7 +876,7 @@ function ke({ site: a, posts: n, staticPage: t, archivesLink: i }) {
 }
 function Ne({ site: a, post: n, bodyHtml: t, author: i, hero: r, primaryTerm: o, tags: s }) {
   var g;
-  const c = N(a), d = R(r, "large"), h = n.type === "post", m = (g = j.find((f) => f.slug === (o == null ? void 0 : o.slug))) == null ? void 0 : g.slug, v = new Date(ae(n));
+  const d = N(a), c = R(r, "large"), h = n.type === "post", m = (g = j.find((f) => f.slug === (o == null ? void 0 : o.slug))) == null ? void 0 : g.slug, v = new Date(ae(n));
   let b = "";
   try {
     b = new Intl.DateTimeFormat(a.settings.language || "fr", { dateStyle: "long" }).format(v);
@@ -895,21 +897,21 @@ function Ne({ site: a, post: n, bodyHtml: t, author: i, hero: r, primaryTerm: o,
           /* @__PURE__ */ l("span", { children: [
             A,
             " ",
-            c("minutes")
+            d("minutes")
           ] })
         ] })
       ] }),
       /* @__PURE__ */ e("svg", { className: "lx-band__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: q(k(n.slug), 1600, 90) }) })
     ] }),
-    d && /* @__PURE__ */ l("figure", { className: "lx-figure", children: [
-      /* @__PURE__ */ e("img", { src: d, alt: (r == null ? void 0 : r.alt) ?? "" }),
+    c && /* @__PURE__ */ l("figure", { className: "lx-figure", children: [
+      /* @__PURE__ */ e("img", { src: c, alt: (r == null ? void 0 : r.alt) ?? "" }),
       (r == null ? void 0 : r.caption) && /* @__PURE__ */ e("figcaption", { children: r.caption })
     ] }),
     /* @__PURE__ */ e("div", { className: "lx-prose", "data-lx-prose": !0, dangerouslySetInnerHTML: { __html: t } }),
-    h && s.length > 0 && /* @__PURE__ */ e("ul", { className: "lx-tags", "aria-label": c("tags"), children: s.map((f) => /* @__PURE__ */ e("li", { children: f.name }, f.id)) }),
+    h && s.length > 0 && /* @__PURE__ */ e("ul", { className: "lx-tags", "aria-label": d("tags"), children: s.map((f) => /* @__PURE__ */ e("li", { children: f.name }, f.id)) }),
     h && /* @__PURE__ */ l(B, { children: [
       /* @__PURE__ */ l("section", { className: "lx-related", "data-lx-related": !0, "data-current": n.id, "data-term": n.primaryTermId, hidden: !0, children: [
-        /* @__PURE__ */ e("h2", { children: c("continue") }),
+        /* @__PURE__ */ e("h2", { children: d("continue") }),
         /* @__PURE__ */ e("div", { className: "lx-related__list" })
       ] }),
       /* @__PURE__ */ l("div", { className: "lx-climb", "data-lx-climb": !0, hidden: !0, "aria-hidden": "true", children: [
@@ -923,8 +925,8 @@ function Ne({ site: a, post: n, bodyHtml: t, author: i, hero: r, primaryTerm: o,
   ] });
 }
 function Me({ site: a, term: n, posts: t, archivesLink: i }) {
-  var c;
-  const r = N(a), o = (c = j.find((d) => d.slug === n.slug)) == null ? void 0 : c.slug, s = n.description || (o ? r(`r.${o}`) : "");
+  var d;
+  const r = N(a), o = (d = j.find((c) => c.slug === n.slug)) == null ? void 0 : d.slug, s = n.description || (o ? r(`r.${o}`) : "");
   return /* @__PURE__ */ l(B, { children: [
     /* @__PURE__ */ l("header", { className: "lx-band lx-band--category", "data-rubric": o, children: [
       /* @__PURE__ */ e(H, { seed: n.slug, width: 1600, height: 620, cols: 110, className: "lx-band__art" }),
@@ -975,22 +977,22 @@ function Se({ site: a, message: n }) {
   ] });
 }
 function Le({ config: a, save: n }) {
-  const { t } = ce("theme-leaux-altitude"), [i, r] = Y(F(a)), [o, s] = Y(!1);
+  const { t } = de("theme-leaux-altitude"), [i, r] = Y(F(a)), [o, s] = Y(!1);
   se(() => r(F(a)), [a]);
-  async function c(d) {
-    d.preventDefault(), s(!0);
+  async function d(c) {
+    c.preventDefault(), s(!0);
     try {
       await n({ ...a, hero: i }), oe.success(t("settings.saved"));
     } finally {
       s(!1);
     }
   }
-  return /* @__PURE__ */ l("form", { onSubmit: c, "data-form-type": "other", className: "max-w-xl space-y-4", children: [
+  return /* @__PURE__ */ l("form", { onSubmit: d, "data-form-type": "other", className: "max-w-xl space-y-4", children: [
     /* @__PURE__ */ e("h1", { className: "text-xl font-semibold", children: t("settings.title") }),
-    ["firstLine", "secondLine", "tagline"].map((d) => /* @__PURE__ */ l("label", { className: "block space-y-1", children: [
-      /* @__PURE__ */ e("span", { className: "label", children: t(`settings.${d}`) }),
-      /* @__PURE__ */ e("input", { className: "input w-full", value: i[d], onChange: (h) => r({ ...i, [d]: h.target.value }) })
-    ] }, d)),
+    ["firstLine", "secondLine", "tagline"].map((c) => /* @__PURE__ */ l("label", { className: "block space-y-1", children: [
+      /* @__PURE__ */ e("span", { className: "label", children: t(`settings.${c}`) }),
+      /* @__PURE__ */ e("input", { className: "input w-full", value: i[c], onChange: (h) => r({ ...i, [c]: h.target.value }) })
+    ] }, c)),
     /* @__PURE__ */ e("button", { type: "submit", className: "btn btn-primary", disabled: o, children: /* @__PURE__ */ e("span", { children: t("settings.save") }) })
   ] });
 }
@@ -1046,11 +1048,11 @@ const Ae = {
 }, qe = {
   id: "leaux-altitude",
   name: "Leaux Altitude",
-  version: "1.0.7",
+  version: "1.0.8",
   description: "Dedicated theme for leaux.ovh: generative topographic art, one trail per section.",
   readme: pe,
   scssEntry: "theme.css",
-  cssText: de,
+  cssText: ce,
   // Uploaded as theme-assets/leaux-altitude-menu.js; fills the menus from
   // data/menu.json so menu edits don't require regenerating every page.
   jsText: he,
