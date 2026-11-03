@@ -270,7 +270,7 @@
     }).catch(function () {});
   }
 
-  /* Section pages: the map drifts slower than the page and the title sinks
+  /* Section pages and photo headers: the map (or photo) drifts slower than the page and the title sinks
      behind the ridge edge, as if they sat at different depths. */
   function parallax(band) {
     var art = band.querySelector(".lx-band__art");
@@ -325,7 +325,7 @@
     if (trailHost) try { trail(trailHost); } catch (e) {}
     var climbHost = document.querySelector("[data-lx-climb]");
     if (climbHost) try { climb(climbHost); } catch (e) {}
-    var band = document.querySelector(".lx-band--category");
+    var band = document.querySelector(".lx-band--category, .lx-band--photo");
     if (band && !calm) try { parallax(band); } catch (e) {}
     var relatedHost = document.querySelector("[data-lx-related]");
     if (relatedHost) related(relatedHost);
