@@ -603,7 +603,7 @@ main:has(.lx-lost) + .lx-footer .lx-footer__ridge { display: none; }
       var y = Math.max(0, window.scrollY || 0);
       var delta = y - last;
       var pinned = (nav && nav.classList.contains("is-open")) || header.querySelector(":focus-visible");
-      if (pinned || y < Math.max(320, innerHeight * .4)) {
+      if (pinned || y < 100) {
         set(false);
         last = y;
         return;
@@ -762,7 +762,7 @@ function Q(a, n, t, i = 90) {
   }
   return o;
 }
-function H(a, n, t, i = 70) {
+function j(a, n, t, i = 70) {
   const r = W(a);
   let o = `M0 ${t}`;
   for (let s = 0; s <= i; s++) {
@@ -791,7 +791,7 @@ function ue(a, n, t, i, r) {
 function ge({ site: a, locale: n }) {
   const t = z(a, n);
   return /* @__PURE__ */ l("footer", { className: "lx-footer", children: [
-    /* @__PURE__ */ e("svg", { className: "lx-footer__ridge", viewBox: "0 0 1600 120", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: H(N("footer"), 1600, 120) }) }),
+    /* @__PURE__ */ e("svg", { className: "lx-footer__ridge", viewBox: "0 0 1600 120", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: j(N("footer"), 1600, 120) }) }),
     /* @__PURE__ */ l("div", { className: "lx-footer__body", children: [
       /* @__PURE__ */ e("p", { className: "lx-footer__name", children: a.settings.title }),
       /* @__PURE__ */ e("nav", { "aria-label": t("footerNav"), "data-cms-menu": "footer", children: /* @__PURE__ */ e(I, { items: a.resolvedMenus.footer }) }),
@@ -876,7 +876,7 @@ function ye({ site: a }) {
     ] })
   ] });
 }
-function j({ seed: a, width: n = 480, height: t = 300, cols: i = 44, className: r }) {
+function H({ seed: a, width: n = 480, height: t = 300, cols: i = 44, className: r }) {
   const o = me(N(a), n, t, i);
   return /* @__PURE__ */ l("svg", { className: `lx-topo ${r ?? ""}`, viewBox: `0 0 ${n} ${t}`, preserveAspectRatio: "xMidYMid slice", "aria-hidden": "true", children: [
     /* @__PURE__ */ e("path", { className: "lx-topo__minor", d: o.minor }),
@@ -890,7 +890,7 @@ function D({ posts: a, site: n }) {
     const o = we((d = i.category) == null ? void 0 : d.url), s = R(i.hero, r === 0 ? "large" : "medium");
     return /* @__PURE__ */ l("article", { className: `lx-way${r === 0 ? " lx-way--first" : ""}`, "data-rubric": o, children: [
       /* @__PURE__ */ e("span", { className: "lx-way__pin", "aria-hidden": "true" }),
-      /* @__PURE__ */ e("a", { className: "lx-way__art", href: "/" + i.url, tabIndex: -1, "aria-hidden": "true", children: s ? /* @__PURE__ */ e("img", { src: s, alt: "", loading: "lazy" }) : /* @__PURE__ */ e(j, { seed: i.slug, cols: r === 0 ? 64 : 44 }) }),
+      /* @__PURE__ */ e("a", { className: "lx-way__art", href: "/" + i.url, tabIndex: -1, "aria-hidden": "true", children: s ? /* @__PURE__ */ e("img", { src: s, alt: "", loading: "lazy" }) : /* @__PURE__ */ e(H, { seed: i.slug, cols: r === 0 ? 64 : 44 }) }),
       /* @__PURE__ */ l("div", { className: "lx-way__text", children: [
         /* @__PURE__ */ l("p", { className: "lx-way__meta", children: [
           i.dateLabel && /* @__PURE__ */ e("span", { children: i.dateLabel }),
@@ -914,7 +914,7 @@ function _e({ site: a }) {
         /* @__PURE__ */ e("span", { children: n.secondLine })
       ] })
     ] }),
-    /* @__PURE__ */ e("svg", { className: "lx-hero__static", viewBox: "0 0 1600 300", preserveAspectRatio: "none", "aria-hidden": "true", children: [0, 1, 2].map((t) => /* @__PURE__ */ e("path", { d: H(N("hero" + t), 1600, 300 - t * 70), transform: `translate(0 ${t * 70})` }, t)) }),
+    /* @__PURE__ */ e("svg", { className: "lx-hero__static", viewBox: "0 0 1600 300", preserveAspectRatio: "none", "aria-hidden": "true", children: [0, 1, 2].map((t) => /* @__PURE__ */ e("path", { d: j(N("hero" + t), 1600, 300 - t * 70), transform: `translate(0 ${t * 70})` }, t)) }),
     /* @__PURE__ */ e("canvas", { className: "lx-hero__canvas lx-hero__canvas--front", "data-lx-front": !0, "aria-hidden": "true" })
   ] });
 }
@@ -942,7 +942,7 @@ function Ne({ site: a, post: n, bodyHtml: t, author: i, hero: r, primaryTerm: o,
   const k = !!(h && c && ((M = n.fields) == null ? void 0 : M["header-photo"]) === !0), T = n.contentMarkdown.trim().split(/\s+/).length, f = Math.max(1, Math.round(T / 220));
   return /* @__PURE__ */ l("article", { "data-rubric": u, className: `lx-article${h ? "" : " lx-article--page"}${n.slug === "qui-suis-je" ? " lx-article--about" : ""}`, children: [
     /* @__PURE__ */ l("header", { className: `lx-band lx-band--article${k ? " lx-band--photo" : ""}`, children: [
-      k ? /* @__PURE__ */ e("div", { className: "lx-band__art lx-band__photo", "aria-hidden": "true", children: /* @__PURE__ */ e("img", { src: c, alt: "" }) }) : /* @__PURE__ */ e(j, { seed: n.slug, width: 1600, height: 720, cols: 110, className: "lx-band__art" }),
+      k ? /* @__PURE__ */ e("div", { className: "lx-band__art lx-band__photo", "aria-hidden": "true", children: /* @__PURE__ */ e("img", { src: c, alt: "" }) }) : /* @__PURE__ */ e(H, { seed: n.slug, width: 1600, height: 720, cols: 110, className: "lx-band__art" }),
       /* @__PURE__ */ l("div", { className: "lx-band__inner", children: [
         h && o && /* @__PURE__ */ e("a", { className: "lx-band__rubric", href: `/${ie(o)}`, children: o.name }),
         /* @__PURE__ */ e("h1", { children: n.title }),
@@ -957,7 +957,7 @@ function Ne({ site: a, post: n, bodyHtml: t, author: i, hero: r, primaryTerm: o,
           ] })
         ] })
       ] }),
-      /* @__PURE__ */ e("svg", { className: "lx-band__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: H(N(n.slug), 1600, 90) }) })
+      /* @__PURE__ */ e("svg", { className: "lx-band__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: j(N(n.slug), 1600, 90) }) })
     ] }),
     c && !k && /* @__PURE__ */ l("figure", { className: "lx-figure", children: [
       /* @__PURE__ */ e("img", { src: c, alt: (r == null ? void 0 : r.alt) ?? "" }),
@@ -985,7 +985,7 @@ function Me({ site: a, term: n, posts: t, archivesLink: i }) {
   const r = z(a), o = (d = C.find((c) => c.slug === n.slug)) == null ? void 0 : d.slug, s = n.description || (o ? r(`r.${o}`) : "");
   return /* @__PURE__ */ l(B, { children: [
     /* @__PURE__ */ l("header", { className: "lx-band lx-band--category", "data-rubric": o, children: [
-      /* @__PURE__ */ e(j, { seed: n.slug, width: 1600, height: 620, cols: 110, className: "lx-band__art" }),
+      /* @__PURE__ */ e(H, { seed: n.slug, width: 1600, height: 620, cols: 110, className: "lx-band__art" }),
       /* @__PURE__ */ l("div", { className: "lx-band__inner", children: [
         /* @__PURE__ */ e("h1", { children: n.name }),
         s && /* @__PURE__ */ e("p", { className: "lx-band__lead", children: s }),
@@ -995,7 +995,7 @@ function Me({ site: a, term: n, posts: t, archivesLink: i }) {
           r(t.length > 1 ? "articles" : "article")
         ] })
       ] }),
-      /* @__PURE__ */ e("svg", { className: "lx-band__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: H(N(n.slug), 1600, 90) }) })
+      /* @__PURE__ */ e("svg", { className: "lx-band__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: j(N(n.slug), 1600, 90) }) })
     ] }),
     /* @__PURE__ */ l("section", { className: "lx-section lx-section--flush", "data-rubric": o, children: [
       /* @__PURE__ */ e(D, { posts: t, site: a }),
@@ -1007,7 +1007,7 @@ function ze({ site: a, author: n, posts: t }) {
   const i = R(n.avatar, "small");
   return /* @__PURE__ */ l(B, { children: [
     /* @__PURE__ */ l("header", { className: "lx-band lx-band--author", children: [
-      /* @__PURE__ */ e(j, { seed: n.displayName, width: 1600, height: 620, cols: 110, className: "lx-band__art" }),
+      /* @__PURE__ */ e(H, { seed: n.displayName, width: 1600, height: 620, cols: 110, className: "lx-band__art" }),
       /* @__PURE__ */ l("div", { className: "lx-band__inner", children: [
         i && /* @__PURE__ */ e("img", { className: "lx-avatar", src: i, alt: "", width: 120, height: 120 }),
         /* @__PURE__ */ e("h1", { children: n.displayName }),
@@ -1015,7 +1015,7 @@ function ze({ site: a, author: n, posts: t }) {
         n.bio && /* @__PURE__ */ e("p", { className: "lx-band__bio", children: n.bio }),
         n.socials && n.socials.length > 0 && /* @__PURE__ */ e("ul", { className: "lx-socials", children: n.socials.map((r) => /* @__PURE__ */ e("li", { children: /* @__PURE__ */ e("a", { href: r.url, rel: "me noopener", "aria-label": le(r.network), children: /* @__PURE__ */ e(re, { network: r.network }) }) }, r.network)) })
       ] }),
-      /* @__PURE__ */ e("svg", { className: "lx-band__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: H(N(n.id), 1600, 90) }) })
+      /* @__PURE__ */ e("svg", { className: "lx-band__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: j(N(n.id), 1600, 90) }) })
     ] }),
     /* @__PURE__ */ e("section", { className: "lx-section lx-section--flush", children: /* @__PURE__ */ e(D, { posts: t, site: a }) })
   ] });
@@ -1023,7 +1023,7 @@ function ze({ site: a, author: n, posts: t }) {
 function Se({ site: a, message: n }) {
   const t = z(a);
   return /* @__PURE__ */ l("section", { className: "lx-lost", children: [
-    /* @__PURE__ */ e(j, { seed: "hors-sentier", width: 1600, height: 900, cols: 120, className: "lx-lost__art" }),
+    /* @__PURE__ */ e(H, { seed: "hors-sentier", width: 1600, height: 900, cols: 120, className: "lx-lost__art" }),
     /* @__PURE__ */ l("div", { className: "lx-lost__copy", children: [
       /* @__PURE__ */ e("p", { className: "lx-lost__code", children: "404" }),
       /* @__PURE__ */ e("h1", { children: t("notFoundTitle") }),
@@ -1101,10 +1101,10 @@ const Ae = {
     },
     settings: { navLabel: "Leaux Altitude", title: "Réglages Leaux Altitude", firstLine: "Titre, première ligne", secondLine: "Titre, deuxième ligne", tagline: "Accroche", save: "Enregistrer", saved: "Enregistré. Lancez Régénérer → Accueil pour publier." }
   }
-}, He = {
+}, je = {
   id: "leaux-altitude",
   name: "Leaux Altitude",
-  version: "1.1.1",
+  version: "1.1.2",
   description: "Dedicated theme for leaux.ovh: generative topographic art, one trail per section.",
   readme: pe,
   scssEntry: "theme.css",
@@ -1138,5 +1138,5 @@ const Ae = {
   i18n: Ae
 };
 export {
-  He as default
+  je as default
 };
