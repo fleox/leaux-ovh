@@ -314,7 +314,7 @@
       var y = Math.max(0, window.scrollY || 0);
       var delta = y - last;
       var pinned = (nav && nav.classList.contains("is-open")) || header.querySelector(":focus-visible");
-      if (pinned || y < Math.max(320, innerHeight * .4)) {
+      if (pinned || y < 100) {
         set(false);
         last = y;
         return;
