@@ -48,6 +48,9 @@ body.lx { margin: 0; background: var(--lx-bg); color: var(--lx-text); font: 400 
 
 /* Header */
 .lx-header { position: sticky; top: 0; z-index: 30; display: flex; align-items: center; gap: 24px; min-height: 68px; padding: 0 var(--lx-gutter); background: var(--lx-night); color: var(--lx-glacier); }
+.lx-header { transition: transform .35s cubic-bezier(.2, .7, .2, 1); }
+.lx-header.is-hidden { transform: translateY(-100%); }
+@media (prefers-reduced-motion: reduce) { .lx-header { transition: none; } }
 .lx-brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 800; font-stretch: 112%; white-space: nowrap; }
 .lx-brand svg { width: 30px; height: 20px; fill: #ff6b3d; }
 .lx-nav { margin-left: auto; }

@@ -297,6 +297,39 @@
     apply();
   }
 
+  /* Header: slides away when reading down, comes back as soon as the
+     reader scrolls up (headroom pattern). Stays put near the top of the
+     page, while the mobile menu is open and while it holds keyboard focus. */
+  function autoHide(header) {
+    var nav = document.getElementById("lx-nav");
+    var last = Math.max(0, window.scrollY || 0);
+    var hidden = false, queued = false;
+    function set(next) {
+      if (next === hidden) return;
+      hidden = next;
+      header.classList.toggle("is-hidden", next);
+    }
+    function apply() {
+      queued = false;
+      var y = Math.max(0, window.scrollY || 0);
+      var delta = y - last;
+      var pinned = (nav && nav.classList.contains("is-open")) || header.querySelector(":focus-visible");
+      if (pinned || y < Math.max(320, innerHeight * .4)) {
+        set(false);
+        last = y;
+        return;
+      }
+      if (delta > 12) { set(true); last = y; }
+      else if (delta < -8) { set(false); last = y; }
+    }
+    window.addEventListener("scroll", function () {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(apply);
+    }, { passive: true });
+    header.addEventListener("focusin", function () { set(false); });
+  }
+
   /* Page transition: the clicked post's map grows into the article header.
      The article side is named in the CSS, the head script names the card
      when coming back. Here we name the card we are leaving from. */
@@ -318,6 +351,8 @@
   function start() {
     wireTransition();
     wireBurger();
+    var header = document.querySelector(".lx-header");
+    if (header) try { autoHide(header); } catch (e) {}
     data("/data/menu.json").then(fill).catch(function () {});
     var hero = document.querySelector("[data-lx-hero]");
     if (hero) try { ridgelines(hero); } catch (e) {}
