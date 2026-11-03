@@ -1,6 +1,6 @@
 import { jsxs as l, jsx as e, Fragment as B } from "react/jsx-runtime";
 import { i18n as ee, pickPublicLocale as te, canonicalUrl as ne, pickFormat as R, postSortMillis as ae, buildTermUrl as ie, SocialIcon as re, socialLabel as le, toast as oe } from "@agent-cms/runtime";
-import { useState as Y, useEffect as se } from "react";
+import { useState as K, useEffect as se } from "react";
 import { useTranslation as de } from "react-i18next";
 const ce = `@import url("https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&display=swap");
 
@@ -52,6 +52,9 @@ body.lx { margin: 0; background: var(--lx-bg); color: var(--lx-text); font: 400 
 
 /* Header */
 .lx-header { position: sticky; top: 0; z-index: 30; display: flex; align-items: center; gap: 24px; min-height: 68px; padding: 0 var(--lx-gutter); background: var(--lx-night); color: var(--lx-glacier); }
+.lx-header { transition: transform .35s cubic-bezier(.2, .7, .2, 1); }
+.lx-header.is-hidden { transform: translateY(-100%); }
+@media (prefers-reduced-motion: reduce) { .lx-header { transition: none; } }
 .lx-brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 800; font-stretch: 112%; white-space: nowrap; }
 .lx-brand svg { width: 30px; height: 20px; fill: #ff6b3d; }
 .lx-nav { margin-left: auto; }
@@ -583,6 +586,39 @@ main:has(.lx-lost) + .lx-footer .lx-footer__ridge { display: none; }
     apply();
   }
 
+  /* Header: slides away when reading down, comes back as soon as the
+     reader scrolls up (headroom pattern). Stays put near the top of the
+     page, while the mobile menu is open and while it holds keyboard focus. */
+  function autoHide(header) {
+    var nav = document.getElementById("lx-nav");
+    var last = Math.max(0, window.scrollY || 0);
+    var hidden = false, queued = false;
+    function set(next) {
+      if (next === hidden) return;
+      hidden = next;
+      header.classList.toggle("is-hidden", next);
+    }
+    function apply() {
+      queued = false;
+      var y = Math.max(0, window.scrollY || 0);
+      var delta = y - last;
+      var pinned = (nav && nav.classList.contains("is-open")) || header.querySelector(":focus-visible");
+      if (pinned || y < Math.max(320, innerHeight * .4)) {
+        set(false);
+        last = y;
+        return;
+      }
+      if (delta > 12) { set(true); last = y; }
+      else if (delta < -8) { set(false); last = y; }
+    }
+    window.addEventListener("scroll", function () {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(apply);
+    }, { passive: true });
+    header.addEventListener("focusin", function () { set(false); });
+  }
+
   /* Page transition: the clicked post's map grows into the article header.
      The article side is named in the CSS, the head script names the card
      when coming back. Here we name the card we are leaving from. */
@@ -604,6 +640,8 @@ main:has(.lx-lost) + .lx-footer .lx-footer__ridge { display: none; }
   function start() {
     wireTransition();
     wireBurger();
+    var header = document.querySelector(".lx-header");
+    if (header) try { autoHide(header); } catch (e) {}
     data("/data/menu.json").then(fill).catch(function () {});
     var hero = document.querySelector("[data-lx-hero]");
     if (hero) try { ridgelines(hero); } catch (e) {}
@@ -683,7 +721,7 @@ function W(a) {
     return b * (1 - g) + k * g;
   };
 }
-const y = (a) => Math.round(a * 10) / 10;
+const _ = (a) => Math.round(a * 10) / 10;
 function me(a, n, t, i, r = 14) {
   const o = W(a), s = P(a ^ 2654435769), d = Math.round(i * t / n), c = [0, 1, 2].map(() => ({ x: 0.15 + s() * 0.7, y: 0.15 + s() * 0.7, s: 0.03 + s() * 0.07, a: 0.5 + s() * 0.7 })), h = n / t, u = [];
   let g = 1 / 0, b = -1 / 0;
@@ -692,25 +730,25 @@ function me(a, n, t, i, r = 14) {
       const S = w / i, m = p / d;
       let x = o(S * 3 * h, m * 3) * 0.6 + o(S * 7 * h, m * 7) * 0.18;
       for (const L of c) {
-        const E = (S - L.x) * h, C = m - L.y;
-        x += L.a * Math.exp(-(E * E + C * C) / (2 * L.s));
+        const E = (S - L.x) * h, q = m - L.y;
+        x += L.a * Math.exp(-(E * E + q * q) / (2 * L.s));
       }
       u.push(x), x < g && (g = x), x > b && (b = x);
     }
-  const k = n / i, A = t / d, f = (p, w) => u[w * (i + 1) + p], v = [], M = [];
+  const k = n / i, T = t / d, f = (p, w) => u[w * (i + 1) + p], v = [], M = [];
   for (let p = 1; p < r; p++) {
     const w = g + (b - g) * p / r, S = p % 4 === 0 ? M : v;
     for (let m = 0; m < d; m++)
       for (let x = 0; x < i; x++) {
-        const L = f(x, m), E = f(x + 1, m), C = f(x + 1, m + 1), U = f(x, m + 1), T = [], $ = (_, O, G, Z, X, J) => {
-          if (_ < w != O < w) {
-            const K = (w - _) / (O - _);
-            T.push([(G + (X - G) * K) * k, (Z + (J - Z) * K) * A]);
+        const L = f(x, m), E = f(x + 1, m), q = f(x + 1, m + 1), U = f(x, m + 1), A = [], $ = (y, O, Y, G, X, J) => {
+          if (y < w != O < w) {
+            const Z = (w - y) / (O - y);
+            A.push([(Y + (X - Y) * Z) * k, (G + (J - G) * Z) * T]);
           }
         };
-        $(L, E, x, m, x + 1, m), $(E, C, x + 1, m, x + 1, m + 1), $(U, C, x, m + 1, x + 1, m + 1), $(L, U, x, m, x, m + 1);
-        for (let _ = 0; _ + 1 < T.length; _ += 2)
-          S.push(`M${y(T[_][0])} ${y(T[_][1])}L${y(T[_ + 1][0])} ${y(T[_ + 1][1])}`);
+        $(L, E, x, m, x + 1, m), $(E, q, x + 1, m, x + 1, m + 1), $(U, q, x, m + 1, x + 1, m + 1), $(L, U, x, m, x, m + 1);
+        for (let y = 0; y + 1 < A.length; y += 2)
+          S.push(`M${_(A[y][0])} ${_(A[y][1])}L${_(A[y + 1][0])} ${_(A[y + 1][1])}`);
       }
   }
   return { minor: v.join(""), major: M.join("") };
@@ -720,16 +758,16 @@ function Q(a, n, t, i = 90) {
   let o = "";
   for (let s = 0; s <= i; s++) {
     const d = s / i, c = t * (0.92 - 0.78 * Math.pow(d, 1.3) + (r(d * 7, 3) - 0.5) * 0.34 * Math.sin(Math.PI * d) + (r(d * 19, 8) - 0.5) * 0.1 * Math.sin(Math.PI * d));
-    o += `${s ? "L" : "M"}${y(d * n)} ${y(Math.max(2, Math.min(t - 2, c)))}`;
+    o += `${s ? "L" : "M"}${_(d * n)} ${_(Math.max(2, Math.min(t - 2, c)))}`;
   }
   return o;
 }
-function q(a, n, t, i = 70) {
+function H(a, n, t, i = 70) {
   const r = W(a);
   let o = `M0 ${t}`;
   for (let s = 0; s <= i; s++) {
     const d = s / i, c = r(d * 5, 2) * 0.7 + r(d * 17, 5) * 0.3;
-    o += `L${y(d * n)} ${y(t * (1 - c))}`;
+    o += `L${_(d * n)} ${_(t * (1 - c))}`;
   }
   return `${o}L${n} ${t}Z`;
 }
@@ -747,13 +785,13 @@ function ue(a, n, t, i, r) {
     const v = f / u;
     g += (o() - 0.32) * r * 0.16, h.push([g, t + (i - t) * v]);
   }
-  const b = (f) => f.map((v, M) => `${M ? "L" : "M"}${y(v[0])} ${y(v[1])}`).join(""), k = [...d.slice().reverse(), [n, t], ...c], A = [[n, t], ...c, ...h.slice().reverse()];
-  return { lit: `${b(k)}Z`, shade: `${b(A)}Z` };
+  const b = (f) => f.map((v, M) => `${M ? "L" : "M"}${_(v[0])} ${_(v[1])}`).join(""), k = [...d.slice().reverse(), [n, t], ...c], T = [[n, t], ...c, ...h.slice().reverse()];
+  return { lit: `${b(k)}Z`, shade: `${b(T)}Z` };
 }
 function ge({ site: a, locale: n }) {
   const t = z(a, n);
   return /* @__PURE__ */ l("footer", { className: "lx-footer", children: [
-    /* @__PURE__ */ e("svg", { className: "lx-footer__ridge", viewBox: "0 0 1600 120", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: q(N("footer"), 1600, 120) }) }),
+    /* @__PURE__ */ e("svg", { className: "lx-footer__ridge", viewBox: "0 0 1600 120", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: H(N("footer"), 1600, 120) }) }),
     /* @__PURE__ */ l("div", { className: "lx-footer__body", children: [
       /* @__PURE__ */ e("p", { className: "lx-footer__name", children: a.settings.title }),
       /* @__PURE__ */ e("nav", { "aria-label": t("footerNav"), "data-cms-menu": "footer", children: /* @__PURE__ */ e(I, { items: a.resolvedMenus.footer }) }),
@@ -806,7 +844,7 @@ const V = {
 function F(a) {
   return { ...V.hero, ...(a == null ? void 0 : a.hero) ?? {} };
 }
-const j = [
+const C = [
   { slug: "edito", name: "Édito", x: 90, height: 0.62 },
   { slug: "news-tech-ia", name: "News tech IA", x: 68, height: 0.8 },
   { slug: "mes-projets", name: "Mes projets", x: 29, height: 0.74 },
@@ -817,28 +855,28 @@ function we(a) {
   var t;
   if (!a) return;
   const n = a.replace(/^\/+/, "");
-  return (t = j.find((i) => n === i.slug || n.startsWith(i.slug + "/"))) == null ? void 0 : t.slug;
+  return (t = C.find((i) => n === i.slug || n.startsWith(i.slug + "/"))) == null ? void 0 : t.slug;
 }
-function _e({ site: a }) {
+function ye({ site: a }) {
   const n = z(a), t = 1600, i = 620;
   return /* @__PURE__ */ l("section", { className: "lx-pano", "aria-labelledby": "lx-pano-title", children: [
     /* @__PURE__ */ e("h2", { id: "lx-pano-title", className: "lx-pano__title", children: n("sections") }),
     /* @__PURE__ */ l("div", { className: "lx-pano__stage", children: [
-      /* @__PURE__ */ e("svg", { viewBox: `0 0 ${t} ${i}`, preserveAspectRatio: "xMidYMax slice", "aria-hidden": "true", children: j.map((r) => {
+      /* @__PURE__ */ e("svg", { viewBox: `0 0 ${t} ${i}`, preserveAspectRatio: "xMidYMax slice", "aria-hidden": "true", children: C.map((r) => {
         const o = ue(N(r.slug), r.x / 100 * t, i * (1 - r.height * 0.86), i + 10, 300 + r.height * 170);
         return /* @__PURE__ */ e("a", { href: `/${r.slug}/index.html`, tabIndex: -1, children: /* @__PURE__ */ l("g", { className: "lx-peak", "data-rubric": r.slug, "data-peak": r.slug, children: [
           /* @__PURE__ */ e("path", { className: "lx-peak__lit", d: o.lit }),
           /* @__PURE__ */ e("path", { className: "lx-peak__shade", d: o.shade })
         ] }) }, r.slug);
       }) }),
-      /* @__PURE__ */ e("ul", { className: "lx-pano__labels", children: [...j].sort((r, o) => r.x - o.x).map((r) => /* @__PURE__ */ e("li", { "data-rubric": r.slug, "data-label": r.slug, style: { left: `${r.x}%`, top: `${100 - r.height * 86}%` }, children: /* @__PURE__ */ l("a", { href: `/${r.slug}/index.html`, children: [
+      /* @__PURE__ */ e("ul", { className: "lx-pano__labels", children: [...C].sort((r, o) => r.x - o.x).map((r) => /* @__PURE__ */ e("li", { "data-rubric": r.slug, "data-label": r.slug, style: { left: `${r.x}%`, top: `${100 - r.height * 86}%` }, children: /* @__PURE__ */ l("a", { href: `/${r.slug}/index.html`, children: [
         /* @__PURE__ */ e("strong", { children: r.name }),
         /* @__PURE__ */ e("span", { children: n(`r.${r.slug}`) })
       ] }) }, r.slug)) })
     ] })
   ] });
 }
-function H({ seed: a, width: n = 480, height: t = 300, cols: i = 44, className: r }) {
+function j({ seed: a, width: n = 480, height: t = 300, cols: i = 44, className: r }) {
   const o = me(N(a), n, t, i);
   return /* @__PURE__ */ l("svg", { className: `lx-topo ${r ?? ""}`, viewBox: `0 0 ${n} ${t}`, preserveAspectRatio: "xMidYMid slice", "aria-hidden": "true", children: [
     /* @__PURE__ */ e("path", { className: "lx-topo__minor", d: o.minor }),
@@ -852,7 +890,7 @@ function D({ posts: a, site: n }) {
     const o = we((d = i.category) == null ? void 0 : d.url), s = R(i.hero, r === 0 ? "large" : "medium");
     return /* @__PURE__ */ l("article", { className: `lx-way${r === 0 ? " lx-way--first" : ""}`, "data-rubric": o, children: [
       /* @__PURE__ */ e("span", { className: "lx-way__pin", "aria-hidden": "true" }),
-      /* @__PURE__ */ e("a", { className: "lx-way__art", href: "/" + i.url, tabIndex: -1, "aria-hidden": "true", children: s ? /* @__PURE__ */ e("img", { src: s, alt: "", loading: "lazy" }) : /* @__PURE__ */ e(H, { seed: i.slug, cols: r === 0 ? 64 : 44 }) }),
+      /* @__PURE__ */ e("a", { className: "lx-way__art", href: "/" + i.url, tabIndex: -1, "aria-hidden": "true", children: s ? /* @__PURE__ */ e("img", { src: s, alt: "", loading: "lazy" }) : /* @__PURE__ */ e(j, { seed: i.slug, cols: r === 0 ? 64 : 44 }) }),
       /* @__PURE__ */ l("div", { className: "lx-way__text", children: [
         /* @__PURE__ */ l("p", { className: "lx-way__meta", children: [
           i.dateLabel && /* @__PURE__ */ e("span", { children: i.dateLabel }),
@@ -864,7 +902,7 @@ function D({ posts: a, site: n }) {
     ] }, i.id);
   }) });
 }
-function ye({ site: a }) {
+function _e({ site: a }) {
   const n = F(a.themeConfig);
   return /* @__PURE__ */ l("section", { className: "lx-hero", "data-lx-hero": !0, children: [
     /* @__PURE__ */ e("canvas", { className: "lx-hero__canvas", "data-lx-back": !0, "aria-hidden": "true" }),
@@ -876,15 +914,15 @@ function ye({ site: a }) {
         /* @__PURE__ */ e("span", { children: n.secondLine })
       ] })
     ] }),
-    /* @__PURE__ */ e("svg", { className: "lx-hero__static", viewBox: "0 0 1600 300", preserveAspectRatio: "none", "aria-hidden": "true", children: [0, 1, 2].map((t) => /* @__PURE__ */ e("path", { d: q(N("hero" + t), 1600, 300 - t * 70), transform: `translate(0 ${t * 70})` }, t)) }),
+    /* @__PURE__ */ e("svg", { className: "lx-hero__static", viewBox: "0 0 1600 300", preserveAspectRatio: "none", "aria-hidden": "true", children: [0, 1, 2].map((t) => /* @__PURE__ */ e("path", { d: H(N("hero" + t), 1600, 300 - t * 70), transform: `translate(0 ${t * 70})` }, t)) }),
     /* @__PURE__ */ e("canvas", { className: "lx-hero__canvas lx-hero__canvas--front", "data-lx-front": !0, "aria-hidden": "true" })
   ] });
 }
 function ke({ site: a, posts: n, staticPage: t, archivesLink: i }) {
   const r = z(a);
   return t ? /* @__PURE__ */ e("div", { className: "lx-prose lx-prose--page", dangerouslySetInnerHTML: { __html: t.bodyHtml } }) : /* @__PURE__ */ l(B, { children: [
-    /* @__PURE__ */ e(ye, { site: a }),
     /* @__PURE__ */ e(_e, { site: a }),
+    /* @__PURE__ */ e(ye, { site: a }),
     /* @__PURE__ */ l("section", { className: "lx-section", "aria-labelledby": "lx-latest", children: [
       /* @__PURE__ */ e("h2", { id: "lx-latest", className: "lx-section__title", children: r("latest") }),
       /* @__PURE__ */ e(D, { posts: n, site: a }),
@@ -894,17 +932,17 @@ function ke({ site: a, posts: n, staticPage: t, archivesLink: i }) {
 }
 function Ne({ site: a, post: n, bodyHtml: t, author: i, hero: r, primaryTerm: o, tags: s }) {
   var v, M;
-  const d = z(a), c = R(r, "large"), h = n.type === "post", u = (v = j.find((p) => p.slug === (o == null ? void 0 : o.slug))) == null ? void 0 : v.slug, g = new Date(ae(n));
+  const d = z(a), c = R(r, "large"), h = n.type === "post", u = (v = C.find((p) => p.slug === (o == null ? void 0 : o.slug))) == null ? void 0 : v.slug, g = new Date(ae(n));
   let b = "";
   try {
     b = new Intl.DateTimeFormat(a.settings.language || "fr", { dateStyle: "long" }).format(g);
   } catch {
     b = g.toDateString();
   }
-  const k = !!(h && c && ((M = n.fields) == null ? void 0 : M["header-photo"]) === !0), A = n.contentMarkdown.trim().split(/\s+/).length, f = Math.max(1, Math.round(A / 220));
+  const k = !!(h && c && ((M = n.fields) == null ? void 0 : M["header-photo"]) === !0), T = n.contentMarkdown.trim().split(/\s+/).length, f = Math.max(1, Math.round(T / 220));
   return /* @__PURE__ */ l("article", { "data-rubric": u, className: `lx-article${h ? "" : " lx-article--page"}${n.slug === "qui-suis-je" ? " lx-article--about" : ""}`, children: [
     /* @__PURE__ */ l("header", { className: `lx-band lx-band--article${k ? " lx-band--photo" : ""}`, children: [
-      k ? /* @__PURE__ */ e("div", { className: "lx-band__art lx-band__photo", "aria-hidden": "true", children: /* @__PURE__ */ e("img", { src: c, alt: "" }) }) : /* @__PURE__ */ e(H, { seed: n.slug, width: 1600, height: 720, cols: 110, className: "lx-band__art" }),
+      k ? /* @__PURE__ */ e("div", { className: "lx-band__art lx-band__photo", "aria-hidden": "true", children: /* @__PURE__ */ e("img", { src: c, alt: "" }) }) : /* @__PURE__ */ e(j, { seed: n.slug, width: 1600, height: 720, cols: 110, className: "lx-band__art" }),
       /* @__PURE__ */ l("div", { className: "lx-band__inner", children: [
         h && o && /* @__PURE__ */ e("a", { className: "lx-band__rubric", href: `/${ie(o)}`, children: o.name }),
         /* @__PURE__ */ e("h1", { children: n.title }),
@@ -919,7 +957,7 @@ function Ne({ site: a, post: n, bodyHtml: t, author: i, hero: r, primaryTerm: o,
           ] })
         ] })
       ] }),
-      /* @__PURE__ */ e("svg", { className: "lx-band__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: q(N(n.slug), 1600, 90) }) })
+      /* @__PURE__ */ e("svg", { className: "lx-band__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: H(N(n.slug), 1600, 90) }) })
     ] }),
     c && !k && /* @__PURE__ */ l("figure", { className: "lx-figure", children: [
       /* @__PURE__ */ e("img", { src: c, alt: (r == null ? void 0 : r.alt) ?? "" }),
@@ -944,10 +982,10 @@ function Ne({ site: a, post: n, bodyHtml: t, author: i, hero: r, primaryTerm: o,
 }
 function Me({ site: a, term: n, posts: t, archivesLink: i }) {
   var d;
-  const r = z(a), o = (d = j.find((c) => c.slug === n.slug)) == null ? void 0 : d.slug, s = n.description || (o ? r(`r.${o}`) : "");
+  const r = z(a), o = (d = C.find((c) => c.slug === n.slug)) == null ? void 0 : d.slug, s = n.description || (o ? r(`r.${o}`) : "");
   return /* @__PURE__ */ l(B, { children: [
     /* @__PURE__ */ l("header", { className: "lx-band lx-band--category", "data-rubric": o, children: [
-      /* @__PURE__ */ e(H, { seed: n.slug, width: 1600, height: 620, cols: 110, className: "lx-band__art" }),
+      /* @__PURE__ */ e(j, { seed: n.slug, width: 1600, height: 620, cols: 110, className: "lx-band__art" }),
       /* @__PURE__ */ l("div", { className: "lx-band__inner", children: [
         /* @__PURE__ */ e("h1", { children: n.name }),
         s && /* @__PURE__ */ e("p", { className: "lx-band__lead", children: s }),
@@ -957,7 +995,7 @@ function Me({ site: a, term: n, posts: t, archivesLink: i }) {
           r(t.length > 1 ? "articles" : "article")
         ] })
       ] }),
-      /* @__PURE__ */ e("svg", { className: "lx-band__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: q(N(n.slug), 1600, 90) }) })
+      /* @__PURE__ */ e("svg", { className: "lx-band__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: H(N(n.slug), 1600, 90) }) })
     ] }),
     /* @__PURE__ */ l("section", { className: "lx-section lx-section--flush", "data-rubric": o, children: [
       /* @__PURE__ */ e(D, { posts: t, site: a }),
@@ -969,7 +1007,7 @@ function ze({ site: a, author: n, posts: t }) {
   const i = R(n.avatar, "small");
   return /* @__PURE__ */ l(B, { children: [
     /* @__PURE__ */ l("header", { className: "lx-band lx-band--author", children: [
-      /* @__PURE__ */ e(H, { seed: n.displayName, width: 1600, height: 620, cols: 110, className: "lx-band__art" }),
+      /* @__PURE__ */ e(j, { seed: n.displayName, width: 1600, height: 620, cols: 110, className: "lx-band__art" }),
       /* @__PURE__ */ l("div", { className: "lx-band__inner", children: [
         i && /* @__PURE__ */ e("img", { className: "lx-avatar", src: i, alt: "", width: 120, height: 120 }),
         /* @__PURE__ */ e("h1", { children: n.displayName }),
@@ -977,7 +1015,7 @@ function ze({ site: a, author: n, posts: t }) {
         n.bio && /* @__PURE__ */ e("p", { className: "lx-band__bio", children: n.bio }),
         n.socials && n.socials.length > 0 && /* @__PURE__ */ e("ul", { className: "lx-socials", children: n.socials.map((r) => /* @__PURE__ */ e("li", { children: /* @__PURE__ */ e("a", { href: r.url, rel: "me noopener", "aria-label": le(r.network), children: /* @__PURE__ */ e(re, { network: r.network }) }) }, r.network)) })
       ] }),
-      /* @__PURE__ */ e("svg", { className: "lx-band__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: q(N(n.id), 1600, 90) }) })
+      /* @__PURE__ */ e("svg", { className: "lx-band__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: H(N(n.id), 1600, 90) }) })
     ] }),
     /* @__PURE__ */ e("section", { className: "lx-section lx-section--flush", children: /* @__PURE__ */ e(D, { posts: t, site: a }) })
   ] });
@@ -985,7 +1023,7 @@ function ze({ site: a, author: n, posts: t }) {
 function Se({ site: a, message: n }) {
   const t = z(a);
   return /* @__PURE__ */ l("section", { className: "lx-lost", children: [
-    /* @__PURE__ */ e(H, { seed: "hors-sentier", width: 1600, height: 900, cols: 120, className: "lx-lost__art" }),
+    /* @__PURE__ */ e(j, { seed: "hors-sentier", width: 1600, height: 900, cols: 120, className: "lx-lost__art" }),
     /* @__PURE__ */ l("div", { className: "lx-lost__copy", children: [
       /* @__PURE__ */ e("p", { className: "lx-lost__code", children: "404" }),
       /* @__PURE__ */ e("h1", { children: t("notFoundTitle") }),
@@ -995,7 +1033,7 @@ function Se({ site: a, message: n }) {
   ] });
 }
 function Le({ config: a, save: n }) {
-  const { t } = de("theme-leaux-altitude"), [i, r] = Y(F(a)), [o, s] = Y(!1);
+  const { t } = de("theme-leaux-altitude"), [i, r] = K(F(a)), [o, s] = K(!1);
   se(() => r(F(a)), [a]);
   async function d(c) {
     c.preventDefault(), s(!0);
@@ -1014,7 +1052,7 @@ function Le({ config: a, save: n }) {
     /* @__PURE__ */ e("button", { type: "submit", className: "btn btn-primary", disabled: o, children: /* @__PURE__ */ e("span", { children: t("settings.save") }) })
   ] });
 }
-const Te = {
+const Ae = {
   en: {
     public: {
       menu: "Menu",
@@ -1063,10 +1101,10 @@ const Te = {
     },
     settings: { navLabel: "Leaux Altitude", title: "Réglages Leaux Altitude", firstLine: "Titre, première ligne", secondLine: "Titre, deuxième ligne", tagline: "Accroche", save: "Enregistrer", saved: "Enregistré. Lancez Régénérer → Accueil pour publier." }
   }
-}, qe = {
+}, He = {
   id: "leaux-altitude",
   name: "Leaux Altitude",
-  version: "1.1.0",
+  version: "1.1.1",
   description: "Dedicated theme for leaux.ovh: generative topographic art, one trail per section.",
   readme: pe,
   scssEntry: "theme.css",
@@ -1097,8 +1135,8 @@ const Te = {
   // /theme-settings page: hero texts.
   settings: { navLabelKey: "settings.navLabel", defaultConfig: V, component: Le, schema: be },
   // Translations, namespace "theme-leaux-altitude" (admin UI + public labels).
-  i18n: Te
+  i18n: Ae
 };
 export {
-  qe as default
+  He as default
 };
