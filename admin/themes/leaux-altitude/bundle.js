@@ -210,6 +210,21 @@ a:hover > .lx-peak { transform: translateY(-16px); }
 .lx-prose hr { height: 16px; margin: 2.4em 0; border: 0; background: var(--lx-deep); clip-path: polygon(0 100%, 8% 30%, 15% 70%, 27% 0, 38% 80%, 49% 25%, 62% 75%, 74% 10%, 87% 70%, 100% 100%, 100% 100%); }
 .lx-prose blockquote { margin: 1.8em 0; padding: .1em 0 .1em clamp(18px, 3vw, 32px); border-left: 8px solid var(--lx-tint); font-size: 1.28em; font-style: italic; line-height: 1.34; }
 .lx-prose blockquote p:last-child { margin-bottom: 0; }
+.lx-prose .lx-pullquote { position: relative; margin: 2.2em calc(-1 * min(var(--lx-gutter), 48px)); padding: clamp(28px, 4vw, 44px) clamp(20px, 4vw, 48px) clamp(24px, 3.5vw, 36px); background: var(--lx-night); color: #fff; }
+.lx-prose .lx-pullquote::before { content: "\\201C"; position: absolute; top: -.28em; left: clamp(12px, 3vw, 36px); color: var(--lx-tint); font: 900 clamp(5rem, 9vw, 7.5rem)/1 var(--lx-display); }
+.lx-prose .lx-pullquote blockquote { margin: 0; padding: 0; border: 0; font: 800 clamp(1.45rem, 1.1rem + 1.4vw, 2.15rem)/1.16 var(--lx-display); font-stretch: 104%; font-style: normal; letter-spacing: -.01em; text-wrap: balance; }
+.lx-prose .lx-pullquote blockquote p { margin: 0; }
+.lx-prose .lx-pullquote figcaption { margin-top: 14px; color: var(--lx-tint); font: 700 .62em/1.3 var(--lx-display); letter-spacing: .08em; text-transform: uppercase; }
+.lx-prose .lx-case { margin: 2em 0; padding: 22px clamp(18px, 3vw, 28px) 18px; border: 2px solid var(--lx-text); border-top-width: 8px; border-top-color: var(--lx-tint); background: var(--lx-snow); font-size: .88em; line-height: 1.58; }
+.lx-prose .lx-case p { margin: 0 0 .8em; }
+.lx-prose .lx-case__tag { display: inline-block; margin-bottom: 12px !important; padding: 4px 10px; background: var(--lx-text); color: var(--lx-bg); font: 700 .74em/1.3 var(--lx-display); letter-spacing: .06em; text-transform: uppercase; }
+.lx-prose .lx-case__title { font: 800 1.22em/1.2 var(--lx-display); }
+.lx-prose .lx-case__src { margin: 0 !important; color: var(--lx-muted); font: 500 .8em/1.4 var(--lx-display); }
+.lx-prose .lx-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2px; margin: 2em 0 .6em; background: var(--lx-text); border: 2px solid var(--lx-text); }
+.lx-prose .lx-stats > div { padding: 20px 22px; background: var(--lx-bg); }
+.lx-prose .lx-stats strong { display: block; color: var(--lx-deep); font: 900 clamp(2.6rem, 6vw, 3.6rem)/1 var(--lx-display); letter-spacing: -.02em; }
+.lx-prose .lx-stats span { display: block; margin-top: 8px; font: 500 .74em/1.4 var(--lx-display); }
+.lx-prose .lx-stats + .lx-case__src { margin-bottom: 1.4em !important; }
 .lx-prose code { padding: .1em .3em; background: color-mix(in srgb, var(--lx-tint) 22%, transparent); font-size: .84em; font-family: ui-monospace, "SF Mono", Menlo, monospace; }
 .lx-prose pre { margin: 1.7em calc(-1 * min(var(--lx-gutter), 32px)); padding: 22px 26px; overflow-x: auto; background: var(--lx-code); color: var(--lx-glacier); font-size: .82em; line-height: 1.6; }
 .lx-prose pre code { padding: 0; background: none; font-size: inherit; }
@@ -287,7 +302,7 @@ main:has(.lx-lost) + .lx-footer .lx-footer__ridge { display: none; }
   @keyframes lx-fade { from { opacity: 0; } }
   @keyframes lx-in { from { opacity: 0; transform: translateY(24px); } }
 }
-`, he = `// Leaux Altitude runtime, uploaded as theme-assets/leaux-altitude-menu.js.
+`, pe = `// Leaux Altitude runtime, uploaded as theme-assets/leaux-altitude-menu.js.
 // Menus, burger, the hero ridgelines, the trail, the reading climb and
 // related posts. Every part fails silently: the static page stays usable.
 (function () {
@@ -657,7 +672,7 @@ main:has(.lx-lost) + .lx-footer .lx-footer__ridge { display: none; }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
   else start();
 })();
-`, pe = `# Leaux Altitude
+`, xe = `# Leaux Altitude
 
 Dedicated AgentCMS theme for leaux.ovh. Ridgelines pass in front of the home title, each section is a summit on an orientation table, each post gets a contour map generated from its slug, and a reading climb follows the scroll.
 
@@ -682,7 +697,7 @@ function I({ items: a, currentPath: n }) {
     ] }, t.id);
   }) });
 }
-function xe({ site: a, currentPath: n, locale: t }) {
+function he({ site: a, currentPath: n, locale: t }) {
   var o;
   const i = z(a, t), r = ((o = a.settings.enabledPlugins) == null ? void 0 : o["agentcms-search"]) !== !1;
   return /* @__PURE__ */ l("header", { className: "lx-header", children: [
@@ -717,36 +732,36 @@ function P(a) {
 function W(a) {
   const n = P(a), t = 64, i = Array.from({ length: t * t }, () => n()), r = (s, d) => i[(d % t + t) % t * t + (s % t + t) % t], o = (s) => s * s * (3 - 2 * s);
   return (s, d) => {
-    const c = Math.floor(s), h = Math.floor(d), u = o(s - c), g = o(d - h), b = r(c, h) * (1 - u) + r(c + 1, h) * u, k = r(c, h + 1) * (1 - u) + r(c + 1, h + 1) * u;
+    const c = Math.floor(s), p = Math.floor(d), u = o(s - c), g = o(d - p), b = r(c, p) * (1 - u) + r(c + 1, p) * u, k = r(c, p + 1) * (1 - u) + r(c + 1, p + 1) * u;
     return b * (1 - g) + k * g;
   };
 }
 const _ = (a) => Math.round(a * 10) / 10;
 function me(a, n, t, i, r = 14) {
-  const o = W(a), s = P(a ^ 2654435769), d = Math.round(i * t / n), c = [0, 1, 2].map(() => ({ x: 0.15 + s() * 0.7, y: 0.15 + s() * 0.7, s: 0.03 + s() * 0.07, a: 0.5 + s() * 0.7 })), h = n / t, u = [];
+  const o = W(a), s = P(a ^ 2654435769), d = Math.round(i * t / n), c = [0, 1, 2].map(() => ({ x: 0.15 + s() * 0.7, y: 0.15 + s() * 0.7, s: 0.03 + s() * 0.07, a: 0.5 + s() * 0.7 })), p = n / t, u = [];
   let g = 1 / 0, b = -1 / 0;
-  for (let p = 0; p <= d; p++)
+  for (let x = 0; x <= d; x++)
     for (let w = 0; w <= i; w++) {
-      const S = w / i, m = p / d;
-      let x = o(S * 3 * h, m * 3) * 0.6 + o(S * 7 * h, m * 7) * 0.18;
+      const S = w / i, m = x / d;
+      let h = o(S * 3 * p, m * 3) * 0.6 + o(S * 7 * p, m * 7) * 0.18;
       for (const L of c) {
-        const E = (S - L.x) * h, q = m - L.y;
-        x += L.a * Math.exp(-(E * E + q * q) / (2 * L.s));
+        const q = (S - L.x) * p, E = m - L.y;
+        h += L.a * Math.exp(-(q * q + E * E) / (2 * L.s));
       }
-      u.push(x), x < g && (g = x), x > b && (b = x);
+      u.push(h), h < g && (g = h), h > b && (b = h);
     }
-  const k = n / i, T = t / d, f = (p, w) => u[w * (i + 1) + p], v = [], M = [];
-  for (let p = 1; p < r; p++) {
-    const w = g + (b - g) * p / r, S = p % 4 === 0 ? M : v;
+  const k = n / i, T = t / d, f = (x, w) => u[w * (i + 1) + x], v = [], M = [];
+  for (let x = 1; x < r; x++) {
+    const w = g + (b - g) * x / r, S = x % 4 === 0 ? M : v;
     for (let m = 0; m < d; m++)
-      for (let x = 0; x < i; x++) {
-        const L = f(x, m), E = f(x + 1, m), q = f(x + 1, m + 1), U = f(x, m + 1), A = [], $ = (y, O, Y, G, X, J) => {
+      for (let h = 0; h < i; h++) {
+        const L = f(h, m), q = f(h + 1, m), E = f(h + 1, m + 1), U = f(h, m + 1), A = [], $ = (y, O, Y, G, X, J) => {
           if (y < w != O < w) {
             const Z = (w - y) / (O - y);
             A.push([(Y + (X - Y) * Z) * k, (G + (J - G) * Z) * T]);
           }
         };
-        $(L, E, x, m, x + 1, m), $(E, q, x + 1, m, x + 1, m + 1), $(U, q, x, m + 1, x + 1, m + 1), $(L, U, x, m, x, m + 1);
+        $(L, q, h, m, h + 1, m), $(q, E, h + 1, m, h + 1, m + 1), $(U, E, h, m + 1, h + 1, m + 1), $(L, U, h, m, h, m + 1);
         for (let y = 0; y + 1 < A.length; y += 2)
           S.push(`M${_(A[y][0])} ${_(A[y][1])}L${_(A[y + 1][0])} ${_(A[y + 1][1])}`);
       }
@@ -774,18 +789,18 @@ function j(a, n, t, i = 70) {
 function ue(a, n, t, i, r) {
   const o = P(a), s = (f) => {
     const v = [];
-    for (let p = 1; p <= 9; p++) {
-      const w = p / 9, S = p === 9 ? 0 : (o() - 0.5) * 0.09;
-      v.push([n + f * r * (w + S * 1.2), t + (i - t) * Math.pow(w, 1.1) + (o() - 0.5) * 14 * (p === 9 ? 0 : 1)]);
+    for (let x = 1; x <= 9; x++) {
+      const w = x / 9, S = x === 9 ? 0 : (o() - 0.5) * 0.09;
+      v.push([n + f * r * (w + S * 1.2), t + (i - t) * Math.pow(w, 1.1) + (o() - 0.5) * 14 * (x === 9 ? 0 : 1)]);
     }
     return v;
-  }, d = s(-1), c = s(1), h = [], u = 8;
+  }, d = s(-1), c = s(1), p = [], u = 8;
   let g = n;
   for (let f = 1; f <= u; f++) {
     const v = f / u;
-    g += (o() - 0.32) * r * 0.16, h.push([g, t + (i - t) * v]);
+    g += (o() - 0.32) * r * 0.16, p.push([g, t + (i - t) * v]);
   }
-  const b = (f) => f.map((v, M) => `${M ? "L" : "M"}${_(v[0])} ${_(v[1])}`).join(""), k = [...d.slice().reverse(), [n, t], ...c], T = [[n, t], ...c, ...h.slice().reverse()];
+  const b = (f) => f.map((v, M) => `${M ? "L" : "M"}${_(v[0])} ${_(v[1])}`).join(""), k = [...d.slice().reverse(), [n, t], ...c], T = [[n, t], ...c, ...p.slice().reverse()];
   return { lit: `${b(k)}Z`, shade: `${b(T)}Z` };
 }
 function ge({ site: a, locale: n }) {
@@ -802,16 +817,16 @@ function ge({ site: a, locale: n }) {
 }
 const fe = 'addEventListener("pagereveal",function(e){var n=window.navigation,f=n&&n.activation&&n.activation.from;if(!e.viewTransition||!f||!f.url)return;var p=new URL(f.url).pathname,a=document.querySelectorAll(".lx-way__art");for(var i=0;i<a.length;i++)if(a[i].pathname===p){var t=a[i].parentNode.querySelector("h3");a[i].style.viewTransitionName="lx-art";if(t)t.style.viewTransitionName="lx-title";e.viewTransition.finished.finally(function(){a[i].style.viewTransitionName="";if(t)t.style.viewTransitionName=""});break}})';
 function ve({ site: a, pageTitle: n, pageDescription: t, ogImage: i, currentPath: r, currentLocale: o, children: s }) {
-  const d = o || a.settings.language || "en", c = a.settings.title || "", h = n ? n.includes(c) ? n : `${n} — ${c}` : c, u = a.settings.baseUrl && r ? ne(a.settings.baseUrl, r) : void 0;
+  const d = o || a.settings.language || "en", c = a.settings.title || "", p = n ? n.includes(c) ? n : `${n} — ${c}` : c, u = a.settings.baseUrl && r ? ne(a.settings.baseUrl, r) : void 0;
   return /* @__PURE__ */ l("html", { lang: d, children: [
     /* @__PURE__ */ l("head", { children: [
       /* @__PURE__ */ e("meta", { charSet: "utf-8" }),
       /* @__PURE__ */ e("meta", { name: "viewport", content: "width=device-width, initial-scale=1" }),
       /* @__PURE__ */ e("meta", { name: "theme-color", content: "#10163f" }),
-      /* @__PURE__ */ e("title", { children: h }),
+      /* @__PURE__ */ e("title", { children: p }),
       t && /* @__PURE__ */ e("meta", { name: "description", content: t }),
       u && /* @__PURE__ */ e("link", { rel: "canonical", href: u }),
-      /* @__PURE__ */ e("meta", { property: "og:title", content: h }),
+      /* @__PURE__ */ e("meta", { property: "og:title", content: p }),
       t && /* @__PURE__ */ e("meta", { property: "og:description", content: t }),
       i && /* @__PURE__ */ e("meta", { property: "og:image", content: i }),
       u && /* @__PURE__ */ e("meta", { property: "og:url", content: u }),
@@ -822,7 +837,7 @@ function ve({ site: a, pageTitle: n, pageDescription: t, ogImage: i, currentPath
       /* @__PURE__ */ e("meta", { name: "x-cms-head-extra" })
     ] }),
     /* @__PURE__ */ l("body", { className: "lx", children: [
-      /* @__PURE__ */ e(xe, { site: a, currentPath: r, locale: d }),
+      /* @__PURE__ */ e(he, { site: a, currentPath: r, locale: d }),
       /* @__PURE__ */ e("main", { children: s }),
       /* @__PURE__ */ e("span", { id: "lx-end" }),
       /* @__PURE__ */ e(ge, { site: a, locale: d }),
@@ -932,22 +947,22 @@ function ke({ site: a, posts: n, staticPage: t, archivesLink: i }) {
 }
 function Ne({ site: a, post: n, bodyHtml: t, author: i, hero: r, primaryTerm: o, tags: s }) {
   var v, M;
-  const d = z(a), c = R(r, "large"), h = n.type === "post", u = (v = C.find((p) => p.slug === (o == null ? void 0 : o.slug))) == null ? void 0 : v.slug, g = new Date(ae(n));
+  const d = z(a), c = R(r, "large"), p = n.type === "post", u = (v = C.find((x) => x.slug === (o == null ? void 0 : o.slug))) == null ? void 0 : v.slug, g = new Date(ae(n));
   let b = "";
   try {
     b = new Intl.DateTimeFormat(a.settings.language || "fr", { dateStyle: "long" }).format(g);
   } catch {
     b = g.toDateString();
   }
-  const k = !!(h && c && ((M = n.fields) == null ? void 0 : M["header-photo"]) === !0), T = n.contentMarkdown.trim().split(/\s+/).length, f = Math.max(1, Math.round(T / 220));
-  return /* @__PURE__ */ l("article", { "data-rubric": u, className: `lx-article${h ? "" : " lx-article--page"}${n.slug === "qui-suis-je" ? " lx-article--about" : ""}`, children: [
+  const k = !!(p && c && ((M = n.fields) == null ? void 0 : M["header-photo"]) === !0), T = n.contentMarkdown.trim().split(/\s+/).length, f = Math.max(1, Math.round(T / 220));
+  return /* @__PURE__ */ l("article", { "data-rubric": u, className: `lx-article${p ? "" : " lx-article--page"}${n.slug === "qui-suis-je" ? " lx-article--about" : ""}`, children: [
     /* @__PURE__ */ l("header", { className: `lx-band lx-band--article${k ? " lx-band--photo" : ""}`, children: [
       k ? /* @__PURE__ */ e("div", { className: "lx-band__art lx-band__photo", "aria-hidden": "true", children: /* @__PURE__ */ e("img", { src: c, alt: "" }) }) : /* @__PURE__ */ e(H, { seed: n.slug, width: 1600, height: 720, cols: 110, className: "lx-band__art" }),
       /* @__PURE__ */ l("div", { className: "lx-band__inner", children: [
-        h && o && /* @__PURE__ */ e("a", { className: "lx-band__rubric", href: `/${ie(o)}`, children: o.name }),
+        p && o && /* @__PURE__ */ e("a", { className: "lx-band__rubric", href: `/${ie(o)}`, children: o.name }),
         /* @__PURE__ */ e("h1", { children: n.title }),
         n.excerpt && /* @__PURE__ */ e("p", { className: "lx-band__lead", children: n.excerpt }),
-        h && /* @__PURE__ */ l("p", { className: "lx-band__count", children: [
+        p && /* @__PURE__ */ l("p", { className: "lx-band__count", children: [
           i && /* @__PURE__ */ e("span", { children: i.url ? /* @__PURE__ */ e("a", { href: i.url, children: i.displayName }) : i.displayName }),
           /* @__PURE__ */ e("time", { dateTime: g.toISOString(), children: b }),
           /* @__PURE__ */ l("span", { children: [
@@ -964,8 +979,8 @@ function Ne({ site: a, post: n, bodyHtml: t, author: i, hero: r, primaryTerm: o,
       (r == null ? void 0 : r.caption) && /* @__PURE__ */ e("figcaption", { children: r.caption })
     ] }),
     /* @__PURE__ */ e("div", { className: "lx-prose", "data-lx-prose": !0, dangerouslySetInnerHTML: { __html: t } }),
-    h && s.length > 0 && /* @__PURE__ */ e("ul", { className: "lx-tags", "aria-label": d("tags"), children: s.map((p) => /* @__PURE__ */ e("li", { children: p.name }, p.id)) }),
-    h && /* @__PURE__ */ l(B, { children: [
+    p && s.length > 0 && /* @__PURE__ */ e("ul", { className: "lx-tags", "aria-label": d("tags"), children: s.map((x) => /* @__PURE__ */ e("li", { children: x.name }, x.id)) }),
+    p && /* @__PURE__ */ l(B, { children: [
       /* @__PURE__ */ l("section", { className: "lx-related", "data-lx-related": !0, "data-current": n.id, "data-term": n.primaryTermId, hidden: !0, children: [
         /* @__PURE__ */ e("h2", { children: d("continue") }),
         /* @__PURE__ */ e("div", { className: "lx-related__list" })
@@ -1047,7 +1062,7 @@ function Le({ config: a, save: n }) {
     /* @__PURE__ */ e("h1", { className: "text-xl font-semibold", children: t("settings.title") }),
     ["firstLine", "secondLine", "tagline"].map((c) => /* @__PURE__ */ l("label", { className: "block space-y-1", children: [
       /* @__PURE__ */ e("span", { className: "label", children: t(`settings.${c}`) }),
-      /* @__PURE__ */ e("input", { className: "input w-full", value: i[c], onChange: (h) => r({ ...i, [c]: h.target.value }) })
+      /* @__PURE__ */ e("input", { className: "input w-full", value: i[c], onChange: (p) => r({ ...i, [c]: p.target.value }) })
     ] }, c)),
     /* @__PURE__ */ e("button", { type: "submit", className: "btn btn-primary", disabled: o, children: /* @__PURE__ */ e("span", { children: t("settings.save") }) })
   ] });
@@ -1104,14 +1119,14 @@ const Ae = {
 }, je = {
   id: "leaux-altitude",
   name: "Leaux Altitude",
-  version: "1.1.2",
+  version: "1.2.0",
   description: "Dedicated theme for leaux.ovh: generative topographic art, one trail per section.",
-  readme: pe,
+  readme: xe,
   scssEntry: "theme.css",
   cssText: ce,
   // Uploaded as theme-assets/leaux-altitude-menu.js; fills the menus from
   // data/menu.json so menu edits don't require regenerating every page.
-  jsText: he,
+  jsText: pe,
   // Image variants generated for every upload while this theme is active.
   imageFormats: {
     inputFormats: [".jpg", ".jpeg", ".png", ".webp", ".gif"],
