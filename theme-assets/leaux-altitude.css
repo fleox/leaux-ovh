@@ -210,6 +210,7 @@ a:hover > .lx-peak { transform: translateY(-16px); }
 .lx-prose .lx-pullquote::before { content: "\201C"; position: absolute; top: -.28em; left: clamp(12px, 3vw, 36px); color: var(--lx-tint); font: 900 clamp(5rem, 9vw, 7.5rem)/1 var(--lx-display); }
 .lx-prose .lx-pullquote blockquote { margin: 0; padding: 0; border: 0; font: 800 clamp(1.45rem, 1.1rem + 1.4vw, 2.15rem)/1.16 var(--lx-display); font-stretch: 104%; font-style: normal; letter-spacing: -.01em; text-wrap: balance; }
 .lx-prose .lx-pullquote blockquote p { margin: 0; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .lx-prose .lx-pullquote { background: var(--lx-night-2); } }
 .lx-prose .lx-pullquote figcaption { margin-top: 14px; color: var(--lx-tint); font: 700 .62em/1.3 var(--lx-display); letter-spacing: .08em; text-transform: uppercase; }
 .lx-prose .lx-case { margin: 2em 0; padding: 22px clamp(18px, 3vw, 28px) 18px; border: 2px solid var(--lx-text); border-top-width: 8px; border-top-color: var(--lx-tint); background: var(--lx-snow); font-size: .88em; line-height: 1.58; }
 .lx-prose .lx-case p { margin: 0 0 .8em; }
