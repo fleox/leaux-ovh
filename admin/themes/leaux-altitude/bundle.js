@@ -246,7 +246,7 @@ a:hover > .lx-peak { transform: translateY(-16px); }
 .lx-prose .lx-chart__rows { display: grid; gap: 14px; margin: 0; }
 .lx-prose .lx-chart__row { display: grid; grid-template-columns: minmax(84px, 130px) 1fr; align-items: center; gap: 4px 12px; font: 600 .74em/1.2 var(--lx-display); }
 .lx-prose .lx-chart__row > span { grid-row: span 2; }
-.lx-prose .lx-chart__hb { display: flex; align-items: center; gap: 8px; font: 700 .9em/1 var(--lx-display); font-variant-numeric: tabular-nums; }
+.lx-prose .lx-chart__hb { display: flex; white-space: nowrap; align-items: center; gap: 8px; font: 700 .9em/1 var(--lx-display); font-variant-numeric: tabular-nums; }
 .lx-prose .lx-chart__hb i { display: block; width: calc(var(--v) * 82%); min-width: 2px; height: 12px; border-radius: 0 4px 4px 0; background: var(--lx-line); }
 .lx-prose .lx-chart__hb.is-hi i { height: 16px; background: var(--lx-deep); }
 .lx-prose .lx-chart__hb em { color: var(--lx-muted); font-style: normal; font-weight: 600; }
@@ -255,7 +255,7 @@ a:hover > .lx-peak { transform: translateY(-16px); }
 .lx-prose .lx-chart summary { cursor: pointer; color: var(--lx-muted); }
 .lx-prose .lx-chart table { margin: 8px 0 0; font-size: 1em; }
 .lx-prose .lx-chart th, .lx-prose .lx-chart td { padding: 4px 8px; }
-@media (max-width: 560px) { .lx-prose .lx-chart__axis span.is-minor { visibility: hidden; } }
+@media (max-width: 560px) { .lx-prose .lx-chart__axis span.is-minor { visibility: hidden; } .lx-prose .lx-chart__val { font-size: .56em; } .lx-prose .lx-chart__hb i { width: calc(var(--v) * 66%); } }
 .lx-prose .lx-stats + .lx-case__src { margin-bottom: 1.4em !important; }
 .lx-prose code { padding: .1em .3em; background: color-mix(in srgb, var(--lx-tint) 22%, transparent); font-size: .84em; font-family: ui-monospace, "SF Mono", Menlo, monospace; }
 .lx-prose pre { margin: 1.7em calc(-1 * min(var(--lx-gutter), 32px)); padding: 22px 26px; overflow-x: auto; background: var(--lx-code); color: var(--lx-glacier); font-size: .82em; line-height: 1.6; }
@@ -1140,7 +1140,7 @@ const Ae = {
 }, je = {
   id: "leaux-altitude",
   name: "Leaux Altitude",
-  version: "1.3.0",
+  version: "1.3.1",
   description: "Dedicated theme for leaux.ovh: generative topographic art, one trail per section.",
   readme: xe,
   scssEntry: "theme.css",
