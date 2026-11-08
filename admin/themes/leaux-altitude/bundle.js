@@ -225,6 +225,37 @@ a:hover > .lx-peak { transform: translateY(-16px); }
 .lx-prose .lx-stats > div { padding: 20px 22px; background: var(--lx-bg); }
 .lx-prose .lx-stats strong { display: block; color: var(--lx-deep); font: 900 clamp(2.6rem, 6vw, 3.6rem)/1 var(--lx-display); letter-spacing: -.02em; }
 .lx-prose .lx-stats span { display: block; margin-top: 8px; font: 500 .74em/1.4 var(--lx-display); }
+.lx-prose .lx-chart { margin: 2.2em 0; padding: clamp(18px, 3vw, 28px); border: 2px solid var(--lx-text); background: var(--lx-snow); font-family: var(--lx-display); }
+.lx-prose .lx-chart__title { margin: 0 0 4px !important; font: 800 1.02em/1.25 var(--lx-display); }
+.lx-prose .lx-chart__sub { margin: 0 0 18px !important; color: var(--lx-muted); font: 500 .72em/1.4 var(--lx-display); }
+.lx-prose .lx-chart__legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: -6px 0 16px; padding: 0; list-style: none; font: 600 .7em/1.3 var(--lx-display); }
+.lx-prose .lx-chart__legend li { display: flex; align-items: center; gap: 6px; margin: 0; }
+.lx-prose .lx-chart__legend i { width: 12px; height: 12px; border-radius: 3px; background: var(--lx-line); }
+.lx-prose .lx-chart__legend i.is-hi { background: var(--lx-deep); }
+.lx-prose .lx-chart__cols { position: relative; display: grid; grid-template-columns: repeat(var(--n), minmax(0, 1fr)); align-items: end; gap: 2px clamp(2px, .8vw, 8px); height: clamp(190px, 32vw, 260px); padding-top: 26px; border-bottom: 1px solid var(--lx-text); background: repeating-linear-gradient(to top, transparent 0 calc(25% - 1px), color-mix(in srgb, var(--lx-line) 70%, transparent) calc(25% - 1px) 25%); }
+.lx-prose .lx-chart__col { position: relative; display: flex; flex-direction: column; justify-content: flex-end; height: 100%; }
+.lx-prose .lx-chart__bar { height: calc(var(--v) * 100%); min-height: 2px; border-radius: 4px 4px 0 0; background: var(--lx-line); transition: filter .15s; }
+.lx-prose .lx-chart__col.is-hi .lx-chart__bar { background: var(--lx-deep); }
+.lx-prose .lx-chart__col.is-part .lx-chart__bar { background: repeating-linear-gradient(135deg, var(--lx-deep) 0 6px, color-mix(in srgb, var(--lx-deep) 55%, transparent) 6px 9px); }
+.lx-prose .lx-chart__val { position: absolute; bottom: calc(var(--v) * 100% + 4px); left: 50%; transform: translateX(-50%); white-space: nowrap; font: 800 .66em/1 var(--lx-display); font-variant-numeric: tabular-nums; }
+.lx-prose .lx-chart__col:not(.is-lab) .lx-chart__val { display: none; }
+.lx-prose .lx-chart__col:hover .lx-chart__bar { filter: brightness(1.15) saturate(1.2); }
+.lx-prose .lx-chart__col:hover .lx-chart__val { display: block; z-index: 2; padding: 3px 6px; border-radius: 4px; background: var(--lx-text); color: var(--lx-bg); }
+.lx-prose .lx-chart__axis { display: grid; grid-template-columns: repeat(var(--n), minmax(0, 1fr)); gap: 0 clamp(2px, .8vw, 8px); margin-top: 6px; color: var(--lx-muted); font: 600 .62em/1.2 var(--lx-display); text-align: center; }
+.lx-prose .lx-chart__axis span { white-space: nowrap; }
+.lx-prose .lx-chart__rows { display: grid; gap: 14px; margin: 0; }
+.lx-prose .lx-chart__row { display: grid; grid-template-columns: minmax(84px, 130px) 1fr; align-items: center; gap: 4px 12px; font: 600 .74em/1.2 var(--lx-display); }
+.lx-prose .lx-chart__row > span { grid-row: span 2; }
+.lx-prose .lx-chart__hb { display: flex; align-items: center; gap: 8px; font: 700 .9em/1 var(--lx-display); font-variant-numeric: tabular-nums; }
+.lx-prose .lx-chart__hb i { display: block; width: calc(var(--v) * 82%); min-width: 2px; height: 12px; border-radius: 0 4px 4px 0; background: var(--lx-line); }
+.lx-prose .lx-chart__hb.is-hi i { height: 16px; background: var(--lx-deep); }
+.lx-prose .lx-chart__hb em { color: var(--lx-muted); font-style: normal; font-weight: 600; }
+.lx-prose .lx-chart .lx-case__src { margin-top: 14px !important; }
+.lx-prose .lx-chart details { margin-top: 10px; font: 500 .7em/1.4 var(--lx-display); }
+.lx-prose .lx-chart summary { cursor: pointer; color: var(--lx-muted); }
+.lx-prose .lx-chart table { margin: 8px 0 0; font-size: 1em; }
+.lx-prose .lx-chart th, .lx-prose .lx-chart td { padding: 4px 8px; }
+@media (max-width: 560px) { .lx-prose .lx-chart__axis span.is-minor { visibility: hidden; } }
 .lx-prose .lx-stats + .lx-case__src { margin-bottom: 1.4em !important; }
 .lx-prose code { padding: .1em .3em; background: color-mix(in srgb, var(--lx-tint) 22%, transparent); font-size: .84em; font-family: ui-monospace, "SF Mono", Menlo, monospace; }
 .lx-prose pre { margin: 1.7em calc(-1 * min(var(--lx-gutter), 32px)); padding: 22px 26px; overflow-x: auto; background: var(--lx-code); color: var(--lx-glacier); font-size: .82em; line-height: 1.6; }
@@ -673,7 +704,7 @@ main:has(.lx-lost) + .lx-footer .lx-footer__ridge { display: none; }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
   else start();
 })();
-`, xe = '# Leaux Altitude\n\nDedicated AgentCMS theme for leaux.ovh. Ridgelines pass in front of the home title, each section is a summit on an orientation table, each post gets a contour map generated from its slug, and a reading climb follows the scroll.\n\nSection slugs and colors live in `src/rubrics.ts` and `src/theme.css` (`[data-rubric]`). Hero texts are editable on the theme settings page.\n\n## Custom fields\n\n| Field | Type | Effect |\n|---|---|---|\n| `header-photo` | yes / no | On a post with a featured image, `true` puts the image behind the header, with a parallax on scroll, instead of the contour map. The image is then not repeated under the header. |\n\n## Article components (raw HTML in Markdown)\n\n- Pull quote: `<figure class="lx-pullquote"><blockquote><p>…</p></blockquote></figure>` (optional `<figcaption>`).\n- Case box: `<aside class="lx-case"><p class="lx-case__tag">Cas réel · date</p><p class="lx-case__title">…</p><p>…</p><p class="lx-case__src">Source : <a href="…">…</a></p></aside>`.\n- Key figures: `<div class="lx-stats"><div><strong>48 %</strong><span>…</span></div>…</div>`, optionally followed by `<p class="lx-case__src">Source : …</p>`.\n';
+`, xe = '# Leaux Altitude\n\nDedicated AgentCMS theme for leaux.ovh. Ridgelines pass in front of the home title, each section is a summit on an orientation table, each post gets a contour map generated from its slug, and a reading climb follows the scroll.\n\nSection slugs and colors live in `src/rubrics.ts` and `src/theme.css` (`[data-rubric]`). Hero texts are editable on the theme settings page.\n\n## Custom fields\n\n| Field | Type | Effect |\n|---|---|---|\n| `header-photo` | yes / no | On a post with a featured image, `true` puts the image behind the header, with a parallax on scroll, instead of the contour map. The image is then not repeated under the header. |\n\n## Article components (raw HTML in Markdown)\n\n- Pull quote: `<figure class="lx-pullquote"><blockquote><p>…</p></blockquote></figure>` (optional `<figcaption>`).\n- Case box: `<aside class="lx-case"><p class="lx-case__tag">Cas réel · date</p><p class="lx-case__title">…</p><p>…</p><p class="lx-case__src">Source : <a href="…">…</a></p></aside>`.\n- Key figures: `<div class="lx-stats"><div><strong>48 %</strong><span>…</span></div>…</div>`, optionally followed by `<p class="lx-case__src">Source : …</p>`.\n- Bar chart: `<figure class="lx-chart"><p class="lx-chart__title">…</p><p class="lx-chart__sub">…</p><div class="lx-chart__cols" style="--n:9"><div class="lx-chart__col is-lab" style="--v:.4" title="2020 : 18 322"><div class="lx-chart__bar"></div><span class="lx-chart__val">18 322</span></div>…</div><div class="lx-chart__axis" style="--n:9"><span>2020</span>…</div><p class="lx-case__src">Source : …</p></figure>`. `--v` is the bar height (0–1). Column modifiers: `is-hi` (highlighted), `is-part` (hatched, partial period), `is-lab` (value always shown; others on hover). Axis labels with `is-minor` hide on phones.\n- Paired horizontal bars: `<div class="lx-chart__rows"><div class="lx-chart__row"><span>Label</span><div class="lx-chart__hb" style="--v:.3"><i></i>1 200 <em>2025</em></div><div class="lx-chart__hb is-hi" style="--v:.8"><i></i>3 400 <em>2026</em></div></div></div>` with a `<ul class="lx-chart__legend"><li><i></i>2025</li><li><i class="is-hi"></i>2026</li></ul>`.\n';
 function z(a, n) {
   const t = ee.getFixedT(te(n || a.settings.language || "en"), "theme-leaux-altitude");
   return (i) => t(`public.${i}`);
@@ -726,7 +757,7 @@ function W(a) {
     return b * (1 - g) + k * g;
   };
 }
-const _ = (a) => Math.round(a * 10) / 10;
+const y = (a) => Math.round(a * 10) / 10;
 function me(a, n, t, i, r = 14) {
   const o = W(a), s = P(a ^ 2654435769), d = Math.round(i * t / n), c = [0, 1, 2].map(() => ({ x: 0.15 + s() * 0.7, y: 0.15 + s() * 0.7, s: 0.03 + s() * 0.07, a: 0.5 + s() * 0.7 })), p = n / t, u = [];
   let g = 1 / 0, b = -1 / 0;
@@ -745,34 +776,34 @@ function me(a, n, t, i, r = 14) {
     const w = g + (b - g) * x / r, S = x % 4 === 0 ? M : v;
     for (let m = 0; m < d; m++)
       for (let h = 0; h < i; h++) {
-        const L = f(h, m), q = f(h + 1, m), E = f(h + 1, m + 1), U = f(h, m + 1), A = [], $ = (y, O, Y, G, X, J) => {
-          if (y < w != O < w) {
-            const K = (w - y) / (O - y);
-            A.push([(Y + (X - Y) * K) * k, (G + (J - G) * K) * T]);
+        const L = f(h, m), q = f(h + 1, m), E = f(h + 1, m + 1), U = f(h, m + 1), A = [], $ = (_, O, Y, G, V, J) => {
+          if (_ < w != O < w) {
+            const K = (w - _) / (O - _);
+            A.push([(Y + (V - Y) * K) * k, (G + (J - G) * K) * T]);
           }
         };
         $(L, q, h, m, h + 1, m), $(q, E, h + 1, m, h + 1, m + 1), $(U, E, h, m + 1, h + 1, m + 1), $(L, U, h, m, h, m + 1);
-        for (let y = 0; y + 1 < A.length; y += 2)
-          S.push(`M${_(A[y][0])} ${_(A[y][1])}L${_(A[y + 1][0])} ${_(A[y + 1][1])}`);
+        for (let _ = 0; _ + 1 < A.length; _ += 2)
+          S.push(`M${y(A[_][0])} ${y(A[_][1])}L${y(A[_ + 1][0])} ${y(A[_ + 1][1])}`);
       }
   }
   return { minor: v.join(""), major: M.join("") };
 }
-function Q(a, n, t, i = 90) {
+function X(a, n, t, i = 90) {
   const r = W(a);
   let o = "";
   for (let s = 0; s <= i; s++) {
     const d = s / i, c = t * (0.92 - 0.78 * Math.pow(d, 1.3) + (r(d * 7, 3) - 0.5) * 0.34 * Math.sin(Math.PI * d) + (r(d * 19, 8) - 0.5) * 0.1 * Math.sin(Math.PI * d));
-    o += `${s ? "L" : "M"}${_(d * n)} ${_(Math.max(2, Math.min(t - 2, c)))}`;
+    o += `${s ? "L" : "M"}${y(d * n)} ${y(Math.max(2, Math.min(t - 2, c)))}`;
   }
   return o;
 }
-function H(a, n, t, i = 70) {
+function j(a, n, t, i = 70) {
   const r = W(a);
   let o = `M0 ${t}`;
   for (let s = 0; s <= i; s++) {
     const d = s / i, c = r(d * 5, 2) * 0.7 + r(d * 17, 5) * 0.3;
-    o += `L${_(d * n)} ${_(t * (1 - c))}`;
+    o += `L${y(d * n)} ${y(t * (1 - c))}`;
   }
   return `${o}L${n} ${t}Z`;
 }
@@ -790,13 +821,13 @@ function ue(a, n, t, i, r) {
     const v = f / u;
     g += (o() - 0.32) * r * 0.16, p.push([g, t + (i - t) * v]);
   }
-  const b = (f) => f.map((v, M) => `${M ? "L" : "M"}${_(v[0])} ${_(v[1])}`).join(""), k = [...d.slice().reverse(), [n, t], ...c], T = [[n, t], ...c, ...p.slice().reverse()];
+  const b = (f) => f.map((v, M) => `${M ? "L" : "M"}${y(v[0])} ${y(v[1])}`).join(""), k = [...d.slice().reverse(), [n, t], ...c], T = [[n, t], ...c, ...p.slice().reverse()];
   return { lit: `${b(k)}Z`, shade: `${b(T)}Z` };
 }
 function ge({ site: a, locale: n }) {
   const t = z(a, n);
   return /* @__PURE__ */ l("footer", { className: "lx-footer", children: [
-    /* @__PURE__ */ e("svg", { className: "lx-footer__ridge", viewBox: "0 0 1600 120", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: H(N("footer"), 1600, 120) }) }),
+    /* @__PURE__ */ e("svg", { className: "lx-footer__ridge", viewBox: "0 0 1600 120", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: j(N("footer"), 1600, 120) }) }),
     /* @__PURE__ */ l("div", { className: "lx-footer__body", children: [
       /* @__PURE__ */ e("p", { className: "lx-footer__name", children: a.settings.title }),
       /* @__PURE__ */ e("nav", { "aria-label": t("footerNav"), "data-cms-menu": "footer", children: /* @__PURE__ */ e(I, { items: a.resolvedMenus.footer }) }),
@@ -835,7 +866,7 @@ function ve({ site: a, pageTitle: n, pageDescription: t, ogImage: i, currentPath
     ] })
   ] });
 }
-const V = {
+const Q = {
   hero: {
     firstLine: "Frédéric",
     secondLine: "Leaux",
@@ -847,7 +878,7 @@ const V = {
   "hero.tagline": { description: "Sentence shown above the home title." }
 };
 function F(a) {
-  return { ...V.hero, ...(a == null ? void 0 : a.hero) ?? {} };
+  return { ...Q.hero, ...(a == null ? void 0 : a.hero) ?? {} };
 }
 const C = [
   { slug: "edito", name: "Édito", x: 90, height: 0.62 },
@@ -862,7 +893,7 @@ function we(a) {
   const n = a.replace(/^\/+/, "");
   return (t = C.find((i) => n === i.slug || n.startsWith(i.slug + "/"))) == null ? void 0 : t.slug;
 }
-function ye({ site: a }) {
+function _e({ site: a }) {
   const n = z(a), t = 1600, i = 620;
   return /* @__PURE__ */ l("section", { className: "lx-pano", "aria-labelledby": "lx-pano-title", children: [
     /* @__PURE__ */ e("h2", { id: "lx-pano-title", className: "lx-pano__title", children: n("sections") }),
@@ -881,7 +912,7 @@ function ye({ site: a }) {
     ] })
   ] });
 }
-function j({ seed: a, width: n = 480, height: t = 300, cols: i = 44, className: r }) {
+function H({ seed: a, width: n = 480, height: t = 300, cols: i = 44, className: r }) {
   const o = me(N(a), n, t, i);
   return /* @__PURE__ */ l("svg", { className: `lx-topo ${r ?? ""}`, viewBox: `0 0 ${n} ${t}`, preserveAspectRatio: "xMidYMid slice", "aria-hidden": "true", children: [
     /* @__PURE__ */ e("path", { className: "lx-topo__minor", d: o.minor }),
@@ -895,7 +926,7 @@ function D({ posts: a, site: n }) {
     const o = we((d = i.category) == null ? void 0 : d.url), s = R(i.hero, r === 0 ? "large" : "medium");
     return /* @__PURE__ */ l("article", { className: `lx-way${r === 0 ? " lx-way--first" : ""}`, "data-rubric": o, children: [
       /* @__PURE__ */ e("span", { className: "lx-way__pin", "aria-hidden": "true" }),
-      /* @__PURE__ */ e("a", { className: "lx-way__art", href: "/" + i.url, tabIndex: -1, "aria-hidden": "true", children: s ? /* @__PURE__ */ e("img", { src: s, alt: "", loading: "lazy" }) : /* @__PURE__ */ e(j, { seed: i.slug, cols: r === 0 ? 64 : 44 }) }),
+      /* @__PURE__ */ e("a", { className: "lx-way__art", href: "/" + i.url, tabIndex: -1, "aria-hidden": "true", children: s ? /* @__PURE__ */ e("img", { src: s, alt: "", loading: "lazy" }) : /* @__PURE__ */ e(H, { seed: i.slug, cols: r === 0 ? 64 : 44 }) }),
       /* @__PURE__ */ l("div", { className: "lx-way__text", children: [
         /* @__PURE__ */ l("p", { className: "lx-way__meta", children: [
           i.dateLabel && /* @__PURE__ */ e("span", { children: i.dateLabel }),
@@ -907,7 +938,7 @@ function D({ posts: a, site: n }) {
     ] }, i.id);
   }) });
 }
-function _e({ site: a }) {
+function ye({ site: a }) {
   const n = F(a.themeConfig);
   return /* @__PURE__ */ l("section", { className: "lx-hero", "data-lx-hero": !0, children: [
     /* @__PURE__ */ e("canvas", { className: "lx-hero__canvas", "data-lx-back": !0, "aria-hidden": "true" }),
@@ -919,15 +950,15 @@ function _e({ site: a }) {
         /* @__PURE__ */ e("span", { children: n.secondLine })
       ] })
     ] }),
-    /* @__PURE__ */ e("svg", { className: "lx-hero__static", viewBox: "0 0 1600 300", preserveAspectRatio: "none", "aria-hidden": "true", children: [0, 1, 2].map((t) => /* @__PURE__ */ e("path", { d: H(N("hero" + t), 1600, 300 - t * 70), transform: `translate(0 ${t * 70})` }, t)) }),
+    /* @__PURE__ */ e("svg", { className: "lx-hero__static", viewBox: "0 0 1600 300", preserveAspectRatio: "none", "aria-hidden": "true", children: [0, 1, 2].map((t) => /* @__PURE__ */ e("path", { d: j(N("hero" + t), 1600, 300 - t * 70), transform: `translate(0 ${t * 70})` }, t)) }),
     /* @__PURE__ */ e("canvas", { className: "lx-hero__canvas lx-hero__canvas--front", "data-lx-front": !0, "aria-hidden": "true" })
   ] });
 }
 function ke({ site: a, posts: n, staticPage: t, archivesLink: i }) {
   const r = z(a);
   return t ? /* @__PURE__ */ e("div", { className: "lx-prose lx-prose--page", dangerouslySetInnerHTML: { __html: t.bodyHtml } }) : /* @__PURE__ */ l(B, { children: [
-    /* @__PURE__ */ e(_e, { site: a }),
     /* @__PURE__ */ e(ye, { site: a }),
+    /* @__PURE__ */ e(_e, { site: a }),
     /* @__PURE__ */ l("section", { className: "lx-section", "aria-labelledby": "lx-latest", children: [
       /* @__PURE__ */ e("h2", { id: "lx-latest", className: "lx-section__title", children: r("latest") }),
       /* @__PURE__ */ e(D, { posts: n, site: a }),
@@ -947,7 +978,7 @@ function Ne({ site: a, post: n, bodyHtml: t, author: i, hero: r, primaryTerm: o,
   const k = !!(p && c && ((M = n.fields) == null ? void 0 : M["header-photo"]) === !0), T = n.contentMarkdown.trim().split(/\s+/).length, f = Math.max(1, Math.round(T / 220));
   return /* @__PURE__ */ l("article", { "data-rubric": u, className: `lx-article${p ? "" : " lx-article--page"}${n.slug === "qui-suis-je" ? " lx-article--about" : ""}`, children: [
     /* @__PURE__ */ l("header", { className: `lx-band lx-band--article${k ? " lx-band--photo" : ""}`, children: [
-      k ? /* @__PURE__ */ e("div", { className: "lx-band__art lx-band__photo", "aria-hidden": "true", children: /* @__PURE__ */ e("img", { src: c, alt: "" }) }) : /* @__PURE__ */ e(j, { seed: n.slug, width: 1600, height: 720, cols: 110, className: "lx-band__art" }),
+      k ? /* @__PURE__ */ e("div", { className: "lx-band__art lx-band__photo", "aria-hidden": "true", children: /* @__PURE__ */ e("img", { src: c, alt: "" }) }) : /* @__PURE__ */ e(H, { seed: n.slug, width: 1600, height: 720, cols: 110, className: "lx-band__art" }),
       /* @__PURE__ */ l("div", { className: "lx-band__inner", children: [
         p && o && /* @__PURE__ */ e("a", { className: "lx-band__rubric", href: `/${ie(o)}`, children: o.name }),
         /* @__PURE__ */ e("h1", { children: n.title }),
@@ -962,7 +993,7 @@ function Ne({ site: a, post: n, bodyHtml: t, author: i, hero: r, primaryTerm: o,
           ] })
         ] })
       ] }),
-      /* @__PURE__ */ e("svg", { className: "lx-band__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: H(N(n.slug), 1600, 90) }) })
+      /* @__PURE__ */ e("svg", { className: "lx-band__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: j(N(n.slug), 1600, 90) }) })
     ] }),
     c && !k && /* @__PURE__ */ l("figure", { className: "lx-figure", children: [
       /* @__PURE__ */ e("img", { src: c, alt: (r == null ? void 0 : r.alt) ?? "" }),
@@ -977,8 +1008,8 @@ function Ne({ site: a, post: n, bodyHtml: t, author: i, hero: r, primaryTerm: o,
       ] }),
       /* @__PURE__ */ l("div", { className: "lx-climb", "data-lx-climb": !0, hidden: !0, "aria-hidden": "true", children: [
         /* @__PURE__ */ l("svg", { viewBox: "0 0 1600 60", preserveAspectRatio: "none", children: [
-          /* @__PURE__ */ e("path", { className: "lx-climb__base", d: Q(N(n.slug), 1600, 60) }),
-          /* @__PURE__ */ e("path", { className: "lx-climb__done", d: Q(N(n.slug), 1600, 60) })
+          /* @__PURE__ */ e("path", { className: "lx-climb__base", d: X(N(n.slug), 1600, 60) }),
+          /* @__PURE__ */ e("path", { className: "lx-climb__done", d: X(N(n.slug), 1600, 60) })
         ] }),
         /* @__PURE__ */ e("span", { className: "lx-climb__dot" })
       ] })
@@ -990,7 +1021,7 @@ function Me({ site: a, term: n, posts: t, archivesLink: i }) {
   const r = z(a), o = (d = C.find((c) => c.slug === n.slug)) == null ? void 0 : d.slug, s = n.description || (o ? r(`r.${o}`) : "");
   return /* @__PURE__ */ l(B, { children: [
     /* @__PURE__ */ l("header", { className: "lx-band lx-band--category", "data-rubric": o, children: [
-      /* @__PURE__ */ e(j, { seed: n.slug, width: 1600, height: 620, cols: 110, className: "lx-band__art" }),
+      /* @__PURE__ */ e(H, { seed: n.slug, width: 1600, height: 620, cols: 110, className: "lx-band__art" }),
       /* @__PURE__ */ l("div", { className: "lx-band__inner", children: [
         /* @__PURE__ */ e("h1", { children: n.name }),
         s && /* @__PURE__ */ e("p", { className: "lx-band__lead", children: s }),
@@ -1000,7 +1031,7 @@ function Me({ site: a, term: n, posts: t, archivesLink: i }) {
           r(t.length > 1 ? "articles" : "article")
         ] })
       ] }),
-      /* @__PURE__ */ e("svg", { className: "lx-band__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: H(N(n.slug), 1600, 90) }) })
+      /* @__PURE__ */ e("svg", { className: "lx-band__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: j(N(n.slug), 1600, 90) }) })
     ] }),
     /* @__PURE__ */ l("section", { className: "lx-section lx-section--flush", "data-rubric": o, children: [
       /* @__PURE__ */ e(D, { posts: t, site: a }),
@@ -1012,7 +1043,7 @@ function ze({ site: a, author: n, posts: t }) {
   const i = R(n.avatar, "small");
   return /* @__PURE__ */ l(B, { children: [
     /* @__PURE__ */ l("header", { className: "lx-band lx-band--author", children: [
-      /* @__PURE__ */ e(j, { seed: n.displayName, width: 1600, height: 620, cols: 110, className: "lx-band__art" }),
+      /* @__PURE__ */ e(H, { seed: n.displayName, width: 1600, height: 620, cols: 110, className: "lx-band__art" }),
       /* @__PURE__ */ l("div", { className: "lx-band__inner", children: [
         i && /* @__PURE__ */ e("img", { className: "lx-avatar", src: i, alt: "", width: 120, height: 120 }),
         /* @__PURE__ */ e("h1", { children: n.displayName }),
@@ -1020,7 +1051,7 @@ function ze({ site: a, author: n, posts: t }) {
         n.bio && /* @__PURE__ */ e("p", { className: "lx-band__bio", children: n.bio }),
         n.socials && n.socials.length > 0 && /* @__PURE__ */ e("ul", { className: "lx-socials", children: n.socials.map((r) => /* @__PURE__ */ e("li", { children: /* @__PURE__ */ e("a", { href: r.url, rel: "me noopener", "aria-label": le(r.network), children: /* @__PURE__ */ e(re, { network: r.network }) }) }, r.network)) })
       ] }),
-      /* @__PURE__ */ e("svg", { className: "lx-band__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: H(N(n.id), 1600, 90) }) })
+      /* @__PURE__ */ e("svg", { className: "lx-band__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: j(N(n.id), 1600, 90) }) })
     ] }),
     /* @__PURE__ */ e("section", { className: "lx-section lx-section--flush", children: /* @__PURE__ */ e(D, { posts: t, site: a }) })
   ] });
@@ -1028,7 +1059,7 @@ function ze({ site: a, author: n, posts: t }) {
 function Se({ site: a, message: n }) {
   const t = z(a);
   return /* @__PURE__ */ l("section", { className: "lx-lost", children: [
-    /* @__PURE__ */ e(j, { seed: "hors-sentier", width: 1600, height: 900, cols: 120, className: "lx-lost__art" }),
+    /* @__PURE__ */ e(H, { seed: "hors-sentier", width: 1600, height: 900, cols: 120, className: "lx-lost__art" }),
     /* @__PURE__ */ l("div", { className: "lx-lost__copy", children: [
       /* @__PURE__ */ e("p", { className: "lx-lost__code", children: "404" }),
       /* @__PURE__ */ e("h1", { children: t("notFoundTitle") }),
@@ -1106,10 +1137,10 @@ const Ae = {
     },
     settings: { navLabel: "Leaux Altitude", title: "Réglages Leaux Altitude", firstLine: "Titre, première ligne", secondLine: "Titre, deuxième ligne", tagline: "Accroche", save: "Enregistrer", saved: "Enregistré. Lancez Régénérer → Accueil pour publier." }
   }
-}, He = {
+}, je = {
   id: "leaux-altitude",
   name: "Leaux Altitude",
-  version: "1.2.1",
+  version: "1.3.0",
   description: "Dedicated theme for leaux.ovh: generative topographic art, one trail per section.",
   readme: xe,
   scssEntry: "theme.css",
@@ -1138,10 +1169,10 @@ const Ae = {
     notFound: Se
   },
   // /theme-settings page: hero texts.
-  settings: { navLabelKey: "settings.navLabel", defaultConfig: V, component: Le, schema: be },
+  settings: { navLabelKey: "settings.navLabel", defaultConfig: Q, component: Le, schema: be },
   // Translations, namespace "theme-leaux-altitude" (admin UI + public labels).
   i18n: Ae
 };
 export {
-  He as default
+  je as default
 };
