@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="https://leaux.ovh/rss.xsl"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Frédéric Leaux</title>
+    <link>https://leaux.ovh/</link>
+    <description>Ce que l&apos;IA change au travail, ce que je construis, et ce que je vais chercher en montagne.</description>
+    <language>fr</language>
+    <lastBuildDate>Mon, 09 Nov 2026 08:09:09 GMT</lastBuildDate>
+    <atom:link href="https://leaux.ovh/rss.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>L&apos;IA accélère tout. Même la dette de sécurité.</title>
+      <link>https://leaux.ovh/edito/l-ia-accelere-le-developpement-qui-va-absorber-l-explosion-des-vulnerabilites.html</link>
+      <guid isPermaLink="true">https://leaux.ovh/edito/l-ia-accelere-le-developpement-qui-va-absorber-l-explosion-des-vulnerabilites.html</guid>
+      <category>Édito</category>
+      <description><![CDATA[En 2026, le nombre de vulnérabilités publiées a presque doublé. L'IA accélère autant la découverte des failles que la production de code, et ce sont les équipes techniques qui absorbent le choc.]]></description>
+      <pubDate>Sun, 08 Nov 2026 18:27:44 GMT</pubDate>
+      <enclosure url="https://fleox.github.io/leaux-ovh/media/2026/11/failles-iceberg-2996f1/large.webp" length="253356" type="image/webp"/>
+    </item>
+    <item>
+      <title>Vibe Coding : le danger de construire ce que l&apos;on ne comprend plus</title>
+      <link>https://leaux.ovh/edito/vibe-coding-le-danger-de-construire-ce-que-l-on-ne-comprend-plus.html</link>
+      <guid isPermaLink="true">https://leaux.ovh/edito/vibe-coding-le-danger-de-construire-ce-que-l-on-ne-comprend-plus.html</guid>
+      <category>Édito</category>
+      <description><![CDATA[L'IA démocratise le développement logiciel et permet aujourd'hui à presque tout le monde de construire des applications. C'est une formidable opportunité. Mais entre produire un outil qui fonctionne et concevoir un produit solide, maintenable et évolutif, il y a un monde. Et je commence à voir les conséquences de cette confusion sur le terrain.]]></description>
+      <pubDate>Sat, 07 Nov 2026 18:32:57 GMT</pubDate>
+      <enclosure url="https://fleox.github.io/leaux-ovh/media/2026/11/vibe-coding-super-dev-ef5c53/large.webp" length="291316" type="image/webp"/>
+    </item>
+    <item>
+      <title>GPX Map 3D est disponible sur l&apos;App Store</title>
+      <link>https://leaux.ovh/mes-projets/gpx-map-3d-disponible-sur-l-app-store.html</link>
+      <guid isPermaLink="true">https://leaux.ovh/mes-projets/gpx-map-3d-disponible-sur-l-app-store.html</guid>
+      <category>Mes projets</category>
+      <description><![CDATA[Mon application pour préparer, enregistrer, suivre et revivre ses randonnées en 3D est sortie sur iPhone, iPad, Mac et Apple Watch.]]></description>
+      <pubDate>Tue, 03 Nov 2026 08:00:00 GMT</pubDate>
+      <enclosure url="https://fleox.github.io/leaux-ovh/media/2026/11/gpx-map-3d-app-store-372ffc/large.webp" length="131840" type="image/webp"/>
+    </item>
+    <item>
+      <title>AgentCMS, le CMS statique que mon agent sait piloter</title>
+      <link>https://leaux.ovh/mes-projets/agentcms-le-cms-que-mon-agent-sait-piloter.html</link>
+      <guid isPermaLink="true">https://leaux.ovh/mes-projets/agentcms-le-cms-que-mon-agent-sait-piloter.html</guid>
+      <category>Mes projets</category>
+      <description><![CDATA[De l'hébergement à la mise à jour du site et de ses contenus, AgentCMS confie tout le pilotage à votre agent IA, en une simple conversation.]]></description>
+      <pubDate>Sat, 24 Oct 2026 09:00:00 GMT</pubDate>
+      <enclosure url="https://fleox.github.io/leaux-ovh/media/2026/11/agentcms-cover-76b368/large.webp" length="22330" type="image/webp"/>
+    </item>
+    <item>
+      <title>GPX Map 3D : faire voler une caméra le long d&apos;une trace</title>
+      <link>https://leaux.ovh/mes-projets/gpx-map-3d-faire-voler-une-camera-le-long-d-une-trace.html</link>
+      <guid isPermaLink="true">https://leaux.ovh/mes-projets/gpx-map-3d-faire-voler-une-camera-le-long-d-une-trace.html</guid>
+      <category>Mes projets</category>
+      <description><![CDATA[Déposer un fichier GPX dans le navigateur, le regarder survoler le relief en 3D et repartir avec la vidéo : gratuit, sans compte, et sans rien envoyer.]]></description>
+      <pubDate>Mon, 05 Oct 2026 09:00:00 GMT</pubDate>
+      <enclosure url="https://fleox.github.io/leaux-ovh/media/2026/11/gpx-map-3d-web-survol-b80679/large.webp" length="54514" type="image/webp"/>
+    </item>
+    <item>
+      <title>Piloter un agent IA interne (Hermes) avec des Skills Python plutôt que des MCP</title>
+      <link>https://leaux.ovh/transition-ia/piloter-un-agent-ia-interne-hermes-avec-des-skills-python.html</link>
+      <guid isPermaLink="true">https://leaux.ovh/transition-ia/piloter-un-agent-ia-interne-hermes-avec-des-skills-python.html</guid>
+      <category>Transition IA</category>
+      <description><![CDATA[Une trentaine de skills, une dizaine de MCP, et un agent qui hésite : comment on a tout restructuré autour d'un router, de petits skills spécialisés et de Skills Python maison.]]></description>
+      <pubDate>Tue, 08 Sep 2026 09:00:00 GMT</pubDate>
+      <enclosure url="https://fleox.github.io/leaux-ovh/media/2026/11/cover-594b11/large.webp" length="33134" type="image/webp"/>
+    </item>
+    <item>
+      <title>De Sixt-Fer-à-Cheval aux Houches : prendre du recul</title>
+      <link>https://leaux.ovh/passions/sixt-fer-a-cheval-les-houches-prendre-du-recul.html</link>
+      <guid isPermaLink="true">https://leaux.ovh/passions/sixt-fer-a-cheval-les-houches-prendre-du-recul.html</guid>
+      <category>Passions</category>
+      <description><![CDATA[Après une année chargée, je refais ce trek pour la troisième fois, sans plan ni rythme imposé. Juste écouter mon corps, m'arrêter où ça me plaît, et reposer mon esprit.]]></description>
+      <pubDate>Wed, 26 Aug 2026 18:00:00 GMT</pubDate>
+      <enclosure url="https://fleox.github.io/leaux-ovh/media/2026/11/recul-panorama-col-6c059b/large.webp" length="230832" type="image/webp"/>
+    </item>
+    <item>
+      <title>Retour d&apos;expérience : la mise en place d&apos;une IA auto-hébergée en entreprise (Semaine 2)</title>
+      <link>https://leaux.ovh/transition-ia/retour-d-experience-ia-auto-hebergee-en-entreprise-semaine-2.html</link>
+      <guid isPermaLink="true">https://leaux.ovh/transition-ia/retour-d-experience-ia-auto-hebergee-en-entreprise-semaine-2.html</guid>
+      <category>Transition IA</category>
+      <description><![CDATA[Deuxième semaine : un dépôt partagé, des Skills pour guider l'agent, de nouveaux outils, et le défi de faire tourner deux modèles sur le même serveur.]]></description>
+      <pubDate>Fri, 26 Jun 2026 09:00:00 GMT</pubDate>
+      <enclosure url="https://fleox.github.io/leaux-ovh/media/2026/11/ia-auto-hebergee-s2-baab05/large.webp" length="64646" type="image/webp"/>
+    </item>
+    <item>
+      <title>Retour d&apos;expérience : la mise en place d&apos;une IA auto-hébergée en entreprise</title>
+      <link>https://leaux.ovh/transition-ia/retour-d-experience-ia-auto-hebergee-en-entreprise.html</link>
+      <guid isPermaLink="true">https://leaux.ovh/transition-ia/retour-d-experience-ia-auto-hebergee-en-entreprise.html</guid>
+      <category>Transition IA</category>
+      <description><![CDATA[De l'idée à la production : le chemin produit et technique pour faire tourner une IA d'entreprise performante et sécurisée sur nos propres serveurs, en France.]]></description>
+      <pubDate>Sat, 20 Jun 2026 09:00:00 GMT</pubDate>
+      <enclosure url="https://fleox.github.io/leaux-ovh/media/2026/11/ia-auto-hebergee-s2-baab05/large.webp" length="64646" type="image/webp"/>
+    </item>
+    <item>
+      <title>De Sixt-Fer-à-Cheval aux Houches : les rencontres</title>
+      <link>https://leaux.ovh/passions/sixt-fer-a-cheval-les-houches-les-rencontres.html</link>
+      <guid isPermaLink="true">https://leaux.ovh/passions/sixt-fer-a-cheval-les-houches-les-rencontres.html</guid>
+      <category>Passions</category>
+      <description><![CDATA[Un bout de GR5 que je connaissais par cœur, redécouvert dans la brume, et une rencontre qui a tout changé : Léo, jeune aventurier parti pour le GR5 en entier.]]></description>
+      <pubDate>Sat, 13 Sep 2025 18:00:00 GMT</pubDate>
+      <enclosure url="https://fleox.github.io/leaux-ovh/media/2026/11/sixt-sentier-brume-952293/large.webp" length="387320" type="image/webp"/>
+    </item>
+    <item>
+      <title>Le Tour du Mont-Blanc dans la neige : le challenge</title>
+      <link>https://leaux.ovh/passions/tour-du-mont-blanc-dans-la-neige.html</link>
+      <guid isPermaLink="true">https://leaux.ovh/passions/tour-du-mont-blanc-dans-la-neige.html</guid>
+      <category>Passions</category>
+      <description><![CDATA[Retour sur le TMB en juin, avec des crampons achetés au dernier moment : une tempête de neige au col du Bonhomme, des cols fermés, et une équipe de jeunes trekkeurs à guider jusqu'au bout.]]></description>
+      <pubDate>Wed, 19 Jun 2024 18:00:00 GMT</pubDate>
+      <enclosure url="https://fleox.github.io/leaux-ovh/media/2026/11/tmbn-neige-ciel-bleu-eb18e0/large.webp" length="243766" type="image/webp"/>
+    </item>
+    <item>
+      <title>Reprise du GR5, de Samoëns à Landry : la persévérance</title>
+      <link>https://leaux.ovh/passions/gr5-samoens-landry-la-perseverance.html</link>
+      <guid isPermaLink="true">https://leaux.ovh/passions/gr5-samoens-landry-la-perseverance.html</guid>
+      <category>Passions</category>
+      <description><![CDATA[Retour sur le GR5 là où je m'étais arrêté : un sac de 12 kilos, six jours de grand beau, la route des crêtes et ma première nuit de marche à la frontale.]]></description>
+      <pubDate>Mon, 11 Sep 2023 18:00:00 GMT</pubDate>
+      <enclosure url="https://fleox.github.io/leaux-ovh/media/2026/11/gr5b-lac-anterne-f9f085/large.webp" length="200306" type="image/webp"/>
+    </item>
+    <item>
+      <title>Un bout du GR5, de Thonon-les-Bains à Samoëns : savoir s&apos;arrêter</title>
+      <link>https://leaux.ovh/passions/gr5-thonon-samoens-savoir-s-arreter.html</link>
+      <guid isPermaLink="true">https://leaux.ovh/passions/gr5-thonon-samoens-savoir-s-arreter.html</guid>
+      <category>Passions</category>
+      <description><![CDATA[Mon deuxième trek : la moitié du GR5 visée en 7 jours, un col passé sous les éclairs, beaucoup trop de neige, et la décision de m'arrêter à Samoëns.]]></description>
+      <pubDate>Sat, 27 May 2023 18:00:00 GMT</pubDate>
+      <enclosure url="https://fleox.github.io/leaux-ovh/media/2026/11/gr5-crepuscule-a920a9/large.webp" length="24754" type="image/webp"/>
+    </item>
+    <item>
+      <title>Le Tour du Mont-Blanc en 4 jours : l&apos;expérience du manque d&apos;expérience</title>
+      <link>https://leaux.ovh/passions/tour-du-mont-blanc-en-4-jours.html</link>
+      <guid isPermaLink="true">https://leaux.ovh/passions/tour-du-mont-blanc-en-4-jours.html</guid>
+      <category>Passions</category>
+      <description><![CDATA[Mon premier grand trek : le Tour du Mont-Blanc en 4 jours au lieu de 6 à 8, en autonomie, avec un sac de plus de 20 kilos. Ce que j'y ai appris.]]></description>
+      <pubDate>Tue, 13 Sep 2022 18:00:00 GMT</pubDate>
+      <enclosure url="https://fleox.github.io/leaux-ovh/media/2026/11/tmb-alpages-d19d42/large.webp" length="262592" type="image/webp"/>
+    </item>
+  </channel>
+</rss>
