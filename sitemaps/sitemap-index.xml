@@ -21,4 +21,8 @@
     <loc>https://leaux.ovh/sitemaps/sitemap-2026.xml</loc>
     <lastmod>2026-11-09</lastmod>
   </sitemap>
+  <sitemap>
+    <loc>https://leaux.ovh/sitemaps/sitemap-archives.xml</loc>
+    <lastmod>2026-11-09</lastmod>
+  </sitemap>
 </sitemapindex>
