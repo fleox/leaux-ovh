@@ -9,8 +9,11 @@ Section slugs and colors live in `src/rubrics.ts` and `src/theme.css` (`[data-ru
 | Field | Type | Effect |
 |---|---|---|
 | `header-photo` | yes / no | On a post with a featured image, `true` puts the image behind the header, with a parallax on scroll, instead of the contour map. The image is then not repeated under the header. |
+| `toc` | yes / no | `true` adds a table of contents built from the body's `h2` (numbered) and `h3` (indented); the headings get ids. Wide screens (≥ 1360 px): sticky rail in the left margin, current section highlighted. Narrower: a sticky bar under the header that shows the current section and a reading progress line, and drops the list down on tap. Without JS: an open list above the text. Shown only with at least 2 headings. |
 
 ## Article components (raw HTML in Markdown)
+
+- En bref (key points, first block of a long post): `<aside class="lx-brief" aria-label="En bref"><p class="lx-brief__tag">En bref</p><ul><li>… <strong>…</strong></li></ul></aside>`.
 
 - Pull quote: `<figure class="lx-pullquote"><blockquote><p>…</p></blockquote></figure>` (optional `<figcaption>`).
 - Case box: `<aside class="lx-case"><p class="lx-case__tag">Cas réel · date</p><p class="lx-case__title">…</p><p>…</p><p class="lx-case__src">Source : <a href="…">…</a></p></aside>`.
