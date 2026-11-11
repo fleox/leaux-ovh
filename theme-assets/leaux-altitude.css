@@ -267,6 +267,66 @@ a:hover > .lx-peak { transform: translateY(-16px); }
 .lx-related__list a:hover { color: var(--lx-deep); }
 .lx-related__list small { display: block; margin-bottom: 6px; font-size: .95rem; font-weight: 400; color: var(--lx-muted); }
 
+/* "En bref": key points at the top of a long post */
+.lx-prose .lx-brief { margin: 0 0 2.4em; padding: 22px clamp(18px, 3vw, 30px) 20px; border-left: 8px solid var(--lx-tint); background: color-mix(in srgb, var(--lx-tint) 13%, var(--lx-snow)); font: 500 .8em/1.48 var(--lx-display); }
+.lx-prose .lx-brief__tag { display: inline-block; margin: 0 0 14px; padding: 4px 10px 5px; background: var(--lx-tint); color: var(--lx-night); font: 800 .74em/1.1 var(--lx-display); letter-spacing: .1em; text-transform: uppercase; }
+.lx-prose .lx-brief ul { display: grid; gap: 11px; margin: 0; padding: 0; list-style: none; }
+.lx-prose .lx-brief li { position: relative; margin: 0; padding-left: 26px; }
+.lx-prose .lx-brief li::before { content: ""; position: absolute; left: 0; top: .34em; width: 15px; height: 11px; background: var(--lx-deep); clip-path: polygon(0 100%, 34% 22%, 52% 56%, 74% 0, 100% 100%); }
+.lx-prose .lx-brief strong { font-weight: 800; }
+
+/* Table of contents ("toc" field). Without JS: an open list above the text.
+   With JS (.is-live): a sticky bar showing the current section on narrow
+   screens, a sticky rail in the left margin on wide ones. */
+html:has(.lx-toc) { scroll-padding-top: 132px; }
+.lx-body--toc { position: relative; }
+.lx-toc { --lx-toc-top: 0px; position: relative; z-index: 25; max-width: calc(68ch + 2 * var(--lx-gutter)); margin: clamp(24px, 4vw, 40px) auto 0; padding: 0 var(--lx-gutter); font-family: var(--lx-display); }
+.lx-toc__box { border: 2px solid var(--lx-line); background: var(--lx-bg); }
+.lx-toc__bar { position: relative; display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 0 16px; cursor: pointer; list-style: none; user-select: none; }
+.lx-toc__bar::-webkit-details-marker { display: none; }
+.lx-toc__title { flex: none; color: var(--lx-deep); font: 800 .78rem/1 var(--lx-display); letter-spacing: .12em; text-transform: uppercase; }
+.lx-toc__now { flex: 1; min-width: 0; overflow: hidden; color: var(--lx-text); font: 650 .98rem/1.2 var(--lx-display); white-space: nowrap; text-overflow: ellipsis; }
+.lx-toc__chev { flex: none; width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; transition: transform .25s; }
+.lx-toc__box[open] .lx-toc__chev { transform: rotate(180deg); }
+.lx-toc__progress { position: absolute; inset: auto auto -2px 0; width: calc(var(--lx-p, 0) * 100%); height: 3px; background: var(--lx-tint); }
+.lx-toc__list { margin: 0; padding: 4px 8px 12px; list-style: none; }
+.lx-toc__list li { margin: 0; }
+.lx-toc__list a { display: flex; gap: 12px; padding: 9px 8px; border-radius: 4px; color: var(--lx-muted); font: 600 1rem/1.3 var(--lx-display); text-decoration: none; }
+.lx-toc__list a:hover { color: var(--lx-text); background: color-mix(in srgb, var(--lx-tint) 12%, transparent); }
+.lx-toc__list a[aria-current="true"] { color: var(--lx-text); }
+.lx-toc__list a[aria-current="true"] .lx-toc__num { color: var(--lx-night); background: var(--lx-tint); }
+.lx-toc__list .is-sub a { padding-left: 50px; font-size: .92rem; font-weight: 500; }
+.lx-toc__num { flex: none; display: inline-grid; place-items: center; width: 30px; height: 22px; border-radius: 3px; color: var(--lx-deep); background: color-mix(in srgb, var(--lx-tint) 16%, transparent); font: 800 .76rem/1 var(--lx-display); font-variant-numeric: tabular-nums; transition: background .2s, color .2s; }
+
+/* Narrow screens, JS on: sticky bar, the list drops down over the text. */
+@media (max-width: 1359px) {
+  .lx-toc.is-live { position: sticky; top: var(--lx-toc-top); margin-top: 0; padding: 0; max-width: none; transition: top .35s cubic-bezier(.2, .7, .2, 1); }
+  body:has(.lx-header:not(.is-hidden)) .lx-toc.is-live { --lx-toc-top: 68px; }
+  .lx-toc.is-live .lx-toc__box { border-width: 0 0 1px; background: color-mix(in srgb, var(--lx-bg) 94%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+  .lx-toc.is-live .lx-toc__bar { max-width: calc(68ch + 2 * var(--lx-gutter)); margin: 0 auto; padding: 0 var(--lx-gutter); }
+  .lx-toc.is-live .lx-toc__progress { left: 0; }
+  .lx-toc.is-live .lx-toc__list { position: absolute; top: 100%; left: 50%; width: min(100%, calc(68ch + 2 * var(--lx-gutter))); max-height: calc(100svh - var(--lx-toc-top) - 120px); overflow-y: auto; overscroll-behavior: contain; transform: translateX(-50%); padding: 8px var(--lx-gutter) 16px; background: var(--lx-bg); border-bottom: 1px solid var(--lx-line); box-shadow: 0 24px 40px -18px rgba(16, 22, 63, .45); }
+  .lx-toc:not(.is-live) .lx-toc__progress { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .lx-toc.is-live { transition: none; } }
+
+/* Wide screens: the contents sit in the left margin, beside the text. */
+@media (min-width: 1360px) {
+  .lx-body--toc { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); }
+  .lx-body--toc > .lx-prose { grid-column: 2; grid-row: 1; width: calc(68ch + 2 * var(--lx-gutter)); max-width: 100%; }
+  .lx-toc { grid-column: 1; grid-row: 1; align-self: start; justify-self: end; position: sticky; top: calc(var(--lx-toc-top) + 28px); width: min(264px, calc(100% + var(--lx-gutter) - 72px)); max-height: calc(100vh - var(--lx-toc-top) - 110px); margin: clamp(32px, 5vw, 64px) calc(40px - var(--lx-gutter)) 0 0; padding: 0; overflow-y: auto; transition: top .35s cubic-bezier(.2, .7, .2, 1); }
+  body:has(.lx-header:not(.is-hidden)) .lx-toc { --lx-toc-top: 68px; }
+  .lx-toc__box { border: 0; background: none; }
+  .lx-toc__bar { min-height: 0; padding: 0 0 14px 2px; cursor: default; pointer-events: none; }
+  .lx-toc__now, .lx-toc__chev { display: none; }
+  .lx-toc__progress { inset: 34px auto auto 0; width: 2px; height: calc(var(--lx-p, 0) * (100% - 34px)); display: none; }
+  .lx-toc__list { position: relative; padding: 0; border-left: 2px solid var(--lx-line); }
+  .lx-toc__list a { margin-left: -2px; padding: 8px 6px 8px 14px; border-left: 2px solid transparent; border-radius: 0 4px 4px 0; font-size: .9rem; }
+  .lx-toc__list a[aria-current="true"] { border-left-color: var(--lx-tint); }
+  .lx-toc__list .is-sub a { padding-left: 56px; font-size: .84rem; }
+  .lx-toc__num { width: 28px; height: 20px; font-size: .7rem; }
+}
+
 /* The reading climb */
 .lx-climb { position: fixed; inset: auto 0 0; z-index: 20; height: 60px; pointer-events: none; }
 .lx-climb svg { position: absolute; inset: 0; width: 100%; height: 100%; }

@@ -330,6 +330,81 @@
     header.addEventListener("focusin", function () { set(false); });
   }
 
+  /* Table of contents: highlights the section being read and, on narrow
+     screens, becomes a sticky bar that shows it and opens on tap. */
+  function toc(nav) {
+    var box = nav.querySelector("details");
+    var now = nav.querySelector("[data-lx-toc-now]");
+    var links = nav.querySelectorAll(".lx-toc__list a");
+    var prose = document.querySelector("[data-lx-prose]");
+    var heads = [], labels = [];
+    for (var i = 0; i < links.length; i++) {
+      var h = document.getElementById(decodeURIComponent(links[i].hash.slice(1)));
+      if (!h) continue;
+      heads.push({ el: h, link: links[i] });
+      labels.push(links[i].lastChild.textContent);
+    }
+    if (!heads.length || !box) return;
+    var idle = now.textContent;
+    var wide = window.matchMedia("(min-width: 1360px)");
+    var current = -1, queued = false;
+    nav.classList.add("is-live");
+    function mode() {
+      box.open = wide.matches;
+    }
+    function apply() {
+      queued = false;
+      var line = innerHeight * .3, k = -1;
+      for (var i = 0; i < heads.length; i++) if (heads[i].el.getBoundingClientRect().top <= line) k = i;
+      if (k !== current) {
+        if (current >= 0) heads[current].link.removeAttribute("aria-current");
+        if (k >= 0) heads[k].link.setAttribute("aria-current", "true");
+        current = k;
+        now.textContent = k >= 0 ? labels[k] : idle;
+        // Keep the active entry visible when the rail scrolls.
+        if (k >= 0 && wide.matches) {
+          var a = heads[k].link, top = a.offsetTop, view = nav.scrollTop;
+          if (top < view || top > view + nav.clientHeight - 40) nav.scrollTop = top - 40;
+        }
+      }
+      if (prose) {
+        var r = prose.getBoundingClientRect();
+        var p = Math.min(1, Math.max(0, -r.top / Math.max(1, r.height - innerHeight)));
+        nav.style.setProperty("--lx-p", p.toFixed(3));
+      }
+    }
+    function queue() {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(apply);
+    }
+    function close() {
+      if (!wide.matches && box.open) box.open = false;
+    }
+    // A choice in the list closes the drop-down; the browser follows the anchor.
+    nav.addEventListener("click", function (e) {
+      if (e.target.closest && e.target.closest(".lx-toc__list a")) close();
+    });
+    document.addEventListener("click", function (e) {
+      if (!nav.contains(e.target)) close();
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && !wide.matches && box.open) {
+        box.open = false;
+        nav.querySelector("summary").focus();
+      }
+    });
+    // On wide screens the list is always open.
+    box.addEventListener("toggle", function () {
+      if (wide.matches && !box.open) box.open = true;
+    });
+    if (wide.addEventListener) wide.addEventListener("change", mode);
+    mode();
+    window.addEventListener("scroll", queue, { passive: true });
+    window.addEventListener("resize", queue);
+    apply();
+  }
+
   /* Page transition: the clicked post's map grows into the article header.
      The article side is named in the CSS, the head script names the card
      when coming back. Here we name the card we are leaving from. */
@@ -362,6 +437,8 @@
     if (climbHost) try { climb(climbHost); } catch (e) {}
     var band = document.querySelector(".lx-band--category, .lx-band--photo");
     if (band && !calm) try { parallax(band); } catch (e) {}
+    var tocNav = document.querySelector("[data-lx-toc]");
+    if (tocNav) try { toc(tocNav); } catch (e) {}
     var relatedHost = document.querySelector("[data-lx-related]");
     if (relatedHost) related(relatedHost);
   }
