@@ -346,7 +346,7 @@
     }
     if (!heads.length || !box) return;
     var idle = now.textContent;
-    var wide = window.matchMedia("(min-width: 1360px)");
+    var wide = window.matchMedia("(min-width: 1200px)");
     var current = -1, queued = false;
     nav.classList.add("is-live");
     function mode() {
