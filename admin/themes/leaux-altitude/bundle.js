@@ -1,4 +1,4 @@
-import { jsxs as o, jsx as e, Fragment as $ } from "react/jsx-runtime";
+import { jsxs as o, jsx as e, Fragment as j } from "react/jsx-runtime";
 import { i18n as le, pickPublicLocale as oe, canonicalUrl as te, buildPostUrl as se, postSortMillis as F, pickFormat as P, buildTermUrl as ne, SocialIcon as ce, socialLabel as de, toast as pe } from "@agent-cms/runtime";
 import { useState as V, useEffect as xe } from "react";
 import { useTranslation as he } from "react-i18next";
@@ -303,7 +303,7 @@ html:has(.lx-toc) { scroll-padding-top: 132px; }
 .lx-toc__num { flex: none; display: inline-grid; place-items: center; width: 30px; height: 22px; border-radius: 3px; color: var(--lx-deep); background: color-mix(in srgb, var(--lx-tint) 16%, transparent); font: 800 .76rem/1 var(--lx-display); font-variant-numeric: tabular-nums; transition: background .2s, color .2s; }
 
 /* Narrow screens, JS on: sticky bar, the list drops down over the text. */
-@media (max-width: 1359px) {
+@media (max-width: 1199px) {
   .lx-toc.is-live { position: sticky; top: var(--lx-toc-top); margin-top: 0; padding: 0; max-width: none; transition: top .35s cubic-bezier(.2, .7, .2, 1); }
   body:has(.lx-header:not(.is-hidden)) .lx-toc.is-live { --lx-toc-top: 68px; }
   .lx-toc.is-live .lx-toc__box { border-width: 0 0 1px; background: color-mix(in srgb, var(--lx-bg) 94%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
@@ -314,18 +314,19 @@ html:has(.lx-toc) { scroll-padding-top: 132px; }
 }
 @media (prefers-reduced-motion: reduce) { .lx-toc.is-live { transition: none; } }
 
-/* Wide screens: the contents sit in the left margin, beside the text. */
-@media (min-width: 1360px) {
-  .lx-body--toc { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); }
-  .lx-body--toc > .lx-prose { grid-column: 2; grid-row: 1; width: calc(68ch + 2 * var(--lx-gutter)); max-width: 100%; }
-  .lx-toc { grid-column: 1; grid-row: 1; align-self: start; justify-self: end; position: sticky; top: calc(var(--lx-toc-top) + 28px); width: min(264px, calc(100% + var(--lx-gutter) - 72px)); max-height: calc(100vh - var(--lx-toc-top) - 110px); margin: clamp(32px, 5vw, 64px) calc(40px - var(--lx-gutter)) 0 0; padding: 0; overflow-y: auto; transition: top .35s cubic-bezier(.2, .7, .2, 1); }
+/* Wide screens: the text on the left, aligned with the title; the contents
+   stay open in a sticky column on the right, the rail fills as you read. */
+@media (min-width: 1200px) {
+  .lx-body--toc { display: grid; grid-template-columns: minmax(0, 1fr) minmax(220px, 272px); column-gap: clamp(40px, 4vw, 72px); max-width: 1320px; margin: 0 auto; padding: 0 var(--lx-gutter); }
+  .lx-body--toc > .lx-prose { grid-column: 1; grid-row: 1; max-width: 68ch; margin: 0; padding-left: 0; padding-right: 0; }
+  .lx-toc { grid-column: 2; grid-row: 1; align-self: start; position: sticky; top: calc(var(--lx-toc-top) + 28px); max-width: none; max-height: calc(100vh - var(--lx-toc-top) - 110px); margin: clamp(32px, 5vw, 64px) 0 0; padding: 0; overflow-y: auto; transition: top .35s cubic-bezier(.2, .7, .2, 1); }
   body:has(.lx-header:not(.is-hidden)) .lx-toc { --lx-toc-top: 68px; }
   .lx-toc__box { border: 0; background: none; }
   .lx-toc__bar { min-height: 0; padding: 0 0 14px 2px; cursor: default; pointer-events: none; }
-  .lx-toc__now, .lx-toc__chev { display: none; }
-  .lx-toc__progress { inset: 34px auto auto 0; width: 2px; height: calc(var(--lx-p, 0) * (100% - 34px)); display: none; }
+  .lx-toc__now, .lx-toc__chev, .lx-toc__progress { display: none; }
   .lx-toc__list { position: relative; padding: 0; border-left: 2px solid var(--lx-line); }
-  .lx-toc__list a { margin-left: -2px; padding: 8px 6px 8px 14px; border-left: 2px solid transparent; border-radius: 0 4px 4px 0; font-size: .9rem; }
+  .lx-toc__list::before { content: ""; position: absolute; left: -2px; top: 0; width: 2px; height: calc(var(--lx-p, 0) * 100%); background: color-mix(in srgb, var(--lx-tint) 60%, transparent); }
+  .lx-toc__list a { position: relative; margin-left: -2px; padding: 8px 6px 8px 14px; border-left: 2px solid transparent; border-radius: 0 4px 4px 0; font-size: .9rem; }
   .lx-toc__list a[aria-current="true"] { border-left-color: var(--lx-tint); }
   .lx-toc__list .is-sub a { padding-left: 56px; font-size: .84rem; }
   .lx-toc__num { width: 28px; height: 20px; font-size: .7rem; }
@@ -742,7 +743,7 @@ main:has(.lx-lost) + .lx-footer .lx-footer__ridge { display: none; }
     }
     if (!heads.length || !box) return;
     var idle = now.textContent;
-    var wide = window.matchMedia("(min-width: 1360px)");
+    var wide = window.matchMedia("(min-width: 1200px)");
     var current = -1, queued = false;
     nav.classList.add("is-live");
     function mode() {
@@ -841,7 +842,7 @@ main:has(.lx-lost) + .lx-footer .lx-footer__ridge { display: none; }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
   else start();
 })();
-`, ge = '# Leaux Altitude\n\nDedicated AgentCMS theme for leaux.ovh. Ridgelines pass in front of the home title, each section is a summit on an orientation table, each post gets a contour map generated from its slug, and a reading climb follows the scroll.\n\nSection slugs and colors live in `src/rubrics.ts` and `src/theme.css` (`[data-rubric]`). Hero texts are editable on the theme settings page.\n\n## Custom fields\n\n| Field | Type | Effect |\n|---|---|---|\n| `header-photo` | yes / no | On a post with a featured image, `true` puts the image behind the header, with a parallax on scroll, instead of the contour map. The image is then not repeated under the header. |\n| `toc` | yes / no | `true` adds a table of contents built from the body\'s `h2` (numbered) and `h3` (indented); the headings get ids. Wide screens (≥ 1360 px): sticky rail in the left margin, current section highlighted. Narrower: a sticky bar under the header that shows the current section and a reading progress line, and drops the list down on tap. Without JS: an open list above the text. Shown only with at least 2 headings. |\n\n## Article components (raw HTML in Markdown)\n\n- En bref (key points, first block of a long post): `<aside class="lx-brief" aria-label="En bref"><p class="lx-brief__tag">En bref</p><ul><li>… <strong>…</strong></li></ul></aside>`.\n\n- Pull quote: `<figure class="lx-pullquote"><blockquote><p>…</p></blockquote></figure>` (optional `<figcaption>`).\n- Case box: `<aside class="lx-case"><p class="lx-case__tag">Cas réel · date</p><p class="lx-case__title">…</p><p>…</p><p class="lx-case__src">Source : <a href="…">…</a></p></aside>`.\n- Key figures: `<div class="lx-stats"><div><strong>48 %</strong><span>…</span></div>…</div>`, optionally followed by `<p class="lx-case__src">Source : …</p>`.\n- Bar chart: `<figure class="lx-chart"><p class="lx-chart__title">…</p><p class="lx-chart__sub">…</p><div class="lx-chart__cols" style="--n:9"><div class="lx-chart__col is-lab" style="--v:.4" title="2020 : 18 322"><div class="lx-chart__bar"></div><span class="lx-chart__val">18 322</span></div>…</div><div class="lx-chart__axis" style="--n:9"><span>2020</span>…</div><p class="lx-case__src">Source : …</p></figure>`. `--v` is the bar height (0–1). Column modifiers: `is-hi` (highlighted), `is-part` (hatched, partial period), `is-lab` (value always shown; others on hover). Axis labels with `is-minor` hide on phones.\n- Paired horizontal bars: `<div class="lx-chart__rows"><div class="lx-chart__row"><span>Label</span><div class="lx-chart__hb" style="--v:.3"><i></i>1 200 <em>2025</em></div><div class="lx-chart__hb is-hi" style="--v:.8"><i></i>3 400 <em>2026</em></div></div></div>` with a `<ul class="lx-chart__legend"><li><i></i>2025</li><li><i class="is-hi"></i>2026</li></ul>`.\n';
+`, ge = '# Leaux Altitude\n\nDedicated AgentCMS theme for leaux.ovh. Ridgelines pass in front of the home title, each section is a summit on an orientation table, each post gets a contour map generated from its slug, and a reading climb follows the scroll.\n\nSection slugs and colors live in `src/rubrics.ts` and `src/theme.css` (`[data-rubric]`). Hero texts are editable on the theme settings page.\n\n## Custom fields\n\n| Field | Type | Effect |\n|---|---|---|\n| `header-photo` | yes / no | On a post with a featured image, `true` puts the image behind the header, with a parallax on scroll, instead of the contour map. The image is then not repeated under the header. |\n| `toc` | yes / no | `true` adds a table of contents built from the body\'s `h2` (numbered) and `h3` (indented); the headings get ids. Wide screens (≥ 1200 px): the text moves left, aligned with the title, and the contents stay open in a sticky column on the right, current section highlighted and the rail filling as you read. Narrower: a sticky bar under the header that shows the current section and a reading progress line, and drops the list down on tap. Without JS: an open list above the text. Shown only with at least 2 headings. |\n\n## Article components (raw HTML in Markdown)\n\n- En bref (key points, first block of a long post): `<aside class="lx-brief" aria-label="En bref"><p class="lx-brief__tag">En bref</p><ul><li>… <strong>…</strong></li></ul></aside>`.\n\n- Pull quote: `<figure class="lx-pullquote"><blockquote><p>…</p></blockquote></figure>` (optional `<figcaption>`).\n- Case box: `<aside class="lx-case"><p class="lx-case__tag">Cas réel · date</p><p class="lx-case__title">…</p><p>…</p><p class="lx-case__src">Source : <a href="…">…</a></p></aside>`.\n- Key figures: `<div class="lx-stats"><div><strong>48 %</strong><span>…</span></div>…</div>`, optionally followed by `<p class="lx-case__src">Source : …</p>`.\n- Bar chart: `<figure class="lx-chart"><p class="lx-chart__title">…</p><p class="lx-chart__sub">…</p><div class="lx-chart__cols" style="--n:9"><div class="lx-chart__col is-lab" style="--v:.4" title="2020 : 18 322"><div class="lx-chart__bar"></div><span class="lx-chart__val">18 322</span></div>…</div><div class="lx-chart__axis" style="--n:9"><span>2020</span>…</div><p class="lx-case__src">Source : …</p></figure>`. `--v` is the bar height (0–1). Column modifiers: `is-hi` (highlighted), `is-part` (hatched, partial period), `is-lab` (value always shown; others on hover). Axis labels with `is-minor` hide on phones.\n- Paired horizontal bars: `<div class="lx-chart__rows"><div class="lx-chart__row"><span>Label</span><div class="lx-chart__hb" style="--v:.3"><i></i>1 200 <em>2025</em></div><div class="lx-chart__hb is-hi" style="--v:.8"><i></i>3 400 <em>2026</em></div></div></div>` with a `<ul class="lx-chart__legend"><li><i></i>2025</li><li><i class="is-hi"></i>2026</li></ul>`.\n';
 function z(a, t) {
   const n = le.getFixedT(oe(t || a.settings.language || "en"), "theme-leaux-altitude");
   return (r) => n(`public.${r}`);
@@ -1019,7 +1020,7 @@ const ae = {
 function R(a) {
   return { ...ae.hero, ...(a == null ? void 0 : a.hero) ?? {} };
 }
-const j = [
+const $ = [
   { slug: "edito", name: "Édito", x: 90, height: 0.62 },
   { slug: "news-tech-ia", name: "News tech IA", x: 68, height: 0.8 },
   { slug: "mes-projets", name: "Mes projets", x: 29, height: 0.74 },
@@ -1030,21 +1031,21 @@ function Me(a) {
   var n;
   if (!a) return;
   const t = a.replace(/^\/+/, "");
-  return (n = j.find((r) => t === r.slug || t.startsWith(r.slug + "/"))) == null ? void 0 : n.slug;
+  return (n = $.find((r) => t === r.slug || t.startsWith(r.slug + "/"))) == null ? void 0 : n.slug;
 }
 function ze({ site: a }) {
   const t = z(a), n = 1600, r = 620;
   return /* @__PURE__ */ o("section", { className: "lx-pano", "aria-labelledby": "lx-pano-title", children: [
     /* @__PURE__ */ e("h2", { id: "lx-pano-title", className: "lx-pano__title", children: t("sections") }),
     /* @__PURE__ */ o("div", { className: "lx-pano__stage", children: [
-      /* @__PURE__ */ e("svg", { viewBox: `0 0 ${n} ${r}`, preserveAspectRatio: "xMidYMax slice", "aria-hidden": "true", children: j.map((i) => {
+      /* @__PURE__ */ e("svg", { viewBox: `0 0 ${n} ${r}`, preserveAspectRatio: "xMidYMax slice", "aria-hidden": "true", children: $.map((i) => {
         const l = be(M(i.slug), i.x / 100 * n, r * (1 - i.height * 0.86), r + 10, 300 + i.height * 170);
         return /* @__PURE__ */ e("a", { href: `/${i.slug}/index.html`, tabIndex: -1, children: /* @__PURE__ */ o("g", { className: "lx-peak", "data-rubric": i.slug, "data-peak": i.slug, children: [
           /* @__PURE__ */ e("path", { className: "lx-peak__lit", d: l.lit }),
           /* @__PURE__ */ e("path", { className: "lx-peak__shade", d: l.shade })
         ] }) }, i.slug);
       }) }),
-      /* @__PURE__ */ e("ul", { className: "lx-pano__labels", children: [...j].sort((i, l) => i.x - l.x).map((i) => /* @__PURE__ */ e("li", { "data-rubric": i.slug, "data-label": i.slug, style: { left: `${i.x}%`, top: `${100 - i.height * 86}%` }, children: /* @__PURE__ */ o("a", { href: `/${i.slug}/index.html`, children: [
+      /* @__PURE__ */ e("ul", { className: "lx-pano__labels", children: [...$].sort((i, l) => i.x - l.x).map((i) => /* @__PURE__ */ e("li", { "data-rubric": i.slug, "data-label": i.slug, style: { left: `${i.x}%`, top: `${100 - i.height * 86}%` }, children: /* @__PURE__ */ o("a", { href: `/${i.slug}/index.html`, children: [
         /* @__PURE__ */ e("strong", { children: i.name }),
         /* @__PURE__ */ e("span", { children: t(`r.${i.slug}`) })
       ] }) }, i.slug)) })
@@ -1091,7 +1092,7 @@ function qe({ site: a, post: t, author: n, hero: r, primaryTerm: i }) {
     ...i ? [{ name: i.name, item: C(a, ne(i)) }] : [],
     { name: t.title, item: l }
   ];
-  return /* @__PURE__ */ o($, { children: [
+  return /* @__PURE__ */ o(j, { children: [
     /* @__PURE__ */ e(
       W,
       {
@@ -1168,7 +1169,7 @@ function Te({ site: a }) {
 }
 function Ae({ site: a, posts: t, staticPage: n, archivesLink: r }) {
   const i = z(a);
-  return n ? /* @__PURE__ */ e("div", { className: "lx-prose lx-prose--page", dangerouslySetInnerHTML: { __html: n.bodyHtml } }) : /* @__PURE__ */ o($, { children: [
+  return n ? /* @__PURE__ */ e("div", { className: "lx-prose lx-prose--page", dangerouslySetInnerHTML: { __html: n.bodyHtml } }) : /* @__PURE__ */ o(j, { children: [
     /* @__PURE__ */ e(Le, { site: a }),
     /* @__PURE__ */ e(Te, { site: a }),
     /* @__PURE__ */ e(ze, { site: a }),
@@ -1200,20 +1201,20 @@ function Ee({ entries: a, label: t, countLabel: n }) {
   ] }) });
 }
 const Ce = { amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: " ", rsquo: "’", laquo: "«", raquo: "»" };
-function je(a) {
+function $e(a) {
   return a.replace(/<[^>]*>/g, "").replace(/&#(\d+);/g, (t, n) => String.fromCodePoint(Number(n))).replace(/&#x([0-9a-f]+);/gi, (t, n) => String.fromCodePoint(parseInt(n, 16))).replace(/&([a-z]+);/gi, (t, n) => Ce[n.toLowerCase()] ?? t).replace(/[ \t\r\n]+/g, " ").trim();
 }
-function $e(a) {
+function je(a) {
   return a.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 64).replace(/-+$/, "") || "section";
 }
 function He(a) {
   const t = [], n = /* @__PURE__ */ new Set();
   return { html: a.replace(/<h([23])(\s[^>]*)?>([\s\S]*?)<\/h\1>/gi, (i, l, s, c) => {
     var u;
-    const d = je(c);
+    const d = $e(c);
     if (!d) return i;
     const p = (u = s == null ? void 0 : s.match(/\sid\s*=\s*"([^"]+)"/i)) == null ? void 0 : u[1];
-    let x = p ?? $e(d);
+    let x = p ?? je(d);
     if (!p) {
       const f = x;
       for (let w = 2; n.has(x); w++) x = `${f}-${w}`;
@@ -1223,7 +1224,7 @@ function He(a) {
 }
 function Be({ site: a, post: t, bodyHtml: n, author: r, hero: i, primaryTerm: l, tags: s }) {
   var g, v, y;
-  const c = z(a), d = P(i, "large"), p = t.type === "post", x = (g = j.find((h) => h.slug === (l == null ? void 0 : l.slug))) == null ? void 0 : g.slug, u = new Date(F(t));
+  const c = z(a), d = P(i, "large"), p = t.type === "post", x = (g = $.find((h) => h.slug === (l == null ? void 0 : l.slug))) == null ? void 0 : g.slug, u = new Date(F(t));
   let f = "";
   try {
     f = new Intl.DateTimeFormat(a.settings.language || "fr", { dateStyle: "long" }).format(u);
@@ -1259,7 +1260,7 @@ function Be({ site: a, post: t, bodyHtml: n, author: r, hero: i, primaryTerm: l,
       /* @__PURE__ */ e("div", { className: "lx-prose", "data-lx-prose": !0, dangerouslySetInnerHTML: { __html: S.html } })
     ] }) : /* @__PURE__ */ e("div", { className: "lx-prose", "data-lx-prose": !0, dangerouslySetInnerHTML: { __html: n } }),
     p && s.length > 0 && /* @__PURE__ */ e("ul", { className: "lx-tags", "aria-label": c("tags"), children: s.map((h) => /* @__PURE__ */ e("li", { children: h.name }, h.id)) }),
-    p && /* @__PURE__ */ o($, { children: [
+    p && /* @__PURE__ */ o(j, { children: [
       /* @__PURE__ */ e(qe, { site: a, post: t, author: r, hero: i, primaryTerm: l }),
       /* @__PURE__ */ o("section", { className: "lx-related", "data-lx-related": !0, "data-current": t.id, "data-term": t.primaryTermId, hidden: !0, children: [
         /* @__PURE__ */ e("h2", { children: c("continue") }),
@@ -1277,8 +1278,8 @@ function Be({ site: a, post: t, bodyHtml: n, author: r, hero: i, primaryTerm: l,
 }
 function Ie({ site: a, term: t, posts: n, archivesLink: r }) {
   var c;
-  const i = z(a), l = (c = j.find((d) => d.slug === t.slug)) == null ? void 0 : c.slug, s = t.description || (l ? i(`r.${l}`) : "");
-  return /* @__PURE__ */ o($, { children: [
+  const i = z(a), l = (c = $.find((d) => d.slug === t.slug)) == null ? void 0 : c.slug, s = t.description || (l ? i(`r.${l}`) : "");
+  return /* @__PURE__ */ o(j, { children: [
     /* @__PURE__ */ o("header", { className: "lx-band lx-band--category", "data-rubric": l, children: [
       /* @__PURE__ */ e(B, { seed: t.slug, width: 1600, height: 620, cols: 110, className: "lx-band__art" }),
       /* @__PURE__ */ o("div", { className: "lx-band__inner", children: [
@@ -1300,7 +1301,7 @@ function Ie({ site: a, term: t, posts: n, archivesLink: r }) {
 }
 function Fe({ site: a, author: t, posts: n }) {
   const r = P(t.avatar, "small");
-  return /* @__PURE__ */ o($, { children: [
+  return /* @__PURE__ */ o(j, { children: [
     /* @__PURE__ */ o("header", { className: "lx-band lx-band--author", children: [
       /* @__PURE__ */ e(B, { seed: t.displayName, width: 1600, height: 620, cols: 110, className: "lx-band__art" }),
       /* @__PURE__ */ o("div", { className: "lx-band__inner", children: [
@@ -1403,7 +1404,7 @@ const We = {
 }, Je = {
   id: "leaux-altitude",
   name: "Leaux Altitude",
-  version: "1.4.0",
+  version: "1.4.1",
   description: "Dedicated theme for leaux.ovh: generative topographic art, one trail per section.",
   readme: ge,
   scssEntry: "theme.css",
