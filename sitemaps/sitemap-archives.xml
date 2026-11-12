@@ -3,11 +3,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://leaux.ovh/</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-12</lastmod>
   </url>
   <url>
     <loc>https://leaux.ovh/mes-projets/</loc>
     <lastmod>2026-11-11</lastmod>
+  </url>
+  <url>
+    <loc>https://leaux.ovh/news-tech-ia/</loc>
+    <lastmod>2026-11-12</lastmod>
   </url>
   <url>
     <loc>https://leaux.ovh/passions/</loc>
