@@ -411,15 +411,7 @@
   function wireTransition() {
     window.addEventListener("pageswap", function (e) {
       if (!e.viewTransition || !e.activation || !e.activation.entry) return;
-      var path = new URL(e.activation.entry.url).pathname;
-      var arts = document.querySelectorAll(".lx-way__art");
-      for (var i = 0; i < arts.length; i++) {
-        if (arts[i].pathname !== path) continue;
-        var title = arts[i].parentNode.querySelector("h3");
-        arts[i].style.viewTransitionName = "lx-art";
-        if (title) title.style.viewTransitionName = "lx-title";
-        break;
-      }
+      if (window.lxVtName && window.lxVtPair) window.lxVtName(window.lxVtPair(new URL(e.activation.entry.url).pathname));
     });
   }
 
@@ -435,8 +427,13 @@
     if (trailHost) try { trail(trailHost); } catch (e) {}
     var climbHost = document.querySelector("[data-lx-climb]");
     if (climbHost) try { climb(climbHost); } catch (e) {}
+    // Parallax: CSS scroll-driven animations when supported (smooth on phones,
+    // they run off the main thread); otherwise JS, but only with a mouse —
+    // on touch screens JS lags one frame behind the finger, so no parallax.
     var band = document.querySelector(".lx-band--category, .lx-band--photo");
-    if (band && !calm) try { parallax(band); } catch (e) {}
+    var cssParallax = window.CSS && CSS.supports && CSS.supports("animation-timeline: view()");
+    var touch = window.matchMedia && matchMedia("(pointer: coarse)").matches;
+    if (band && !calm && !cssParallax && !touch) try { parallax(band); } catch (e) {}
     var tocNav = document.querySelector("[data-lx-toc]");
     if (tocNav) try { toc(tocNav); } catch (e) {}
     var relatedHost = document.querySelector("[data-lx-related]");

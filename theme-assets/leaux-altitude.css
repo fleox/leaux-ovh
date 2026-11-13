@@ -526,3 +526,16 @@ main:has(.lx-lost) + .lx-footer .lx-footer__ridge { display: none; }
   @keyframes lx-fade { from { opacity: 0; } }
   @keyframes lx-in { from { opacity: 0; transform: translateY(24px); } }
 }
+
+/* Parallax of the section / photo bands, driven by the scroll on the compositor
+   (smooth on phones). Browsers without scroll-driven animations use the JS
+   fallback in menu-loader.js (mouse only). */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .lx-band--category, .lx-band--photo { view-timeline: --lx-band block; }
+    .lx-band--category .lx-band__art, .lx-band--photo .lx-band__art { animation: lx-par-art linear both; animation-timeline: --lx-band; animation-range: exit-crossing 0% exit-crossing 100%; }
+    .lx-band--category .lx-band__inner, .lx-band--photo .lx-band__inner { animation: lx-par-inner linear both; animation-timeline: --lx-band; animation-range: exit-crossing 0% exit-crossing 90%; }
+  }
+}
+@keyframes lx-par-art { from { transform: translate3d(0, 0, 0) scale(1); } to { transform: translate3d(0, 42%, 0) scale(1.17); } }
+@keyframes lx-par-inner { from { transform: translate3d(0, 0, 0); opacity: 1; } to { transform: translate3d(0, 30%, 0); opacity: 0; } }
