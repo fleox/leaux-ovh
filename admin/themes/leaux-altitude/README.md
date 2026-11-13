@@ -21,3 +21,11 @@ Section slugs and colors live in `src/rubrics.ts` and `src/theme.css` (`[data-ru
 - Key figures: `<div class="lx-stats"><div><strong>48 %</strong><span>…</span></div>…</div>`, optionally followed by `<p class="lx-case__src">Source : …</p>`.
 - Bar chart: `<figure class="lx-chart"><p class="lx-chart__title">…</p><p class="lx-chart__sub">…</p><div class="lx-chart__cols" style="--n:9"><div class="lx-chart__col is-lab" style="--v:.4" title="2020 : 18 322"><div class="lx-chart__bar"></div><span class="lx-chart__val">18 322</span></div>…</div><div class="lx-chart__axis" style="--n:9"><span>2020</span>…</div><p class="lx-case__src">Source : …</p></figure>`. `--v` is the bar height (0–1). Column modifiers: `is-hi` (highlighted), `is-part` (hatched, partial period), `is-lab` (value always shown; others on hover). Axis labels with `is-minor` hide on phones.
 - Paired horizontal bars: `<div class="lx-chart__rows"><div class="lx-chart__row"><span>Label</span><div class="lx-chart__hb" style="--v:.3"><i></i>1 200 <em>2025</em></div><div class="lx-chart__hb is-hi" style="--v:.8"><i></i>3 400 <em>2026</em></div></div></div>` with a `<ul class="lx-chart__legend"><li><i></i>2025</li><li><i class="is-hi"></i>2026</li></ul>`.
+
+## Section pages (1.6.0)
+
+The band of each section page features its latest post: image as background (rubric-tinted gradient), kicker « Rubrique — Dernier article », title, excerpt, « Lire l'article » button, date and reading time, ridge edge kept. The other posts follow under « Articles précédents ». The h1 of the page is the logo, with the section name visually hidden; `<title>` and meta description still come from the category.
+
+## Home (1.7.0)
+
+Newest post in the band (same design as section pages), one block per section (newest post large, two more beside it, link « Toute la rubrique »), « Mes projets » as round logos, « Par où monter ? » at the bottom. Project fields on posts of « Mes projets »: `project` (name), `project-logo` (URL of the `square` image format), `project-tagline` (optional). New image format `square` (320×320).
