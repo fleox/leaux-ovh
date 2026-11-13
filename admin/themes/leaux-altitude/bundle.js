@@ -1,5 +1,5 @@
-import { jsxs as s, jsx as e, Fragment as I } from "react/jsx-runtime";
-import { i18n as ce, pickPublicLocale as pe, canonicalUrl as ne, pickFormat as C, buildPostUrl as xe, postSortMillis as R, buildTermUrl as ae, SocialIcon as he, socialLabel as me, toast as ge } from "@agent-cms/runtime";
+import { jsxs as s, jsx as e, Fragment as P } from "react/jsx-runtime";
+import { i18n as ce, pickPublicLocale as pe, canonicalUrl as ne, pickFormat as A, buildPostUrl as xe, postSortMillis as R, buildTermUrl as ae, SocialIcon as he, socialLabel as me, toast as ge } from "@agent-cms/runtime";
 import { useState as Z, useEffect as ue } from "react";
 import { useTranslation as fe } from "react-i18next";
 const ve = `@import url("https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&display=swap");
@@ -530,6 +530,19 @@ main:has(.lx-lost) + .lx-footer .lx-footer__ridge { display: none; }
   @keyframes lx-fade { from { opacity: 0; } }
   @keyframes lx-in { from { opacity: 0; transform: translateY(24px); } }
 }
+
+/* Parallax of the section / photo bands, driven by the scroll on the compositor
+   (smooth on phones). Browsers without scroll-driven animations use the JS
+   fallback in menu-loader.js (mouse only). */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .lx-band--category, .lx-band--photo { view-timeline: --lx-band block; }
+    .lx-band--category .lx-band__art, .lx-band--photo .lx-band__art { animation: lx-par-art linear both; animation-timeline: --lx-band; animation-range: exit-crossing 0% exit-crossing 100%; }
+    .lx-band--category .lx-band__inner, .lx-band--photo .lx-band__inner { animation: lx-par-inner linear both; animation-timeline: --lx-band; animation-range: exit-crossing 0% exit-crossing 90%; }
+  }
+}
+@keyframes lx-par-art { from { transform: translate3d(0, 0, 0) scale(1); } to { transform: translate3d(0, 42%, 0) scale(1.17); } }
+@keyframes lx-par-inner { from { transform: translate3d(0, 0, 0); opacity: 1; } to { transform: translate3d(0, 30%, 0); opacity: 0; } }
 `, be = `// Leaux Altitude runtime, uploaded as theme-assets/leaux-altitude-menu.js.
 // Menus, burger, the hero ridgelines, the trail, the reading climb and
 // related posts. Every part fails silently: the static page stays usable.
@@ -943,15 +956,7 @@ main:has(.lx-lost) + .lx-footer .lx-footer__ridge { display: none; }
   function wireTransition() {
     window.addEventListener("pageswap", function (e) {
       if (!e.viewTransition || !e.activation || !e.activation.entry) return;
-      var path = new URL(e.activation.entry.url).pathname;
-      var arts = document.querySelectorAll(".lx-way__art");
-      for (var i = 0; i < arts.length; i++) {
-        if (arts[i].pathname !== path) continue;
-        var title = arts[i].parentNode.querySelector("h3");
-        arts[i].style.viewTransitionName = "lx-art";
-        if (title) title.style.viewTransitionName = "lx-title";
-        break;
-      }
+      if (window.lxVtName && window.lxVtPair) window.lxVtName(window.lxVtPair(new URL(e.activation.entry.url).pathname));
     });
   }
 
@@ -967,8 +972,13 @@ main:has(.lx-lost) + .lx-footer .lx-footer__ridge { display: none; }
     if (trailHost) try { trail(trailHost); } catch (e) {}
     var climbHost = document.querySelector("[data-lx-climb]");
     if (climbHost) try { climb(climbHost); } catch (e) {}
+    // Parallax: CSS scroll-driven animations when supported (smooth on phones,
+    // they run off the main thread); otherwise JS, but only with a mouse —
+    // on touch screens JS lags one frame behind the finger, so no parallax.
     var band = document.querySelector(".lx-band--category, .lx-band--photo");
-    if (band && !calm) try { parallax(band); } catch (e) {}
+    var cssParallax = window.CSS && CSS.supports && CSS.supports("animation-timeline: view()");
+    var touch = window.matchMedia && matchMedia("(pointer: coarse)").matches;
+    if (band && !calm && !cssParallax && !touch) try { parallax(band); } catch (e) {}
     var tocNav = document.querySelector("[data-lx-toc]");
     if (tocNav) try { toc(tocNav); } catch (e) {}
     var relatedHost = document.querySelector("[data-lx-related]");
@@ -982,7 +992,7 @@ function M(n, t) {
   const a = ce.getFixedT(pe(t || n.settings.language || "en"), "theme-leaux-altitude");
   return (i) => a(`public.${i}`);
 }
-const T = [
+const q = [
   { slug: "edito", name: "Édito", x: 90, height: 0.62 },
   { slug: "news-tech-ia", name: "News tech IA", x: 68, height: 0.8 },
   { slug: "mes-projets", name: "Mes projets", x: 29, height: 0.74 },
@@ -993,7 +1003,7 @@ function F(n) {
   var a;
   if (!n) return;
   const t = n.replace(/^\/+/, "");
-  return (a = T.find((i) => t === i.slug || t.startsWith(i.slug + "/"))) == null ? void 0 : a.slug;
+  return (a = q.find((i) => t === i.slug || t.startsWith(i.slug + "/"))) == null ? void 0 : a.slug;
 }
 function O({ items: n, currentPath: t }) {
   return /* @__PURE__ */ e("ul", { children: n.map((a) => {
@@ -1006,7 +1016,7 @@ function O({ items: n, currentPath: t }) {
 }
 function we({ site: n, currentPath: t, locale: a }) {
   var c;
-  const i = M(n, a), r = ((c = n.settings.enabledPlugins) == null ? void 0 : c["agentcms-search"]) !== !1, l = T.find((p) => new RegExp(`^${p.slug}/(index\\.html|page/\\d+(/index)?\\.html)?$`).test(t ?? "")), o = t === "index.html" || `/${t}` === (n.homePath ?? "/index.html"), d = /* @__PURE__ */ s("a", { className: "lx-brand", href: n.homePath ?? "/index.html", children: [
+  const i = M(n, a), r = ((c = n.settings.enabledPlugins) == null ? void 0 : c["agentcms-search"]) !== !1, l = q.find((p) => new RegExp(`^${p.slug}/(index\\.html|page/\\d+(/index)?\\.html)?$`).test(t ?? "")), o = t === "index.html" || `/${t}` === (n.homePath ?? "/index.html"), d = /* @__PURE__ */ s("a", { className: "lx-brand", href: n.homePath ?? "/index.html", children: [
     /* @__PURE__ */ e("svg", { viewBox: "0 0 34 22", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: "M1 21 12 4l6 9 4-6 11 14z" }) }),
     l && /* @__PURE__ */ s("span", { className: "lx-sr", children: [
       l.name,
@@ -1040,7 +1050,7 @@ function U(n) {
     return a = a + Math.imul(a ^ a >>> 7, 61 | a) ^ a, ((a ^ a >>> 14) >>> 0) / 4294967296;
   };
 }
-function Y(n) {
+function V(n) {
   const t = U(n), a = 64, i = Array.from({ length: a * a }, () => t()), r = (o, d) => i[(d % a + a) % a * a + (o % a + a) % a], l = (o) => o * o * (3 - 2 * o);
   return (o, d) => {
     const c = Math.floor(o), p = Math.floor(d), x = l(o - c), h = l(d - p), f = r(c, p) * (1 - x) + r(c + 1, p) * x, _ = r(c, p + 1) * (1 - x) + r(c + 1, p + 1) * x;
@@ -1049,38 +1059,38 @@ function Y(n) {
 }
 const j = (n) => Math.round(n * 10) / 10;
 function ye(n, t, a, i, r = 14) {
-  const l = Y(n), o = U(n ^ 2654435769), d = Math.round(i * a / t), c = [0, 1, 2].map(() => ({ x: 0.15 + o() * 0.7, y: 0.15 + o() * 0.7, s: 0.03 + o() * 0.07, a: 0.5 + o() * 0.7 })), p = t / a, x = [];
+  const l = V(n), o = U(n ^ 2654435769), d = Math.round(i * a / t), c = [0, 1, 2].map(() => ({ x: 0.15 + o() * 0.7, y: 0.15 + o() * 0.7, s: 0.03 + o() * 0.07, a: 0.5 + o() * 0.7 })), p = t / a, x = [];
   let h = 1 / 0, f = -1 / 0;
   for (let v = 0; v <= d; v++)
     for (let w = 0; w <= i; w++) {
-      const z = w / i, g = v / d;
-      let u = l(z * 3 * p, g * 3) * 0.6 + l(z * 7 * p, g * 7) * 0.18;
+      const S = w / i, g = v / d;
+      let u = l(S * 3 * p, g * 3) * 0.6 + l(S * 7 * p, g * 7) * 0.18;
       for (const L of c) {
-        const $ = (z - L.x) * p, H = g - L.y;
+        const $ = (S - L.x) * p, H = g - L.y;
         u += L.a * Math.exp(-($ * $ + H * H) / (2 * L.s));
       }
       x.push(u), u < h && (h = u), u > f && (f = u);
     }
   const _ = t / i, y = a / d, b = (v, w) => x[w * (i + 1) + v], m = [], N = [];
   for (let v = 1; v < r; v++) {
-    const w = h + (f - h) * v / r, z = v % 4 === 0 ? N : m;
+    const w = h + (f - h) * v / r, S = v % 4 === 0 ? N : m;
     for (let g = 0; g < d; g++)
       for (let u = 0; u < i; u++) {
-        const L = b(u, g), $ = b(u + 1, g), H = b(u + 1, g + 1), G = b(u, g + 1), A = [], P = (S, J, K, X, se, de) => {
-          if (S < w != J < w) {
-            const V = (w - S) / (J - S);
-            A.push([(K + (se - K) * V) * _, (X + (de - X) * V) * y]);
+        const L = b(u, g), $ = b(u + 1, g), H = b(u + 1, g + 1), J = b(u, g + 1), C = [], I = (z, Y, G, K, se, de) => {
+          if (z < w != Y < w) {
+            const X = (w - z) / (Y - z);
+            C.push([(G + (se - G) * X) * _, (K + (de - K) * X) * y]);
           }
         };
-        P(L, $, u, g, u + 1, g), P($, H, u + 1, g, u + 1, g + 1), P(G, H, u, g + 1, u + 1, g + 1), P(L, G, u, g, u, g + 1);
-        for (let S = 0; S + 1 < A.length; S += 2)
-          z.push(`M${j(A[S][0])} ${j(A[S][1])}L${j(A[S + 1][0])} ${j(A[S + 1][1])}`);
+        I(L, $, u, g, u + 1, g), I($, H, u + 1, g, u + 1, g + 1), I(J, H, u, g + 1, u + 1, g + 1), I(L, J, u, g, u, g + 1);
+        for (let z = 0; z + 1 < C.length; z += 2)
+          S.push(`M${j(C[z][0])} ${j(C[z][1])}L${j(C[z + 1][0])} ${j(C[z + 1][1])}`);
       }
   }
   return { minor: m.join(""), major: N.join("") };
 }
 function Q(n, t, a, i = 90) {
-  const r = Y(n);
+  const r = V(n);
   let l = "";
   for (let o = 0; o <= i; o++) {
     const d = o / i, c = a * (0.92 - 0.78 * Math.pow(d, 1.3) + (r(d * 7, 3) - 0.5) * 0.34 * Math.sin(Math.PI * d) + (r(d * 19, 8) - 0.5) * 0.1 * Math.sin(Math.PI * d));
@@ -1088,8 +1098,8 @@ function Q(n, t, a, i = 90) {
   }
   return l;
 }
-function q(n, t, a, i = 70) {
-  const r = Y(n);
+function T(n, t, a, i = 70) {
+  const r = V(n);
   let l = `M0 ${a}`;
   for (let o = 0; o <= i; o++) {
     const d = o / i, c = r(d * 5, 2) * 0.7 + r(d * 17, 5) * 0.3;
@@ -1101,8 +1111,8 @@ function ke(n, t, a, i, r) {
   const l = U(n), o = (b) => {
     const m = [];
     for (let v = 1; v <= 9; v++) {
-      const w = v / 9, z = v === 9 ? 0 : (l() - 0.5) * 0.09;
-      m.push([t + b * r * (w + z * 1.2), a + (i - a) * Math.pow(w, 1.1) + (l() - 0.5) * 14 * (v === 9 ? 0 : 1)]);
+      const w = v / 9, S = v === 9 ? 0 : (l() - 0.5) * 0.09;
+      m.push([t + b * r * (w + S * 1.2), a + (i - a) * Math.pow(w, 1.1) + (l() - 0.5) * 14 * (v === 9 ? 0 : 1)]);
     }
     return m;
   }, d = o(-1), c = o(1), p = [], x = 8;
@@ -1117,7 +1127,7 @@ function ke(n, t, a, i, r) {
 function Ne({ site: n, locale: t }) {
   const a = M(n, t);
   return /* @__PURE__ */ s("footer", { className: "lx-footer", children: [
-    /* @__PURE__ */ e("svg", { className: "lx-footer__ridge", viewBox: "0 0 1600 120", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: q(k("footer"), 1600, 120) }) }),
+    /* @__PURE__ */ e("svg", { className: "lx-footer__ridge", viewBox: "0 0 1600 120", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: T(k("footer"), 1600, 120) }) }),
     /* @__PURE__ */ s("div", { className: "lx-footer__body", children: [
       /* @__PURE__ */ e("p", { className: "lx-footer__name", children: n.settings.title }),
       /* @__PURE__ */ e("nav", { "aria-label": a("footerNav"), "data-cms-menu": "footer", children: /* @__PURE__ */ e(O, { items: n.resolvedMenus.footer }) }),
@@ -1126,7 +1136,7 @@ function Ne({ site: n, locale: t }) {
     ] })
   ] });
 }
-const ze = 'addEventListener("pagereveal",function(e){var n=window.navigation,f=n&&n.activation&&n.activation.from;if(!e.viewTransition||!f||!f.url)return;var p=new URL(f.url).pathname,a=document.querySelectorAll(".lx-way__art");for(var i=0;i<a.length;i++)if(a[i].pathname===p){var t=a[i].parentNode.querySelector("h3");a[i].style.viewTransitionName="lx-art";if(t)t.style.viewTransitionName="lx-title";e.viewTransition.finished.finally(function(){a[i].style.viewTransitionName="";if(t)t.style.viewTransitionName=""});break}})', Se = "GTM-KNDFD5GH", je = "window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());";
+const Se = 'window.lxVtPair=function(p){var q=[[".lx-feature__title a",function(a){var b=a.closest(".lx-band");return[b&&b.querySelector(".lx-band__art"),a.closest("h2")]}],[".lx-way__art,.lx-card__art",function(a){return[a,a.parentNode.querySelector("h3")]}],[".lx-projects__list a",function(a){return[a.querySelector(".lx-projects__logo"),a.querySelector(".lx-projects__name")]}]];for(var k=0;k<q.length;k++){var l=document.querySelectorAll(q[k][0]);for(var i=0;i<l.length;i++)if(l[i].pathname===p)return q[k][1](l[i])}return null};window.lxVtName=function(r){if(!r)return function(){};if(r[0])r[0].style.viewTransitionName="lx-art";if(r[1])r[1].style.viewTransitionName="lx-title";return function(){if(r[0])r[0].style.viewTransitionName="";if(r[1])r[1].style.viewTransitionName=""}};addEventListener("pagereveal",function(e){var n=window.navigation,f=n&&n.activation&&n.activation.from;if(!e.viewTransition||!f||!f.url)return;var c=lxVtName(lxVtPair(new URL(f.url).pathname));e.viewTransition.finished.finally(c)})', ze = "GTM-KNDFD5GH", je = "window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());";
 function Me({ site: n, pageTitle: t, pageDescription: a, ogImage: i, currentPath: r, currentLocale: l, children: o }) {
   const d = l || n.settings.language || "en", c = n.settings.title || "", p = t ? t.includes(c) ? t : `${t} — ${c}` : c, x = n.settings.baseUrl && r ? ne(n.settings.baseUrl, r) : void 0;
   return /* @__PURE__ */ s("html", { lang: d, children: [
@@ -1143,7 +1153,7 @@ function Me({ site: n, pageTitle: t, pageDescription: a, ogImage: i, currentPath
       x && /* @__PURE__ */ e("meta", { property: "og:url", content: x }),
       /* @__PURE__ */ e("link", { rel: "stylesheet", href: `/${n.themeCssPath}` }),
       /* @__PURE__ */ e("link", { rel: "expect", href: "#lx-end", blocking: "render" }),
-      /* @__PURE__ */ e("script", { dangerouslySetInnerHTML: { __html: ze } }),
+      /* @__PURE__ */ e("script", { dangerouslySetInnerHTML: { __html: Se } }),
       /* @__PURE__ */ e("script", { src: "/theme-assets/leaux-altitude-menu.js", defer: !0 }),
       /* @__PURE__ */ e("meta", { name: "x-cms-head-extra" })
     ] }),
@@ -1152,7 +1162,7 @@ function Me({ site: n, pageTitle: t, pageDescription: a, ogImage: i, currentPath
       /* @__PURE__ */ e("main", { children: o }),
       /* @__PURE__ */ e("span", { id: "lx-end" }),
       /* @__PURE__ */ e(Ne, { site: n, locale: d }),
-      /* @__PURE__ */ e("script", { async: !0, src: `https://www.googletagmanager.com/gtm.js?id=${Se}` }),
+      /* @__PURE__ */ e("script", { async: !0, src: `https://www.googletagmanager.com/gtm.js?id=${ze}` }),
       /* @__PURE__ */ e("script", { dangerouslySetInnerHTML: { __html: je } }),
       /* @__PURE__ */ e("script", { type: "application/x-cms-body-end" })
     ] })
@@ -1169,7 +1179,7 @@ function Le(n) {
   return Math.max(1, Math.round(n.contentMarkdown.trim().split(/\s+/).length / 220));
 }
 function re({ site: n, post: t, rubric: a, label: i, edgeSeed: r }) {
-  const l = M(n), o = t ? C(t.hero, "large") : void 0;
+  const l = M(n), o = t ? A(t.hero, "large") : void 0;
   return /* @__PURE__ */ s("header", { className: `lx-band lx-band--category lx-band--feature${o ? " lx-band--photo" : ""}`, "data-rubric": a, children: [
     o ? /* @__PURE__ */ e("div", { className: "lx-band__art lx-band__photo", "aria-hidden": "true", children: /* @__PURE__ */ e("img", { src: o, alt: "", fetchPriority: "high" }) }) : /* @__PURE__ */ e(E, { seed: (t == null ? void 0 : t.slug) ?? r, width: 1600, height: 720, cols: 110, className: "lx-band__art" }),
     /* @__PURE__ */ e("div", { className: "lx-band__inner", children: t ? /* @__PURE__ */ s("article", { className: "lx-feature", children: [
@@ -1194,23 +1204,23 @@ function re({ site: n, post: t, rubric: a, label: i, edgeSeed: r }) {
         ] })
       ] })
     ] }) : /* @__PURE__ */ e("p", { className: "lx-band__lead", children: l("empty") }) }),
-    /* @__PURE__ */ e("svg", { className: "lx-band__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: q(k(r), 1600, 90) }) })
+    /* @__PURE__ */ e("svg", { className: "lx-band__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: T(k(r), 1600, 90) }) })
   ] });
 }
-function Te({ site: n }) {
+function qe({ site: n }) {
   const t = M(n), a = 1600, i = 620;
   return /* @__PURE__ */ s("section", { className: "lx-pano", "aria-labelledby": "lx-pano-title", children: [
-    /* @__PURE__ */ e("svg", { className: "lx-pano__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: q(k("pano-top"), 1600, 90) }) }),
+    /* @__PURE__ */ e("svg", { className: "lx-pano__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: T(k("pano-top"), 1600, 90) }) }),
     /* @__PURE__ */ e("h2", { id: "lx-pano-title", className: "lx-pano__title", children: t("sections") }),
     /* @__PURE__ */ s("div", { className: "lx-pano__stage", children: [
-      /* @__PURE__ */ e("svg", { viewBox: `0 0 ${a} ${i}`, preserveAspectRatio: "xMidYMax slice", "aria-hidden": "true", children: T.map((r) => {
+      /* @__PURE__ */ e("svg", { viewBox: `0 0 ${a} ${i}`, preserveAspectRatio: "xMidYMax slice", "aria-hidden": "true", children: q.map((r) => {
         const l = ke(k(r.slug), r.x / 100 * a, i * (1 - r.height * 0.86), i + 10, 300 + r.height * 170);
         return /* @__PURE__ */ e("a", { href: `/${r.slug}/index.html`, tabIndex: -1, children: /* @__PURE__ */ s("g", { className: "lx-peak", "data-rubric": r.slug, "data-peak": r.slug, children: [
           /* @__PURE__ */ e("path", { className: "lx-peak__lit", d: l.lit }),
           /* @__PURE__ */ e("path", { className: "lx-peak__shade", d: l.shade })
         ] }) }, r.slug);
       }) }),
-      /* @__PURE__ */ e("ul", { className: "lx-pano__labels", children: [...T].sort((r, l) => r.x - l.x).map((r) => /* @__PURE__ */ e("li", { "data-rubric": r.slug, "data-label": r.slug, style: { left: `${r.x}%`, top: `${100 - r.height * 86}%` }, children: /* @__PURE__ */ s("a", { href: `/${r.slug}/index.html`, children: [
+      /* @__PURE__ */ e("ul", { className: "lx-pano__labels", children: [...q].sort((r, l) => r.x - l.x).map((r) => /* @__PURE__ */ e("li", { "data-rubric": r.slug, "data-label": r.slug, style: { left: `${r.x}%`, top: `${100 - r.height * 86}%` }, children: /* @__PURE__ */ s("a", { href: `/${r.slug}/index.html`, children: [
         /* @__PURE__ */ e("strong", { children: r.name }),
         /* @__PURE__ */ e("span", { children: t(`r.${r.slug}`) })
       ] }) }, r.slug)) })
@@ -1233,7 +1243,7 @@ function W(n, t) {
     ...i.length ? { sameAs: i } : {}
   };
 }
-function qe({ site: n }) {
+function Te({ site: n }) {
   const t = B(n, "");
   return /* @__PURE__ */ e(
     D,
@@ -1252,12 +1262,12 @@ function qe({ site: n }) {
 }
 function Ee({ site: n, post: t, author: a, hero: i, primaryTerm: r }) {
   var x;
-  const l = B(n, xe({ post: t, primaryTerm: r })), o = new Date(R(t)).toISOString(), d = t.updatedAt ? R({ updatedAt: t.updatedAt }) : 0, c = C(i, "large"), p = [
+  const l = B(n, xe({ post: t, primaryTerm: r })), o = new Date(R(t)).toISOString(), d = t.updatedAt ? R({ updatedAt: t.updatedAt }) : 0, c = A(i, "large"), p = [
     { name: n.settings.title, item: B(n, "") },
     ...r ? [{ name: r.name, item: B(n, ae(r)) }] : [],
     { name: t.title, item: l }
   ];
-  return /* @__PURE__ */ s(I, { children: [
+  return /* @__PURE__ */ s(P, { children: [
     /* @__PURE__ */ e(
       D,
       {
@@ -1290,7 +1300,7 @@ function Ee({ site: n, post: t, author: a, hero: i, primaryTerm: r }) {
     )
   ] });
 }
-const Ae = ["transition-ia", "mes-projets", "passions", "news-tech-ia", "edito"], Ce = 3, $e = 12;
+const Ce = ["transition-ia", "mes-projets", "passions", "news-tech-ia", "edito"], Ae = 3, $e = 12;
 function ie({ rubric: n, t, id: a }) {
   return /* @__PURE__ */ s("div", { className: "lx-shelf__head", children: [
     /* @__PURE__ */ s("div", { children: [
@@ -1307,7 +1317,7 @@ function ie({ rubric: n, t, id: a }) {
   ] });
 }
 function ee({ post: n, lead: t }) {
-  const a = C(n.hero, t ? "large" : "small");
+  const a = A(n.hero, t ? "large" : "small");
   return /* @__PURE__ */ s("article", { className: `lx-card${t ? " lx-card--lead" : ""}`, children: [
     /* @__PURE__ */ e("a", { className: "lx-card__art", href: "/" + n.url, tabIndex: -1, "aria-hidden": "true", children: a ? /* @__PURE__ */ e("img", { src: a, alt: "", loading: "lazy" }) : /* @__PURE__ */ e(E, { seed: n.slug, cols: t ? 60 : 30 }) }),
     /* @__PURE__ */ s("div", { className: "lx-card__text", children: [
@@ -1343,24 +1353,24 @@ function Be(n) {
   }
   return [...t.values()];
 }
-function Ie(n) {
+function Pe(n) {
   const t = n.replace(/[^\p{L}\p{N} ]/gu, " ").split(/\s+/).filter(Boolean);
   return (t.length > 1 ? t[0][0] + t[1][0] : (t[0] ?? "?").slice(0, 2)).toUpperCase();
 }
-function Pe({ rubric: n, projects: t, t: a }) {
+function Ie({ rubric: n, projects: t, t: a }) {
   const i = `lx-shelf-${n.slug}`;
   return /* @__PURE__ */ s("section", { className: "lx-projects", "data-rubric": n.slug, "aria-labelledby": i, children: [
-    /* @__PURE__ */ e("svg", { className: "lx-projects__edge lx-projects__edge--top", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: q(k("projects-top"), 1600, 90) }) }),
+    /* @__PURE__ */ e("svg", { className: "lx-projects__edge lx-projects__edge--top", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: T(k("projects-top"), 1600, 90) }) }),
     /* @__PURE__ */ e(E, { seed: "projects", width: 1600, height: 700, cols: 90, className: "lx-projects__art" }),
     /* @__PURE__ */ s("div", { className: "lx-projects__inner", children: [
       /* @__PURE__ */ e(ie, { rubric: n, t: a, id: i }),
       /* @__PURE__ */ e("ul", { className: "lx-projects__list", children: t.map((r) => /* @__PURE__ */ e("li", { children: /* @__PURE__ */ s("a", { href: "/" + r.post.url, children: [
-        /* @__PURE__ */ e("span", { className: "lx-projects__logo", children: r.logo ? /* @__PURE__ */ e("img", { src: r.logo, alt: "", loading: "lazy" }) : /* @__PURE__ */ e("span", { "aria-hidden": "true", children: Ie(r.name) }) }),
+        /* @__PURE__ */ e("span", { className: "lx-projects__logo", children: r.logo ? /* @__PURE__ */ e("img", { src: r.logo, alt: "", loading: "lazy" }) : /* @__PURE__ */ e("span", { "aria-hidden": "true", children: Pe(r.name) }) }),
         /* @__PURE__ */ e("span", { className: "lx-projects__name", children: r.name }),
         r.tagline && /* @__PURE__ */ e("span", { className: "lx-projects__tag", children: r.tagline })
       ] }) }, r.name)) })
     ] }),
-    /* @__PURE__ */ e("svg", { className: "lx-projects__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: q(k("projects-bottom"), 1600, 90) }) })
+    /* @__PURE__ */ e("svg", { className: "lx-projects__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: T(k("projects-bottom"), 1600, 90) }) })
   ] });
 }
 function Re({ site: n, posts: t, staticPage: a, archivesLink: i, categories: r }) {
@@ -1369,13 +1379,13 @@ function Re({ site: n, posts: t, staticPage: a, archivesLink: i, categories: r }
   if (a)
     return /* @__PURE__ */ e("div", { className: "lx-prose lx-prose--page", dangerouslySetInnerHTML: { __html: a.bodyHtml } });
   const [o, ...d] = t, c = F((p = o == null ? void 0 : o.category) == null ? void 0 : p.url);
-  return /* @__PURE__ */ s(I, { children: [
-    /* @__PURE__ */ e(qe, { site: n }),
+  return /* @__PURE__ */ s(P, { children: [
+    /* @__PURE__ */ e(Te, { site: n }),
     /* @__PURE__ */ e(re, { site: n, post: o, rubric: c, label: (x = o == null ? void 0 : o.category) == null ? void 0 : x.name, edgeSeed: "home" }),
     /* @__PURE__ */ s("div", { className: "lx-shelves", children: [
-      Ae.map((h) => {
+      Ce.map((h) => {
         var b;
-        const f = T.find((m) => m.slug === h);
+        const f = q.find((m) => m.slug === h);
         if (!f) return null;
         const _ = ((b = r == null ? void 0 : r.find((m) => m.term.slug === h)) == null ? void 0 : b.posts) ?? t.filter((m) => {
           var N;
@@ -1383,13 +1393,13 @@ function Re({ site: n, posts: t, staticPage: a, archivesLink: i, categories: r }
         }), y = _.filter((m) => m.id !== (o == null ? void 0 : o.id));
         if (h === "mes-projets") {
           const m = Be(_);
-          if (m.length) return /* @__PURE__ */ e(Pe, { rubric: f, projects: m, t: l }, h);
+          if (m.length) return /* @__PURE__ */ e(Ie, { rubric: f, projects: m, t: l }, h);
         }
-        return y.length ? /* @__PURE__ */ e(He, { rubric: f, posts: y.slice(0, Ce), t: l }, h) : null;
+        return y.length ? /* @__PURE__ */ e(He, { rubric: f, posts: y.slice(0, Ae), t: l }, h) : null;
       }),
       i && /* @__PURE__ */ e("p", { className: "lx-more lx-shelves__more", children: /* @__PURE__ */ e("a", { href: i.href, children: i.label }) })
     ] }),
-    /* @__PURE__ */ e(Te, { site: n })
+    /* @__PURE__ */ e(qe, { site: n })
   ] });
 }
 function Fe({ entries: n, label: t, countLabel: a }) {
@@ -1434,16 +1444,16 @@ function Ue(n) {
     return a.add(x), t.push({ id: x, text: c, level: l === "2" ? 2 : 3 }), p ? r : `<h${l} id="${x}"${o ?? ""}>${d}</h${l}>`;
   }), entries: t };
 }
-function Ye({ site: n, post: t, bodyHtml: a, author: i, hero: r, primaryTerm: l, tags: o }) {
-  var v, w, z;
-  const d = M(n), c = C(r, "large"), p = t.type === "post", x = (v = T.find((g) => g.slug === (l == null ? void 0 : l.slug))) == null ? void 0 : v.slug, h = new Date(R(t));
+function Ve({ site: n, post: t, bodyHtml: a, author: i, hero: r, primaryTerm: l, tags: o }) {
+  var v, w, S;
+  const d = M(n), c = A(r, "large"), p = t.type === "post", x = (v = q.find((g) => g.slug === (l == null ? void 0 : l.slug))) == null ? void 0 : v.slug, h = new Date(R(t));
   let f = "";
   try {
     f = new Intl.DateTimeFormat(n.settings.language || "fr", { dateStyle: "long" }).format(h);
   } catch {
     f = h.toDateString();
   }
-  const _ = !!(p && c && ((w = t.fields) == null ? void 0 : w["header-photo"]) === !0), y = ((z = t.fields) == null ? void 0 : z.toc) === !0 ? Ue(a) : null, b = !!(y && y.entries.length >= 2), m = t.contentMarkdown.trim().split(/\s+/).length, N = Math.max(1, Math.round(m / 220));
+  const _ = !!(p && c && ((w = t.fields) == null ? void 0 : w["header-photo"]) === !0), y = ((S = t.fields) == null ? void 0 : S.toc) === !0 ? Ue(a) : null, b = !!(y && y.entries.length >= 2), m = t.contentMarkdown.trim().split(/\s+/).length, N = Math.max(1, Math.round(m / 220));
   return /* @__PURE__ */ s("article", { "data-rubric": x, className: `lx-article${p ? "" : " lx-article--page"}${t.slug === "qui-suis-je" ? " lx-article--about" : ""}`, children: [
     /* @__PURE__ */ s("header", { className: `lx-band lx-band--article${_ ? " lx-band--photo" : ""}`, children: [
       _ ? /* @__PURE__ */ e("div", { className: "lx-band__art lx-band__photo", "aria-hidden": "true", children: /* @__PURE__ */ e("img", { src: c, alt: "" }) }) : /* @__PURE__ */ e(E, { seed: t.slug, width: 1600, height: 720, cols: 110, className: "lx-band__art" }),
@@ -1461,7 +1471,7 @@ function Ye({ site: n, post: t, bodyHtml: a, author: i, hero: r, primaryTerm: l,
           ] })
         ] })
       ] }),
-      /* @__PURE__ */ e("svg", { className: "lx-band__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: q(k(t.slug), 1600, 90) }) })
+      /* @__PURE__ */ e("svg", { className: "lx-band__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: T(k(t.slug), 1600, 90) }) })
     ] }),
     c && !_ && /* @__PURE__ */ s("figure", { className: "lx-figure", children: [
       /* @__PURE__ */ e("img", { src: c, alt: (r == null ? void 0 : r.alt) ?? "" }),
@@ -1472,7 +1482,7 @@ function Ye({ site: n, post: t, bodyHtml: a, author: i, hero: r, primaryTerm: l,
       /* @__PURE__ */ e("div", { className: "lx-prose", "data-lx-prose": !0, dangerouslySetInnerHTML: { __html: y.html } })
     ] }) : /* @__PURE__ */ e("div", { className: "lx-prose", "data-lx-prose": !0, dangerouslySetInnerHTML: { __html: a } }),
     p && o.length > 0 && /* @__PURE__ */ e("ul", { className: "lx-tags", "aria-label": d("tags"), children: o.map((g) => /* @__PURE__ */ e("li", { children: g.name }, g.id)) }),
-    p && /* @__PURE__ */ s(I, { children: [
+    p && /* @__PURE__ */ s(P, { children: [
       /* @__PURE__ */ e(Ee, { site: n, post: t, author: i, hero: r, primaryTerm: l }),
       /* @__PURE__ */ s("section", { className: "lx-related", "data-lx-related": !0, "data-current": t.id, "data-term": t.primaryTermId, hidden: !0, children: [
         /* @__PURE__ */ e("h2", { children: d("continue") }),
@@ -1492,7 +1502,7 @@ function le({ posts: n, site: t, lead: a = !0 }) {
   const i = M(t);
   return n.length === 0 ? /* @__PURE__ */ e("p", { className: "lx-empty", children: i("empty") }) : /* @__PURE__ */ e("div", { className: "lx-trail", "data-lx-trail": !0, children: n.map((r, l) => {
     var p;
-    const o = F((p = r.category) == null ? void 0 : p.url), d = a && l === 0, c = C(r.hero, d ? "large" : "medium");
+    const o = F((p = r.category) == null ? void 0 : p.url), d = a && l === 0, c = A(r.hero, d ? "large" : "medium");
     return /* @__PURE__ */ s("article", { className: `lx-way${d ? " lx-way--first" : ""}`, "data-rubric": o, children: [
       /* @__PURE__ */ e("span", { className: "lx-way__pin", "aria-hidden": "true" }),
       /* @__PURE__ */ e("a", { className: "lx-way__art", href: "/" + r.url, tabIndex: -1, "aria-hidden": "true", children: c ? /* @__PURE__ */ e("img", { src: c, alt: "", loading: "lazy" }) : /* @__PURE__ */ e(E, { seed: r.slug, cols: d ? 64 : 44 }) }),
@@ -1507,10 +1517,10 @@ function le({ posts: n, site: t, lead: a = !0 }) {
     ] }, r.id);
   }) });
 }
-function Ge({ site: n, term: t, posts: a, archivesLink: i }) {
+function Je({ site: n, term: t, posts: a, archivesLink: i }) {
   var c;
-  const r = M(n), l = (c = T.find((p) => p.slug === t.slug)) == null ? void 0 : c.slug, [o, ...d] = a;
-  return /* @__PURE__ */ s(I, { children: [
+  const r = M(n), l = (c = q.find((p) => p.slug === t.slug)) == null ? void 0 : c.slug, [o, ...d] = a;
+  return /* @__PURE__ */ s(P, { children: [
     /* @__PURE__ */ e(re, { site: n, post: o, rubric: l, label: t.name, edgeSeed: t.slug }),
     d.length > 0 && /* @__PURE__ */ s("section", { className: "lx-section lx-section--flush", "data-rubric": l, children: [
       /* @__PURE__ */ s("h2", { className: "lx-section__title lx-section__title--small", children: [
@@ -1527,9 +1537,9 @@ function Ge({ site: n, term: t, posts: a, archivesLink: i }) {
     ] })
   ] });
 }
-function Je({ site: n, author: t, posts: a }) {
-  const i = C(t.avatar, "small");
-  return /* @__PURE__ */ s(I, { children: [
+function Ye({ site: n, author: t, posts: a }) {
+  const i = A(t.avatar, "small");
+  return /* @__PURE__ */ s(P, { children: [
     /* @__PURE__ */ s("header", { className: "lx-band lx-band--author", children: [
       /* @__PURE__ */ e(E, { seed: t.displayName, width: 1600, height: 620, cols: 110, className: "lx-band__art" }),
       /* @__PURE__ */ s("div", { className: "lx-band__inner", children: [
@@ -1539,12 +1549,12 @@ function Je({ site: n, author: t, posts: a }) {
         t.bio && /* @__PURE__ */ e("p", { className: "lx-band__bio", children: t.bio }),
         t.socials && t.socials.length > 0 && /* @__PURE__ */ e("ul", { className: "lx-socials", children: t.socials.map((r) => /* @__PURE__ */ e("li", { children: /* @__PURE__ */ e("a", { href: r.url, rel: "me noopener", "aria-label": me(r.network), children: /* @__PURE__ */ e(he, { network: r.network }) }) }, r.network)) })
       ] }),
-      /* @__PURE__ */ e("svg", { className: "lx-band__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: q(k(t.id), 1600, 90) }) })
+      /* @__PURE__ */ e("svg", { className: "lx-band__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: T(k(t.id), 1600, 90) }) })
     ] }),
     /* @__PURE__ */ e("section", { className: "lx-section lx-section--flush", children: /* @__PURE__ */ e(le, { posts: a, site: n }) })
   ] });
 }
-function Ke({ site: n, message: t }) {
+function Ge({ site: n, message: t }) {
   const a = M(n);
   return /* @__PURE__ */ s("section", { className: "lx-lost", children: [
     /* @__PURE__ */ e(E, { seed: "hors-sentier", width: 1600, height: 900, cols: 120, className: "lx-lost__art" }),
@@ -1562,7 +1572,7 @@ const oe = {
     secondLine: "Leaux",
     tagline: "Ce que l'IA change au travail, ce que je construis, et ce que je vais chercher en montagne."
   }
-}, Xe = {
+}, Ke = {
   "hero.firstLine": { description: "First line of the giant home title." },
   "hero.secondLine": { description: "Second line of the giant home title." },
   "hero.tagline": { description: "Sentence shown above the home title." }
@@ -1570,7 +1580,7 @@ const oe = {
 function te(n) {
   return { ...oe.hero, ...(n == null ? void 0 : n.hero) ?? {} };
 }
-function Ve({ config: n, save: t }) {
+function Xe({ config: n, save: t }) {
   const { t: a } = fe("theme-leaux-altitude"), [i, r] = Z(te(n)), [l, o] = Z(!1);
   ue(() => r(te(n)), [n]);
   async function d(c) {
@@ -1656,7 +1666,7 @@ const Ze = {
 }, at = {
   id: "leaux-altitude",
   name: "Leaux Altitude",
-  version: "1.7.1",
+  version: "1.7.2",
   description: "Dedicated theme for leaux.ovh: generative topographic art, one trail per section.",
   readme: _e,
   scssEntry: "theme.css",
@@ -1683,13 +1693,13 @@ const Ze = {
   templates: {
     base: Me,
     home: Re,
-    single: Ye,
-    category: Ge,
-    author: Je,
-    notFound: Ke
+    single: Ve,
+    category: Je,
+    author: Ye,
+    notFound: Ge
   },
   // /theme-settings page: hero texts.
-  settings: { navLabelKey: "settings.navLabel", defaultConfig: oe, component: Ve, schema: Xe },
+  settings: { navLabelKey: "settings.navLabel", defaultConfig: oe, component: Xe, schema: Ke },
   // Translations, namespace "theme-leaux-altitude" (admin UI + public labels).
   i18n: Ze
 };
