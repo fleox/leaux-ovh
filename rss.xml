@@ -6,7 +6,7 @@
     <link>https://leaux.ovh/</link>
     <description>Ce que l&apos;IA change au travail, ce que je construis, et ce que je vais chercher en montagne.</description>
     <language>fr</language>
-    <lastBuildDate>Fri, 13 Nov 2026 12:56:18 GMT</lastBuildDate>
+    <lastBuildDate>Fri, 13 Nov 2026 13:09:21 GMT</lastBuildDate>
     <atom:link href="https://leaux.ovh/rss.xml" rel="self" type="application/rss+xml"/>
     <item>
       <title>Revue IA de la semaine : Nvidia sans Jensen Huang</title>
@@ -15,6 +15,7 @@
       <category>News tech IA</category>
       <description><![CDATA[Jensen Huang quitte Nvidia, Anthropic lance son entrée en Bourse, Claude Fable 5.2 et Gemini 4 : l'essentiel de l'IA du 6 au 13 novembre 2026.]]></description>
       <pubDate>Fri, 13 Nov 2026 12:24:22 GMT</pubDate>
+      <enclosure url="https://leaux.ovh/media/2026/11/revue-ia-s46-jensen-huang-portrait-crayon-header-887cc1/large.webp" length="147246" type="image/webp"/>
     </item>
     <item>
       <title>AI Rebounding : un rebond bien plus petit que la vague</title>
