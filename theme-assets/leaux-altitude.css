@@ -532,7 +532,9 @@ main:has(.lx-lost) + .lx-footer .lx-footer__ridge { display: none; }
    fallback in menu-loader.js (mouse only). */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
-    .lx-band--category, .lx-band--photo { view-timeline: --lx-band block; }
+    /* Inset 0: the default (auto) takes html's scroll-padding-top (88 px, 132 px
+       with a table of contents) and would start the animation before any scroll. */
+    .lx-band--category, .lx-band--photo { view-timeline: --lx-band block; view-timeline-inset: 0; }
     .lx-band--category .lx-band__art, .lx-band--photo .lx-band__art { animation: lx-par-art linear both; animation-timeline: --lx-band; animation-range: exit-crossing 0% exit-crossing 100%; }
     .lx-band--category .lx-band__inner, .lx-band--photo .lx-band__inner { animation: lx-par-inner linear both; animation-timeline: --lx-band; animation-range: exit-crossing 0% exit-crossing 90%; }
   }
