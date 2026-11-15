@@ -33,3 +33,7 @@ Newest post in the band (same design as section pages), one block per section (n
 ## Home data (1.7.1)
 
 The manifest sets `homeCategoryPosts: 12`: AgentCMS ≥ 0.4.4 passes the newest 12 posts of every category to the home (`props.categories`), used for the section blocks and the projects. `postsPerPage` no longer has to be large. Older AgentCMS: fallback on `props.posts`.
+
+## Transitions and parallax (1.7.2)
+
+The list → post transition starts from the feature band, the home cards and the project logos too (`lxVtPair` in BaseLayout's head script). The band parallax uses CSS scroll-driven animations (off the main thread, smooth on phones); the JS version is a fallback for mouse users on browsers without them.
