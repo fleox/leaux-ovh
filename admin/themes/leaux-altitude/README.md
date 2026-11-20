@@ -37,3 +37,8 @@ The manifest sets `homeCategoryPosts: 12`: AgentCMS ≥ 0.4.4 passes the newest 
 ## Transitions and parallax (1.7.2)
 
 The list → post transition starts from the feature band, the home cards and the project logos too (`lxVtPair` in BaseLayout's head script). The band parallax uses CSS scroll-driven animations (off the main thread, smooth on phones); the JS version is a fallback for mouse users on browsers without them.
+
+
+### 1.7.3
+
+The bands' view timeline uses `view-timeline-inset: 0`. With the default (`auto`) it took html's `scroll-padding-top` (88 px, 132 px on posts with a table of contents), so the parallax had already started at load and the header photo sat ~27 px below the site header.

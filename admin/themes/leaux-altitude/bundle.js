@@ -259,7 +259,8 @@ main:has(> .lx-pano:last-child) ~ .lx-footer .lx-footer__ridge { display: none; 
 .lx-band--photo .lx-band__count a { color: inherit; }
 .lx-band__inner { max-width: 1320px; margin: 0 auto; padding: clamp(40px, 7vw, 96px) var(--lx-gutter) clamp(80px, 11vw, 150px); }
 .lx-band h1 { font-weight: 900; letter-spacing: -.025em; line-height: .96; }
-.lx-band--article h1 { max-width: 19ch; font-size: clamp(2.5rem, 7.2vw, 7rem); font-stretch: 112%; }
+/* Same size as the home's featured title (.lx-feature__title) from desktop up; 2.5rem floor keeps phones unchanged. */
+.lx-band--article h1 { max-width: 18ch; font-size: clamp(2.5rem, 5.2vw, 5rem); font-stretch: 112%; line-height: .98; }
 .lx-band--category h1 { font-size: clamp(3.4rem, 13.5vw, 13rem); font-stretch: 125%; line-height: .88; letter-spacing: -.035em; }
 .lx-band--author h1 { font-size: clamp(3rem, 10vw, 9rem); font-stretch: 120%; }
 .lx-band__rubric { display: inline-block; margin-bottom: 18px; padding: 5px 12px 6px; background: var(--lx-night); color: var(--lx-glacier) !important; font-weight: 700; text-decoration: none; }
@@ -989,7 +990,7 @@ main:has(.lx-lost) + .lx-footer .lx-footer__ridge { display: none; }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
   else start();
 })();
-`, _e = '# Leaux Altitude\n\nDedicated AgentCMS theme for leaux.ovh. Ridgelines pass in front of the home title, each section is a summit on an orientation table, each post gets a contour map generated from its slug, and a reading climb follows the scroll.\n\nSection slugs and colors live in `src/rubrics.ts` and `src/theme.css` (`[data-rubric]`). Hero texts are editable on the theme settings page.\n\n## Custom fields\n\n| Field | Type | Effect |\n|---|---|---|\n| `header-photo` | yes / no | On a post with a featured image, `true` puts the image behind the header, with a parallax on scroll, instead of the contour map. The image is then not repeated under the header. |\n| `toc` | yes / no | `true` adds a table of contents built from the body\'s `h2` (numbered) and `h3` (indented); the headings get ids. Wide screens (≥ 1200 px): the text moves left, aligned with the title, and the contents stay open in a sticky column on the right, current section highlighted and the rail filling as you read. Narrower: a sticky bar under the header that shows the current section and a reading progress line, and drops the list down on tap. Without JS: an open list above the text. Shown only with at least 2 headings. |\n\n## Article components (raw HTML in Markdown)\n\n- Video card (YouTube link with thumbnail, no embed): `<div class="lx-video"><a class="lx-video__thumb" href="https://www.youtube.com/watch?v=ID" aria-label="Regarder « Titre » sur YouTube"><img src="https://i.ytimg.com/vi/ID/hqdefault.jpg" alt="" loading="lazy"></a><div><p class="lx-video__meta">Chaîne · 18 min · en anglais</p><p class="lx-video__title"><a href="https://www.youtube.com/watch?v=ID">Titre</a></p><p>Résumé…</p></div></div>`.\n- En bref (key points, first block of a long post): `<aside class="lx-brief" aria-label="En bref"><p class="lx-brief__tag">En bref</p><ul><li>… <strong>…</strong></li></ul></aside>`.\n\n- Pull quote: `<figure class="lx-pullquote"><blockquote><p>…</p></blockquote></figure>` (optional `<figcaption>`).\n- Case box: `<aside class="lx-case"><p class="lx-case__tag">Cas réel · date</p><p class="lx-case__title">…</p><p>…</p><p class="lx-case__src">Source : <a href="…">…</a></p></aside>`.\n- Key figures: `<div class="lx-stats"><div><strong>48 %</strong><span>…</span></div>…</div>`, optionally followed by `<p class="lx-case__src">Source : …</p>`.\n- Bar chart: `<figure class="lx-chart"><p class="lx-chart__title">…</p><p class="lx-chart__sub">…</p><div class="lx-chart__cols" style="--n:9"><div class="lx-chart__col is-lab" style="--v:.4" title="2020 : 18 322"><div class="lx-chart__bar"></div><span class="lx-chart__val">18 322</span></div>…</div><div class="lx-chart__axis" style="--n:9"><span>2020</span>…</div><p class="lx-case__src">Source : …</p></figure>`. `--v` is the bar height (0–1). Column modifiers: `is-hi` (highlighted), `is-part` (hatched, partial period), `is-lab` (value always shown; others on hover). Axis labels with `is-minor` hide on phones.\n- Paired horizontal bars: `<div class="lx-chart__rows"><div class="lx-chart__row"><span>Label</span><div class="lx-chart__hb" style="--v:.3"><i></i>1 200 <em>2025</em></div><div class="lx-chart__hb is-hi" style="--v:.8"><i></i>3 400 <em>2026</em></div></div></div>` with a `<ul class="lx-chart__legend"><li><i></i>2025</li><li><i class="is-hi"></i>2026</li></ul>`.\n\n## Section pages (1.6.0)\n\nThe band of each section page features its latest post: image as background (rubric-tinted gradient), kicker « Rubrique — Dernier article », title, excerpt, « Lire l\'article » button, date and reading time, ridge edge kept. The other posts follow under « Articles précédents ». The h1 of the page is the logo, with the section name visually hidden; `<title>` and meta description still come from the category.\n\n## Home (1.7.0)\n\nNewest post in the band (same design as section pages), one block per section (newest post large, two more beside it, link « Toute la rubrique »), « Mes projets » as round logos, « Par où monter ? » at the bottom. Project fields on posts of « Mes projets »: `project` (name), `project-logo` (URL of the `square` image format), `project-tagline` (optional). New image format `square` (320×320).\n\n## Home data (1.7.1)\n\nThe manifest sets `homeCategoryPosts: 12`: AgentCMS ≥ 0.4.4 passes the newest 12 posts of every category to the home (`props.categories`), used for the section blocks and the projects. `postsPerPage` no longer has to be large. Older AgentCMS: fallback on `props.posts`.\n\n## Transitions and parallax (1.7.2)\n\nThe list → post transition starts from the feature band, the home cards and the project logos too (`lxVtPair` in BaseLayout\'s head script). The band parallax uses CSS scroll-driven animations (off the main thread, smooth on phones); the JS version is a fallback for mouse users on browsers without them.\n';
+`, _e = '# Leaux Altitude\n\nDedicated AgentCMS theme for leaux.ovh. Ridgelines pass in front of the home title, each section is a summit on an orientation table, each post gets a contour map generated from its slug, and a reading climb follows the scroll.\n\nSection slugs and colors live in `src/rubrics.ts` and `src/theme.css` (`[data-rubric]`). Hero texts are editable on the theme settings page.\n\n## Custom fields\n\n| Field | Type | Effect |\n|---|---|---|\n| `header-photo` | yes / no | On a post with a featured image, `true` puts the image behind the header, with a parallax on scroll, instead of the contour map. The image is then not repeated under the header. |\n| `toc` | yes / no | `true` adds a table of contents built from the body\'s `h2` (numbered) and `h3` (indented); the headings get ids. Wide screens (≥ 1200 px): the text moves left, aligned with the title, and the contents stay open in a sticky column on the right, current section highlighted and the rail filling as you read. Narrower: a sticky bar under the header that shows the current section and a reading progress line, and drops the list down on tap. Without JS: an open list above the text. Shown only with at least 2 headings. |\n\n## Article components (raw HTML in Markdown)\n\n- Video card (YouTube link with thumbnail, no embed): `<div class="lx-video"><a class="lx-video__thumb" href="https://www.youtube.com/watch?v=ID" aria-label="Regarder « Titre » sur YouTube"><img src="https://i.ytimg.com/vi/ID/hqdefault.jpg" alt="" loading="lazy"></a><div><p class="lx-video__meta">Chaîne · 18 min · en anglais</p><p class="lx-video__title"><a href="https://www.youtube.com/watch?v=ID">Titre</a></p><p>Résumé…</p></div></div>`.\n- En bref (key points, first block of a long post): `<aside class="lx-brief" aria-label="En bref"><p class="lx-brief__tag">En bref</p><ul><li>… <strong>…</strong></li></ul></aside>`.\n\n- Pull quote: `<figure class="lx-pullquote"><blockquote><p>…</p></blockquote></figure>` (optional `<figcaption>`).\n- Case box: `<aside class="lx-case"><p class="lx-case__tag">Cas réel · date</p><p class="lx-case__title">…</p><p>…</p><p class="lx-case__src">Source : <a href="…">…</a></p></aside>`.\n- Key figures: `<div class="lx-stats"><div><strong>48 %</strong><span>…</span></div>…</div>`, optionally followed by `<p class="lx-case__src">Source : …</p>`.\n- Bar chart: `<figure class="lx-chart"><p class="lx-chart__title">…</p><p class="lx-chart__sub">…</p><div class="lx-chart__cols" style="--n:9"><div class="lx-chart__col is-lab" style="--v:.4" title="2020 : 18 322"><div class="lx-chart__bar"></div><span class="lx-chart__val">18 322</span></div>…</div><div class="lx-chart__axis" style="--n:9"><span>2020</span>…</div><p class="lx-case__src">Source : …</p></figure>`. `--v` is the bar height (0–1). Column modifiers: `is-hi` (highlighted), `is-part` (hatched, partial period), `is-lab` (value always shown; others on hover). Axis labels with `is-minor` hide on phones.\n- Paired horizontal bars: `<div class="lx-chart__rows"><div class="lx-chart__row"><span>Label</span><div class="lx-chart__hb" style="--v:.3"><i></i>1 200 <em>2025</em></div><div class="lx-chart__hb is-hi" style="--v:.8"><i></i>3 400 <em>2026</em></div></div></div>` with a `<ul class="lx-chart__legend"><li><i></i>2025</li><li><i class="is-hi"></i>2026</li></ul>`.\n\n## Section pages (1.6.0)\n\nThe band of each section page features its latest post: image as background (rubric-tinted gradient), kicker « Rubrique — Dernier article », title, excerpt, « Lire l\'article » button, date and reading time, ridge edge kept. The other posts follow under « Articles précédents ». The h1 of the page is the logo, with the section name visually hidden; `<title>` and meta description still come from the category.\n\n## Home (1.7.0)\n\nNewest post in the band (same design as section pages), one block per section (newest post large, two more beside it, link « Toute la rubrique »), « Mes projets » as round logos, « Par où monter ? » at the bottom. Project fields on posts of « Mes projets »: `project` (name), `project-logo` (URL of the `square` image format), `project-tagline` (optional). New image format `square` (320×320).\n\n## Home data (1.7.1)\n\nThe manifest sets `homeCategoryPosts: 12`: AgentCMS ≥ 0.4.4 passes the newest 12 posts of every category to the home (`props.categories`), used for the section blocks and the projects. `postsPerPage` no longer has to be large. Older AgentCMS: fallback on `props.posts`.\n\n## Transitions and parallax (1.7.2)\n\nThe list → post transition starts from the feature band, the home cards and the project logos too (`lxVtPair` in BaseLayout\'s head script). The band parallax uses CSS scroll-driven animations (off the main thread, smooth on phones); the JS version is a fallback for mouse users on browsers without them.\n\n\n### 1.7.3\n\nThe bands\' view timeline uses `view-timeline-inset: 0`. With the default (`auto`) it took html\'s `scroll-padding-top` (88 px, 132 px on posts with a table of contents), so the parallax had already started at load and the header photo sat ~27 px below the site header.\n';
 function M(n, t) {
   const a = ce.getFixedT(pe(t || n.settings.language || "en"), "theme-leaux-altitude");
   return (i) => a(`public.${i}`);
@@ -1229,13 +1230,13 @@ function qe({ site: n }) {
     ] })
   ] });
 }
-function D({ data: n }) {
+function W({ data: n }) {
   return /* @__PURE__ */ e("script", { type: "application/ld+json", dangerouslySetInnerHTML: { __html: JSON.stringify(n).replace(/</g, "\\u003c") } });
 }
 function B(n, t) {
   return n.settings.baseUrl ? ne(n.settings.baseUrl, t) : void 0;
 }
-function W(n, t) {
+function D(n, t) {
   const a = (t == null ? void 0 : t.displayName) || n.settings.title || "", i = ((t == null ? void 0 : t.socials) ?? []).map((r) => r.url).filter(Boolean);
   return {
     "@type": "Person",
@@ -1248,7 +1249,7 @@ function W(n, t) {
 function Te({ site: n }) {
   const t = B(n, "");
   return /* @__PURE__ */ e(
-    D,
+    W,
     {
       data: {
         "@context": "https://schema.org",
@@ -1257,7 +1258,7 @@ function Te({ site: n }) {
         description: n.settings.description,
         url: t,
         inLanguage: n.settings.language || "fr",
-        author: W(n)
+        author: D(n)
       }
     }
   );
@@ -1271,7 +1272,7 @@ function Ee({ site: n, post: t, author: a, hero: i, primaryTerm: r }) {
   ];
   return /* @__PURE__ */ s(P, { children: [
     /* @__PURE__ */ e(
-      D,
+      W,
       {
         data: {
           "@context": "https://schema.org",
@@ -1285,13 +1286,13 @@ function Ee({ site: n, post: t, author: a, hero: i, primaryTerm: r }) {
           dateModified: d > R(t) ? new Date(d).toISOString() : o,
           ...c ? { image: c } : {},
           ...r ? { articleSection: r.name } : {},
-          author: W(n, a),
-          publisher: W(n, a)
+          author: D(n, a),
+          publisher: D(n, a)
         }
       }
     ),
     /* @__PURE__ */ e(
-      D,
+      W,
       {
         data: {
           "@context": "https://schema.org",
@@ -1424,9 +1425,9 @@ function Fe({ entries: n, label: t, countLabel: a }) {
     ] }) }, l.id)) })
   ] }) });
 }
-const De = { amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: " ", rsquo: "’", laquo: "«", raquo: "»" };
-function We(n) {
-  return n.replace(/<[^>]*>/g, "").replace(/&#(\d+);/g, (t, a) => String.fromCodePoint(Number(a))).replace(/&#x([0-9a-f]+);/gi, (t, a) => String.fromCodePoint(parseInt(a, 16))).replace(/&([a-z]+);/gi, (t, a) => De[a.toLowerCase()] ?? t).replace(/[ \t\r\n]+/g, " ").trim();
+const We = { amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: " ", rsquo: "’", laquo: "«", raquo: "»" };
+function De(n) {
+  return n.replace(/<[^>]*>/g, "").replace(/&#(\d+);/g, (t, a) => String.fromCodePoint(Number(a))).replace(/&#x([0-9a-f]+);/gi, (t, a) => String.fromCodePoint(parseInt(a, 16))).replace(/&([a-z]+);/gi, (t, a) => We[a.toLowerCase()] ?? t).replace(/[ \t\r\n]+/g, " ").trim();
 }
 function Oe(n) {
   return n.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 64).replace(/-+$/, "") || "section";
@@ -1435,7 +1436,7 @@ function Ue(n) {
   const t = [], a = /* @__PURE__ */ new Set();
   return { html: n.replace(/<h([23])(\s[^>]*)?>([\s\S]*?)<\/h\1>/gi, (r, l, o, d) => {
     var h;
-    const c = We(d);
+    const c = De(d);
     if (!c) return r;
     const p = (h = o == null ? void 0 : o.match(/\sid\s*=\s*"([^"]+)"/i)) == null ? void 0 : h[1];
     let x = p ?? Oe(c);
@@ -1668,7 +1669,7 @@ const Ze = {
 }, at = {
   id: "leaux-altitude",
   name: "Leaux Altitude",
-  version: "1.7.3",
+  version: "1.7.4",
   description: "Dedicated theme for leaux.ovh: generative topographic art, one trail per section.",
   readme: _e,
   scssEntry: "theme.css",
