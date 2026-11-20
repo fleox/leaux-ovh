@@ -255,7 +255,8 @@ main:has(> .lx-pano:last-child) ~ .lx-footer .lx-footer__ridge { display: none; 
 .lx-band--photo .lx-band__count a { color: inherit; }
 .lx-band__inner { max-width: 1320px; margin: 0 auto; padding: clamp(40px, 7vw, 96px) var(--lx-gutter) clamp(80px, 11vw, 150px); }
 .lx-band h1 { font-weight: 900; letter-spacing: -.025em; line-height: .96; }
-.lx-band--article h1 { max-width: 19ch; font-size: clamp(2.5rem, 7.2vw, 7rem); font-stretch: 112%; }
+/* Same size as the home's featured title (.lx-feature__title) from desktop up; 2.5rem floor keeps phones unchanged. */
+.lx-band--article h1 { max-width: 18ch; font-size: clamp(2.5rem, 5.2vw, 5rem); font-stretch: 112%; line-height: .98; }
 .lx-band--category h1 { font-size: clamp(3.4rem, 13.5vw, 13rem); font-stretch: 125%; line-height: .88; letter-spacing: -.035em; }
 .lx-band--author h1 { font-size: clamp(3rem, 10vw, 9rem); font-stretch: 120%; }
 .lx-band__rubric { display: inline-block; margin-bottom: 18px; padding: 5px 12px 6px; background: var(--lx-night); color: var(--lx-glacier) !important; font-weight: 700; text-decoration: none; }
