@@ -6,15 +6,24 @@
     <link>https://leaux.ovh/</link>
     <description>Ce que l&apos;IA change au travail, ce que je construis, et ce que je vais chercher en montagne.</description>
     <language>fr</language>
-    <lastBuildDate>Thu, 19 Nov 2026 22:27:25 GMT</lastBuildDate>
+    <lastBuildDate>Fri, 20 Nov 2026 11:01:21 GMT</lastBuildDate>
     <atom:link href="https://leaux.ovh/rss.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>CLAUDE.md, AGENTS.md : quand un fichier texte devient un exécutable</title>
+      <link>https://leaux.ovh/transition-ia/claude-md-agents-md-quand-un-fichier-texte-devient-un-executable.html</link>
+      <guid isPermaLink="true">https://leaux.ovh/transition-ia/claude-md-agents-md-quand-un-fichier-texte-devient-un-executable.html</guid>
+      <category>Transition IA</category>
+      <description><![CDATA[Des dépôts GitHub piégés détournent Claude Code et les autres agents avec de simples fichiers de consignes. J'ai audité mon propre poste : voici ce qu'un attaquant y trouverait.]]></description>
+      <pubDate>Fri, 20 Nov 2026 11:01:01 GMT</pubDate>
+      <enclosure url="https://leaux.ovh/media/2026/11/fichier-texte-agent-ia-1ed37f/large.webp" length="57522" type="image/webp"/>
+    </item>
     <item>
       <title>No AI Slop : l&apos;IA fait payer l&apos;addition au dernier maillon</title>
       <link>https://leaux.ovh/edito/no-ai-slop-l-ia-fait-payer-l-addition-au-dernier-maillon.html</link>
       <guid isPermaLink="true">https://leaux.ovh/edito/no-ai-slop-l-ia-fait-payer-l-addition-au-dernier-maillon.html</guid>
       <category>Édito</category>
       <description><![CDATA[Un manifeste signé par plus de 1 000 développeurs dénonce le « slop ». Pour un CTO adepte du Lean, c'est un gaspillage déplacé vers le dernier maillon de la chaîne, souvent la tech.]]></description>
-      <pubDate>Thu, 19 Nov 2026 22:27:05 GMT</pubDate>
+      <pubDate>Thu, 19 Nov 2026 22:27:23 GMT</pubDate>
       <enclosure url="https://leaux.ovh/media/2026/11/no-ai-slop-manifestation-6d4d44/large.webp" length="151470" type="image/webp"/>
     </item>
     <item>
@@ -178,15 +187,6 @@
       <description><![CDATA[Retour sur le GR5 là où je m'étais arrêté : un sac de 12 kilos, six jours de grand beau, la route des crêtes et ma première nuit de marche à la frontale.]]></description>
       <pubDate>Mon, 11 Sep 2023 18:00:00 GMT</pubDate>
       <enclosure url="https://leaux.ovh/media/2026/11/gr5b-lac-anterne-f9f085/large.webp" length="200306" type="image/webp"/>
-    </item>
-    <item>
-      <title>Un bout du GR5, de Thonon-les-Bains à Samoëns : savoir s&apos;arrêter</title>
-      <link>https://leaux.ovh/passions/gr5-thonon-samoens-savoir-s-arreter.html</link>
-      <guid isPermaLink="true">https://leaux.ovh/passions/gr5-thonon-samoens-savoir-s-arreter.html</guid>
-      <category>Passions</category>
-      <description><![CDATA[Mon deuxième trek : la moitié du GR5 visée en 7 jours, un col passé sous les éclairs, beaucoup trop de neige, et la décision de m'arrêter à Samoëns.]]></description>
-      <pubDate>Sat, 27 May 2023 18:00:00 GMT</pubDate>
-      <enclosure url="https://leaux.ovh/media/2026/11/gr5-crepuscule-a920a9/large.webp" length="24754" type="image/webp"/>
     </item>
   </channel>
 </rss>
