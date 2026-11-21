@@ -42,3 +42,11 @@ The list → post transition starts from the feature band, the home cards and th
 ### 1.7.3
 
 The bands' view timeline uses `view-timeline-inset: 0`. With the default (`auto`) it took html's `scroll-padding-top` (88 px, 132 px on posts with a table of contents), so the parallax had already started at load and the header photo sat ~27 px below the site header.
+
+### 1.7.4
+
+Post and page titles (`.lx-band--article h1`) use the same size as the home's featured title (`.lx-feature__title`): `clamp(2.5rem, 5.2vw, 5rem)`, 18ch wide — 75 px instead of 104 px at 1440 px. The 2.5rem floor keeps phones at 40 px.
+
+### 1.7.5
+
+Google Tag Manager container replaced: `GTM-PJ68GND6` (was `GTM-KNDFD5GH`), same snippet after the footer.

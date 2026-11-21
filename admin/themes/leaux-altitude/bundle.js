@@ -1,4 +1,4 @@
-import { jsxs as s, jsx as e, Fragment as P } from "react/jsx-runtime";
+import { jsxs as s, jsx as e, Fragment as B } from "react/jsx-runtime";
 import { i18n as ce, pickPublicLocale as pe, canonicalUrl as ne, pickFormat as A, buildPostUrl as xe, postSortMillis as R, buildTermUrl as ae, SocialIcon as he, socialLabel as me, toast as ge } from "@agent-cms/runtime";
 import { useState as Z, useEffect as ue } from "react";
 import { useTranslation as fe } from "react-i18next";
@@ -990,12 +990,12 @@ main:has(.lx-lost) + .lx-footer .lx-footer__ridge { display: none; }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
   else start();
 })();
-`, _e = '# Leaux Altitude\n\nDedicated AgentCMS theme for leaux.ovh. Ridgelines pass in front of the home title, each section is a summit on an orientation table, each post gets a contour map generated from its slug, and a reading climb follows the scroll.\n\nSection slugs and colors live in `src/rubrics.ts` and `src/theme.css` (`[data-rubric]`). Hero texts are editable on the theme settings page.\n\n## Custom fields\n\n| Field | Type | Effect |\n|---|---|---|\n| `header-photo` | yes / no | On a post with a featured image, `true` puts the image behind the header, with a parallax on scroll, instead of the contour map. The image is then not repeated under the header. |\n| `toc` | yes / no | `true` adds a table of contents built from the body\'s `h2` (numbered) and `h3` (indented); the headings get ids. Wide screens (≥ 1200 px): the text moves left, aligned with the title, and the contents stay open in a sticky column on the right, current section highlighted and the rail filling as you read. Narrower: a sticky bar under the header that shows the current section and a reading progress line, and drops the list down on tap. Without JS: an open list above the text. Shown only with at least 2 headings. |\n\n## Article components (raw HTML in Markdown)\n\n- Video card (YouTube link with thumbnail, no embed): `<div class="lx-video"><a class="lx-video__thumb" href="https://www.youtube.com/watch?v=ID" aria-label="Regarder « Titre » sur YouTube"><img src="https://i.ytimg.com/vi/ID/hqdefault.jpg" alt="" loading="lazy"></a><div><p class="lx-video__meta">Chaîne · 18 min · en anglais</p><p class="lx-video__title"><a href="https://www.youtube.com/watch?v=ID">Titre</a></p><p>Résumé…</p></div></div>`.\n- En bref (key points, first block of a long post): `<aside class="lx-brief" aria-label="En bref"><p class="lx-brief__tag">En bref</p><ul><li>… <strong>…</strong></li></ul></aside>`.\n\n- Pull quote: `<figure class="lx-pullquote"><blockquote><p>…</p></blockquote></figure>` (optional `<figcaption>`).\n- Case box: `<aside class="lx-case"><p class="lx-case__tag">Cas réel · date</p><p class="lx-case__title">…</p><p>…</p><p class="lx-case__src">Source : <a href="…">…</a></p></aside>`.\n- Key figures: `<div class="lx-stats"><div><strong>48 %</strong><span>…</span></div>…</div>`, optionally followed by `<p class="lx-case__src">Source : …</p>`.\n- Bar chart: `<figure class="lx-chart"><p class="lx-chart__title">…</p><p class="lx-chart__sub">…</p><div class="lx-chart__cols" style="--n:9"><div class="lx-chart__col is-lab" style="--v:.4" title="2020 : 18 322"><div class="lx-chart__bar"></div><span class="lx-chart__val">18 322</span></div>…</div><div class="lx-chart__axis" style="--n:9"><span>2020</span>…</div><p class="lx-case__src">Source : …</p></figure>`. `--v` is the bar height (0–1). Column modifiers: `is-hi` (highlighted), `is-part` (hatched, partial period), `is-lab` (value always shown; others on hover). Axis labels with `is-minor` hide on phones.\n- Paired horizontal bars: `<div class="lx-chart__rows"><div class="lx-chart__row"><span>Label</span><div class="lx-chart__hb" style="--v:.3"><i></i>1 200 <em>2025</em></div><div class="lx-chart__hb is-hi" style="--v:.8"><i></i>3 400 <em>2026</em></div></div></div>` with a `<ul class="lx-chart__legend"><li><i></i>2025</li><li><i class="is-hi"></i>2026</li></ul>`.\n\n## Section pages (1.6.0)\n\nThe band of each section page features its latest post: image as background (rubric-tinted gradient), kicker « Rubrique — Dernier article », title, excerpt, « Lire l\'article » button, date and reading time, ridge edge kept. The other posts follow under « Articles précédents ». The h1 of the page is the logo, with the section name visually hidden; `<title>` and meta description still come from the category.\n\n## Home (1.7.0)\n\nNewest post in the band (same design as section pages), one block per section (newest post large, two more beside it, link « Toute la rubrique »), « Mes projets » as round logos, « Par où monter ? » at the bottom. Project fields on posts of « Mes projets »: `project` (name), `project-logo` (URL of the `square` image format), `project-tagline` (optional). New image format `square` (320×320).\n\n## Home data (1.7.1)\n\nThe manifest sets `homeCategoryPosts: 12`: AgentCMS ≥ 0.4.4 passes the newest 12 posts of every category to the home (`props.categories`), used for the section blocks and the projects. `postsPerPage` no longer has to be large. Older AgentCMS: fallback on `props.posts`.\n\n## Transitions and parallax (1.7.2)\n\nThe list → post transition starts from the feature band, the home cards and the project logos too (`lxVtPair` in BaseLayout\'s head script). The band parallax uses CSS scroll-driven animations (off the main thread, smooth on phones); the JS version is a fallback for mouse users on browsers without them.\n\n\n### 1.7.3\n\nThe bands\' view timeline uses `view-timeline-inset: 0`. With the default (`auto`) it took html\'s `scroll-padding-top` (88 px, 132 px on posts with a table of contents), so the parallax had already started at load and the header photo sat ~27 px below the site header.\n';
+`, _e = '# Leaux Altitude\n\nDedicated AgentCMS theme for leaux.ovh. Ridgelines pass in front of the home title, each section is a summit on an orientation table, each post gets a contour map generated from its slug, and a reading climb follows the scroll.\n\nSection slugs and colors live in `src/rubrics.ts` and `src/theme.css` (`[data-rubric]`). Hero texts are editable on the theme settings page.\n\n## Custom fields\n\n| Field | Type | Effect |\n|---|---|---|\n| `header-photo` | yes / no | On a post with a featured image, `true` puts the image behind the header, with a parallax on scroll, instead of the contour map. The image is then not repeated under the header. |\n| `toc` | yes / no | `true` adds a table of contents built from the body\'s `h2` (numbered) and `h3` (indented); the headings get ids. Wide screens (≥ 1200 px): the text moves left, aligned with the title, and the contents stay open in a sticky column on the right, current section highlighted and the rail filling as you read. Narrower: a sticky bar under the header that shows the current section and a reading progress line, and drops the list down on tap. Without JS: an open list above the text. Shown only with at least 2 headings. |\n\n## Article components (raw HTML in Markdown)\n\n- Video card (YouTube link with thumbnail, no embed): `<div class="lx-video"><a class="lx-video__thumb" href="https://www.youtube.com/watch?v=ID" aria-label="Regarder « Titre » sur YouTube"><img src="https://i.ytimg.com/vi/ID/hqdefault.jpg" alt="" loading="lazy"></a><div><p class="lx-video__meta">Chaîne · 18 min · en anglais</p><p class="lx-video__title"><a href="https://www.youtube.com/watch?v=ID">Titre</a></p><p>Résumé…</p></div></div>`.\n- En bref (key points, first block of a long post): `<aside class="lx-brief" aria-label="En bref"><p class="lx-brief__tag">En bref</p><ul><li>… <strong>…</strong></li></ul></aside>`.\n\n- Pull quote: `<figure class="lx-pullquote"><blockquote><p>…</p></blockquote></figure>` (optional `<figcaption>`).\n- Case box: `<aside class="lx-case"><p class="lx-case__tag">Cas réel · date</p><p class="lx-case__title">…</p><p>…</p><p class="lx-case__src">Source : <a href="…">…</a></p></aside>`.\n- Key figures: `<div class="lx-stats"><div><strong>48 %</strong><span>…</span></div>…</div>`, optionally followed by `<p class="lx-case__src">Source : …</p>`.\n- Bar chart: `<figure class="lx-chart"><p class="lx-chart__title">…</p><p class="lx-chart__sub">…</p><div class="lx-chart__cols" style="--n:9"><div class="lx-chart__col is-lab" style="--v:.4" title="2020 : 18 322"><div class="lx-chart__bar"></div><span class="lx-chart__val">18 322</span></div>…</div><div class="lx-chart__axis" style="--n:9"><span>2020</span>…</div><p class="lx-case__src">Source : …</p></figure>`. `--v` is the bar height (0–1). Column modifiers: `is-hi` (highlighted), `is-part` (hatched, partial period), `is-lab` (value always shown; others on hover). Axis labels with `is-minor` hide on phones.\n- Paired horizontal bars: `<div class="lx-chart__rows"><div class="lx-chart__row"><span>Label</span><div class="lx-chart__hb" style="--v:.3"><i></i>1 200 <em>2025</em></div><div class="lx-chart__hb is-hi" style="--v:.8"><i></i>3 400 <em>2026</em></div></div></div>` with a `<ul class="lx-chart__legend"><li><i></i>2025</li><li><i class="is-hi"></i>2026</li></ul>`.\n\n## Section pages (1.6.0)\n\nThe band of each section page features its latest post: image as background (rubric-tinted gradient), kicker « Rubrique — Dernier article », title, excerpt, « Lire l\'article » button, date and reading time, ridge edge kept. The other posts follow under « Articles précédents ». The h1 of the page is the logo, with the section name visually hidden; `<title>` and meta description still come from the category.\n\n## Home (1.7.0)\n\nNewest post in the band (same design as section pages), one block per section (newest post large, two more beside it, link « Toute la rubrique »), « Mes projets » as round logos, « Par où monter ? » at the bottom. Project fields on posts of « Mes projets »: `project` (name), `project-logo` (URL of the `square` image format), `project-tagline` (optional). New image format `square` (320×320).\n\n## Home data (1.7.1)\n\nThe manifest sets `homeCategoryPosts: 12`: AgentCMS ≥ 0.4.4 passes the newest 12 posts of every category to the home (`props.categories`), used for the section blocks and the projects. `postsPerPage` no longer has to be large. Older AgentCMS: fallback on `props.posts`.\n\n## Transitions and parallax (1.7.2)\n\nThe list → post transition starts from the feature band, the home cards and the project logos too (`lxVtPair` in BaseLayout\'s head script). The band parallax uses CSS scroll-driven animations (off the main thread, smooth on phones); the JS version is a fallback for mouse users on browsers without them.\n\n\n### 1.7.3\n\nThe bands\' view timeline uses `view-timeline-inset: 0`. With the default (`auto`) it took html\'s `scroll-padding-top` (88 px, 132 px on posts with a table of contents), so the parallax had already started at load and the header photo sat ~27 px below the site header.\n\n### 1.7.4\n\nPost and page titles (`.lx-band--article h1`) use the same size as the home\'s featured title (`.lx-feature__title`): `clamp(2.5rem, 5.2vw, 5rem)`, 18ch wide — 75 px instead of 104 px at 1440 px. The 2.5rem floor keeps phones at 40 px.\n\n### 1.7.5\n\nGoogle Tag Manager container replaced: `GTM-PJ68GND6` (was `GTM-KNDFD5GH`), same snippet after the footer.\n';
 function M(n, t) {
   const a = ce.getFixedT(pe(t || n.settings.language || "en"), "theme-leaux-altitude");
   return (i) => a(`public.${i}`);
 }
-const q = [
+const T = [
   { slug: "edito", name: "Édito", x: 90, height: 0.62 },
   { slug: "news-tech-ia", name: "News tech IA", x: 68, height: 0.8 },
   { slug: "mes-projets", name: "Mes projets", x: 29, height: 0.74 },
@@ -1006,7 +1006,7 @@ function F(n) {
   var a;
   if (!n) return;
   const t = n.replace(/^\/+/, "");
-  return (a = q.find((i) => t === i.slug || t.startsWith(i.slug + "/"))) == null ? void 0 : a.slug;
+  return (a = T.find((i) => t === i.slug || t.startsWith(i.slug + "/"))) == null ? void 0 : a.slug;
 }
 function O({ items: n, currentPath: t }) {
   return /* @__PURE__ */ e("ul", { children: n.map((a) => {
@@ -1019,7 +1019,7 @@ function O({ items: n, currentPath: t }) {
 }
 function we({ site: n, currentPath: t, locale: a }) {
   var c;
-  const i = M(n, a), r = ((c = n.settings.enabledPlugins) == null ? void 0 : c["agentcms-search"]) !== !1, l = q.find((p) => new RegExp(`^${p.slug}/(index\\.html|page/\\d+(/index)?\\.html)?$`).test(t ?? "")), o = t === "index.html" || `/${t}` === (n.homePath ?? "/index.html"), d = /* @__PURE__ */ s("a", { className: "lx-brand", href: n.homePath ?? "/index.html", children: [
+  const i = M(n, a), r = ((c = n.settings.enabledPlugins) == null ? void 0 : c["agentcms-search"]) !== !1, l = T.find((p) => new RegExp(`^${p.slug}/(index\\.html|page/\\d+(/index)?\\.html)?$`).test(t ?? "")), o = t === "index.html" || `/${t}` === (n.homePath ?? "/index.html"), d = /* @__PURE__ */ s("a", { className: "lx-brand", href: n.homePath ?? "/index.html", children: [
     /* @__PURE__ */ e("svg", { viewBox: "0 0 34 22", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: "M1 21 12 4l6 9 4-6 11 14z" }) }),
     l && /* @__PURE__ */ s("span", { className: "lx-sr", children: [
       l.name,
@@ -1053,7 +1053,7 @@ function U(n) {
     return a = a + Math.imul(a ^ a >>> 7, 61 | a) ^ a, ((a ^ a >>> 14) >>> 0) / 4294967296;
   };
 }
-function V(n) {
+function G(n) {
   const t = U(n), a = 64, i = Array.from({ length: a * a }, () => t()), r = (o, d) => i[(d % a + a) % a * a + (o % a + a) % a], l = (o) => o * o * (3 - 2 * o);
   return (o, d) => {
     const c = Math.floor(o), p = Math.floor(d), x = l(o - c), h = l(d - p), f = r(c, p) * (1 - x) + r(c + 1, p) * x, _ = r(c, p + 1) * (1 - x) + r(c + 1, p + 1) * x;
@@ -1062,7 +1062,7 @@ function V(n) {
 }
 const j = (n) => Math.round(n * 10) / 10;
 function ye(n, t, a, i, r = 14) {
-  const l = V(n), o = U(n ^ 2654435769), d = Math.round(i * a / t), c = [0, 1, 2].map(() => ({ x: 0.15 + o() * 0.7, y: 0.15 + o() * 0.7, s: 0.03 + o() * 0.07, a: 0.5 + o() * 0.7 })), p = t / a, x = [];
+  const l = G(n), o = U(n ^ 2654435769), d = Math.round(i * a / t), c = [0, 1, 2].map(() => ({ x: 0.15 + o() * 0.7, y: 0.15 + o() * 0.7, s: 0.03 + o() * 0.07, a: 0.5 + o() * 0.7 })), p = t / a, x = [];
   let h = 1 / 0, f = -1 / 0;
   for (let v = 0; v <= d; v++)
     for (let w = 0; w <= i; w++) {
@@ -1079,10 +1079,10 @@ function ye(n, t, a, i, r = 14) {
     const w = h + (f - h) * v / r, S = v % 4 === 0 ? N : m;
     for (let g = 0; g < d; g++)
       for (let u = 0; u < i; u++) {
-        const L = b(u, g), $ = b(u + 1, g), H = b(u + 1, g + 1), J = b(u, g + 1), C = [], I = (z, Y, G, K, se, de) => {
-          if (z < w != Y < w) {
-            const X = (w - z) / (Y - z);
-            C.push([(G + (se - G) * X) * _, (K + (de - K) * X) * y]);
+        const L = b(u, g), $ = b(u + 1, g), H = b(u + 1, g + 1), J = b(u, g + 1), C = [], I = (z, V, Y, K, se, de) => {
+          if (z < w != V < w) {
+            const X = (w - z) / (V - z);
+            C.push([(Y + (se - Y) * X) * _, (K + (de - K) * X) * y]);
           }
         };
         I(L, $, u, g, u + 1, g), I($, H, u + 1, g, u + 1, g + 1), I(J, H, u, g + 1, u + 1, g + 1), I(L, J, u, g, u, g + 1);
@@ -1093,7 +1093,7 @@ function ye(n, t, a, i, r = 14) {
   return { minor: m.join(""), major: N.join("") };
 }
 function Q(n, t, a, i = 90) {
-  const r = V(n);
+  const r = G(n);
   let l = "";
   for (let o = 0; o <= i; o++) {
     const d = o / i, c = a * (0.92 - 0.78 * Math.pow(d, 1.3) + (r(d * 7, 3) - 0.5) * 0.34 * Math.sin(Math.PI * d) + (r(d * 19, 8) - 0.5) * 0.1 * Math.sin(Math.PI * d));
@@ -1101,8 +1101,8 @@ function Q(n, t, a, i = 90) {
   }
   return l;
 }
-function T(n, t, a, i = 70) {
-  const r = V(n);
+function q(n, t, a, i = 70) {
+  const r = G(n);
   let l = `M0 ${a}`;
   for (let o = 0; o <= i; o++) {
     const d = o / i, c = r(d * 5, 2) * 0.7 + r(d * 17, 5) * 0.3;
@@ -1130,7 +1130,7 @@ function ke(n, t, a, i, r) {
 function Ne({ site: n, locale: t }) {
   const a = M(n, t);
   return /* @__PURE__ */ s("footer", { className: "lx-footer", children: [
-    /* @__PURE__ */ e("svg", { className: "lx-footer__ridge", viewBox: "0 0 1600 120", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: T(k("footer"), 1600, 120) }) }),
+    /* @__PURE__ */ e("svg", { className: "lx-footer__ridge", viewBox: "0 0 1600 120", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: q(k("footer"), 1600, 120) }) }),
     /* @__PURE__ */ s("div", { className: "lx-footer__body", children: [
       /* @__PURE__ */ e("p", { className: "lx-footer__name", children: n.settings.title }),
       /* @__PURE__ */ e("nav", { "aria-label": a("footerNav"), "data-cms-menu": "footer", children: /* @__PURE__ */ e(O, { items: n.resolvedMenus.footer }) }),
@@ -1139,7 +1139,7 @@ function Ne({ site: n, locale: t }) {
     ] })
   ] });
 }
-const Se = 'window.lxVtPair=function(p){var q=[[".lx-feature__title a",function(a){var b=a.closest(".lx-band");return[b&&b.querySelector(".lx-band__art"),a.closest("h2")]}],[".lx-way__art,.lx-card__art",function(a){return[a,a.parentNode.querySelector("h3")]}],[".lx-projects__list a",function(a){return[a.querySelector(".lx-projects__logo"),a.querySelector(".lx-projects__name")]}]];for(var k=0;k<q.length;k++){var l=document.querySelectorAll(q[k][0]);for(var i=0;i<l.length;i++)if(l[i].pathname===p)return q[k][1](l[i])}return null};window.lxVtName=function(r){if(!r)return function(){};if(r[0])r[0].style.viewTransitionName="lx-art";if(r[1])r[1].style.viewTransitionName="lx-title";return function(){if(r[0])r[0].style.viewTransitionName="";if(r[1])r[1].style.viewTransitionName=""}};addEventListener("pagereveal",function(e){var n=window.navigation,f=n&&n.activation&&n.activation.from;if(!e.viewTransition||!f||!f.url)return;var c=lxVtName(lxVtPair(new URL(f.url).pathname));e.viewTransition.finished.finally(c)})', ze = "GTM-KNDFD5GH", je = "window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());";
+const Se = 'window.lxVtPair=function(p){var q=[[".lx-feature__title a",function(a){var b=a.closest(".lx-band");return[b&&b.querySelector(".lx-band__art"),a.closest("h2")]}],[".lx-way__art,.lx-card__art",function(a){return[a,a.parentNode.querySelector("h3")]}],[".lx-projects__list a",function(a){return[a.querySelector(".lx-projects__logo"),a.querySelector(".lx-projects__name")]}]];for(var k=0;k<q.length;k++){var l=document.querySelectorAll(q[k][0]);for(var i=0;i<l.length;i++)if(l[i].pathname===p)return q[k][1](l[i])}return null};window.lxVtName=function(r){if(!r)return function(){};if(r[0])r[0].style.viewTransitionName="lx-art";if(r[1])r[1].style.viewTransitionName="lx-title";return function(){if(r[0])r[0].style.viewTransitionName="";if(r[1])r[1].style.viewTransitionName=""}};addEventListener("pagereveal",function(e){var n=window.navigation,f=n&&n.activation&&n.activation.from;if(!e.viewTransition||!f||!f.url)return;var c=lxVtName(lxVtPair(new URL(f.url).pathname));e.viewTransition.finished.finally(c)})', ze = "GTM-PJ68GND6", je = "window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());";
 function Me({ site: n, pageTitle: t, pageDescription: a, ogImage: i, currentPath: r, currentLocale: l, children: o }) {
   const d = l || n.settings.language || "en", c = n.settings.title || "", p = t ? t.includes(c) ? t : `${t} — ${c}` : c, x = n.settings.baseUrl && r ? ne(n.settings.baseUrl, r) : void 0;
   return /* @__PURE__ */ s("html", { lang: d, children: [
@@ -1207,49 +1207,49 @@ function re({ site: n, post: t, rubric: a, label: i, edgeSeed: r }) {
         ] })
       ] })
     ] }) : /* @__PURE__ */ e("p", { className: "lx-band__lead", children: l("empty") }) }),
-    /* @__PURE__ */ e("svg", { className: "lx-band__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: T(k(r), 1600, 90) }) })
+    /* @__PURE__ */ e("svg", { className: "lx-band__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: q(k(r), 1600, 90) }) })
   ] });
 }
-function qe({ site: n }) {
+function Te({ site: n }) {
   const t = M(n), a = 1600, i = 620;
   return /* @__PURE__ */ s("section", { className: "lx-pano", "aria-labelledby": "lx-pano-title", children: [
-    /* @__PURE__ */ e("svg", { className: "lx-pano__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: T(k("pano-top"), 1600, 90) }) }),
+    /* @__PURE__ */ e("svg", { className: "lx-pano__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: q(k("pano-top"), 1600, 90) }) }),
     /* @__PURE__ */ e("h2", { id: "lx-pano-title", className: "lx-pano__title", children: t("sections") }),
     /* @__PURE__ */ s("div", { className: "lx-pano__stage", children: [
-      /* @__PURE__ */ e("svg", { viewBox: `0 0 ${a} ${i}`, preserveAspectRatio: "xMidYMax slice", "aria-hidden": "true", children: q.map((r) => {
+      /* @__PURE__ */ e("svg", { viewBox: `0 0 ${a} ${i}`, preserveAspectRatio: "xMidYMax slice", "aria-hidden": "true", children: T.map((r) => {
         const l = ke(k(r.slug), r.x / 100 * a, i * (1 - r.height * 0.86), i + 10, 300 + r.height * 170);
         return /* @__PURE__ */ e("a", { href: `/${r.slug}/index.html`, tabIndex: -1, children: /* @__PURE__ */ s("g", { className: "lx-peak", "data-rubric": r.slug, "data-peak": r.slug, children: [
           /* @__PURE__ */ e("path", { className: "lx-peak__lit", d: l.lit }),
           /* @__PURE__ */ e("path", { className: "lx-peak__shade", d: l.shade })
         ] }) }, r.slug);
       }) }),
-      /* @__PURE__ */ e("ul", { className: "lx-pano__labels", children: [...q].sort((r, l) => r.x - l.x).map((r) => /* @__PURE__ */ e("li", { "data-rubric": r.slug, "data-label": r.slug, style: { left: `${r.x}%`, top: `${100 - r.height * 86}%` }, children: /* @__PURE__ */ s("a", { href: `/${r.slug}/index.html`, children: [
+      /* @__PURE__ */ e("ul", { className: "lx-pano__labels", children: [...T].sort((r, l) => r.x - l.x).map((r) => /* @__PURE__ */ e("li", { "data-rubric": r.slug, "data-label": r.slug, style: { left: `${r.x}%`, top: `${100 - r.height * 86}%` }, children: /* @__PURE__ */ s("a", { href: `/${r.slug}/index.html`, children: [
         /* @__PURE__ */ e("strong", { children: r.name }),
         /* @__PURE__ */ e("span", { children: t(`r.${r.slug}`) })
       ] }) }, r.slug)) })
     ] })
   ] });
 }
-function W({ data: n }) {
+function D({ data: n }) {
   return /* @__PURE__ */ e("script", { type: "application/ld+json", dangerouslySetInnerHTML: { __html: JSON.stringify(n).replace(/</g, "\\u003c") } });
 }
-function B(n, t) {
+function P(n, t) {
   return n.settings.baseUrl ? ne(n.settings.baseUrl, t) : void 0;
 }
-function D(n, t) {
+function W(n, t) {
   const a = (t == null ? void 0 : t.displayName) || n.settings.title || "", i = ((t == null ? void 0 : t.socials) ?? []).map((r) => r.url).filter(Boolean);
   return {
     "@type": "Person",
     name: a,
-    url: B(n, "qui-suis-je.html"),
+    url: P(n, "qui-suis-je.html"),
     ...t != null && t.title ? { jobTitle: t.title } : {},
     ...i.length ? { sameAs: i } : {}
   };
 }
-function Te({ site: n }) {
-  const t = B(n, "");
+function qe({ site: n }) {
+  const t = P(n, "");
   return /* @__PURE__ */ e(
-    W,
+    D,
     {
       data: {
         "@context": "https://schema.org",
@@ -1258,21 +1258,21 @@ function Te({ site: n }) {
         description: n.settings.description,
         url: t,
         inLanguage: n.settings.language || "fr",
-        author: D(n)
+        author: W(n)
       }
     }
   );
 }
 function Ee({ site: n, post: t, author: a, hero: i, primaryTerm: r }) {
   var x;
-  const l = B(n, xe({ post: t, primaryTerm: r })), o = new Date(R(t)).toISOString(), d = t.updatedAt ? R({ updatedAt: t.updatedAt }) : 0, c = A(i, "large"), p = [
-    { name: n.settings.title, item: B(n, "") },
-    ...r ? [{ name: r.name, item: B(n, ae(r)) }] : [],
+  const l = P(n, xe({ post: t, primaryTerm: r })), o = new Date(R(t)).toISOString(), d = t.updatedAt ? R({ updatedAt: t.updatedAt }) : 0, c = A(i, "large"), p = [
+    { name: n.settings.title, item: P(n, "") },
+    ...r ? [{ name: r.name, item: P(n, ae(r)) }] : [],
     { name: t.title, item: l }
   ];
-  return /* @__PURE__ */ s(P, { children: [
+  return /* @__PURE__ */ s(B, { children: [
     /* @__PURE__ */ e(
-      W,
+      D,
       {
         data: {
           "@context": "https://schema.org",
@@ -1286,13 +1286,13 @@ function Ee({ site: n, post: t, author: a, hero: i, primaryTerm: r }) {
           dateModified: d > R(t) ? new Date(d).toISOString() : o,
           ...c ? { image: c } : {},
           ...r ? { articleSection: r.name } : {},
-          author: D(n, a),
-          publisher: D(n, a)
+          author: W(n, a),
+          publisher: W(n, a)
         }
       }
     ),
     /* @__PURE__ */ e(
-      W,
+      D,
       {
         data: {
           "@context": "https://schema.org",
@@ -1340,7 +1340,7 @@ function He({ rubric: n, posts: t, t: a }) {
     ] })
   ] });
 }
-function Be(n) {
+function Pe(n) {
   var a, i, r;
   const t = /* @__PURE__ */ new Map();
   for (const l of n) {
@@ -1356,24 +1356,24 @@ function Be(n) {
   }
   return [...t.values()];
 }
-function Pe(n) {
+function Be(n) {
   const t = n.replace(/[^\p{L}\p{N} ]/gu, " ").split(/\s+/).filter(Boolean);
   return (t.length > 1 ? t[0][0] + t[1][0] : (t[0] ?? "?").slice(0, 2)).toUpperCase();
 }
 function Ie({ rubric: n, projects: t, t: a }) {
   const i = `lx-shelf-${n.slug}`;
   return /* @__PURE__ */ s("section", { className: "lx-projects", "data-rubric": n.slug, "aria-labelledby": i, children: [
-    /* @__PURE__ */ e("svg", { className: "lx-projects__edge lx-projects__edge--top", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: T(k("projects-top"), 1600, 90) }) }),
+    /* @__PURE__ */ e("svg", { className: "lx-projects__edge lx-projects__edge--top", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: q(k("projects-top"), 1600, 90) }) }),
     /* @__PURE__ */ e(E, { seed: "projects", width: 1600, height: 700, cols: 90, className: "lx-projects__art" }),
     /* @__PURE__ */ s("div", { className: "lx-projects__inner", children: [
       /* @__PURE__ */ e(ie, { rubric: n, t: a, id: i }),
       /* @__PURE__ */ e("ul", { className: "lx-projects__list", children: t.map((r) => /* @__PURE__ */ e("li", { children: /* @__PURE__ */ s("a", { href: "/" + r.post.url, children: [
-        /* @__PURE__ */ e("span", { className: "lx-projects__logo", children: r.logo ? /* @__PURE__ */ e("img", { src: r.logo, alt: "", loading: "lazy" }) : /* @__PURE__ */ e("span", { "aria-hidden": "true", children: Pe(r.name) }) }),
+        /* @__PURE__ */ e("span", { className: "lx-projects__logo", children: r.logo ? /* @__PURE__ */ e("img", { src: r.logo, alt: "", loading: "lazy" }) : /* @__PURE__ */ e("span", { "aria-hidden": "true", children: Be(r.name) }) }),
         /* @__PURE__ */ e("span", { className: "lx-projects__name", children: r.name }),
         r.tagline && /* @__PURE__ */ e("span", { className: "lx-projects__tag", children: r.tagline })
       ] }) }, r.name)) })
     ] }),
-    /* @__PURE__ */ e("svg", { className: "lx-projects__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: T(k("projects-bottom"), 1600, 90) }) })
+    /* @__PURE__ */ e("svg", { className: "lx-projects__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: q(k("projects-bottom"), 1600, 90) }) })
   ] });
 }
 function Re({ site: n, posts: t, staticPage: a, archivesLink: i, categories: r }) {
@@ -1382,27 +1382,27 @@ function Re({ site: n, posts: t, staticPage: a, archivesLink: i, categories: r }
   if (a)
     return /* @__PURE__ */ e("div", { className: "lx-prose lx-prose--page", dangerouslySetInnerHTML: { __html: a.bodyHtml } });
   const [o, ...d] = t, c = F((p = o == null ? void 0 : o.category) == null ? void 0 : p.url);
-  return /* @__PURE__ */ s(P, { children: [
-    /* @__PURE__ */ e(Te, { site: n }),
+  return /* @__PURE__ */ s(B, { children: [
+    /* @__PURE__ */ e(qe, { site: n }),
     /* @__PURE__ */ e(re, { site: n, post: o, rubric: c, label: (x = o == null ? void 0 : o.category) == null ? void 0 : x.name, edgeSeed: "home" }),
     /* @__PURE__ */ s("div", { className: "lx-shelves", children: [
       Ce.map((h) => {
         var b;
-        const f = q.find((m) => m.slug === h);
+        const f = T.find((m) => m.slug === h);
         if (!f) return null;
         const _ = ((b = r == null ? void 0 : r.find((m) => m.term.slug === h)) == null ? void 0 : b.posts) ?? t.filter((m) => {
           var N;
           return F((N = m.category) == null ? void 0 : N.url) === h;
         }), y = _.filter((m) => m.id !== (o == null ? void 0 : o.id));
         if (h === "mes-projets") {
-          const m = Be(_);
+          const m = Pe(_);
           if (m.length) return /* @__PURE__ */ e(Ie, { rubric: f, projects: m, t: l }, h);
         }
         return y.length ? /* @__PURE__ */ e(He, { rubric: f, posts: y.slice(0, Ae), t: l }, h) : null;
       }),
       i && /* @__PURE__ */ e("p", { className: "lx-more lx-shelves__more", children: /* @__PURE__ */ e("a", { href: i.href, children: i.label }) })
     ] }),
-    /* @__PURE__ */ e(qe, { site: n })
+    /* @__PURE__ */ e(Te, { site: n })
   ] });
 }
 function Fe({ entries: n, label: t, countLabel: a }) {
@@ -1425,9 +1425,9 @@ function Fe({ entries: n, label: t, countLabel: a }) {
     ] }) }, l.id)) })
   ] }) });
 }
-const We = { amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: " ", rsquo: "’", laquo: "«", raquo: "»" };
-function De(n) {
-  return n.replace(/<[^>]*>/g, "").replace(/&#(\d+);/g, (t, a) => String.fromCodePoint(Number(a))).replace(/&#x([0-9a-f]+);/gi, (t, a) => String.fromCodePoint(parseInt(a, 16))).replace(/&([a-z]+);/gi, (t, a) => We[a.toLowerCase()] ?? t).replace(/[ \t\r\n]+/g, " ").trim();
+const De = { amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: " ", rsquo: "’", laquo: "«", raquo: "»" };
+function We(n) {
+  return n.replace(/<[^>]*>/g, "").replace(/&#(\d+);/g, (t, a) => String.fromCodePoint(Number(a))).replace(/&#x([0-9a-f]+);/gi, (t, a) => String.fromCodePoint(parseInt(a, 16))).replace(/&([a-z]+);/gi, (t, a) => De[a.toLowerCase()] ?? t).replace(/[ \t\r\n]+/g, " ").trim();
 }
 function Oe(n) {
   return n.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 64).replace(/-+$/, "") || "section";
@@ -1436,7 +1436,7 @@ function Ue(n) {
   const t = [], a = /* @__PURE__ */ new Set();
   return { html: n.replace(/<h([23])(\s[^>]*)?>([\s\S]*?)<\/h\1>/gi, (r, l, o, d) => {
     var h;
-    const c = De(d);
+    const c = We(d);
     if (!c) return r;
     const p = (h = o == null ? void 0 : o.match(/\sid\s*=\s*"([^"]+)"/i)) == null ? void 0 : h[1];
     let x = p ?? Oe(c);
@@ -1447,9 +1447,9 @@ function Ue(n) {
     return a.add(x), t.push({ id: x, text: c, level: l === "2" ? 2 : 3 }), p ? r : `<h${l} id="${x}"${o ?? ""}>${d}</h${l}>`;
   }), entries: t };
 }
-function Ve({ site: n, post: t, bodyHtml: a, author: i, hero: r, primaryTerm: l, tags: o }) {
+function Ge({ site: n, post: t, bodyHtml: a, author: i, hero: r, primaryTerm: l, tags: o }) {
   var v, w, S;
-  const d = M(n), c = A(r, "large"), p = t.type === "post", x = (v = q.find((g) => g.slug === (l == null ? void 0 : l.slug))) == null ? void 0 : v.slug, h = new Date(R(t));
+  const d = M(n), c = A(r, "large"), p = t.type === "post", x = (v = T.find((g) => g.slug === (l == null ? void 0 : l.slug))) == null ? void 0 : v.slug, h = new Date(R(t));
   let f = "";
   try {
     f = new Intl.DateTimeFormat(n.settings.language || "fr", { dateStyle: "long" }).format(h);
@@ -1474,7 +1474,7 @@ function Ve({ site: n, post: t, bodyHtml: a, author: i, hero: r, primaryTerm: l,
           ] })
         ] })
       ] }),
-      /* @__PURE__ */ e("svg", { className: "lx-band__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: T(k(t.slug), 1600, 90) }) })
+      /* @__PURE__ */ e("svg", { className: "lx-band__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: q(k(t.slug), 1600, 90) }) })
     ] }),
     c && !_ && /* @__PURE__ */ s("figure", { className: "lx-figure", children: [
       /* @__PURE__ */ e("img", { src: c, alt: (r == null ? void 0 : r.alt) ?? "" }),
@@ -1485,7 +1485,7 @@ function Ve({ site: n, post: t, bodyHtml: a, author: i, hero: r, primaryTerm: l,
       /* @__PURE__ */ e("div", { className: "lx-prose", "data-lx-prose": !0, dangerouslySetInnerHTML: { __html: y.html } })
     ] }) : /* @__PURE__ */ e("div", { className: "lx-prose", "data-lx-prose": !0, dangerouslySetInnerHTML: { __html: a } }),
     p && o.length > 0 && /* @__PURE__ */ e("ul", { className: "lx-tags", "aria-label": d("tags"), children: o.map((g) => /* @__PURE__ */ e("li", { children: g.name }, g.id)) }),
-    p && /* @__PURE__ */ s(P, { children: [
+    p && /* @__PURE__ */ s(B, { children: [
       /* @__PURE__ */ e(Ee, { site: n, post: t, author: i, hero: r, primaryTerm: l }),
       /* @__PURE__ */ s("section", { className: "lx-related", "data-lx-related": !0, "data-current": t.id, "data-term": t.primaryTermId, hidden: !0, children: [
         /* @__PURE__ */ e("h2", { children: d("continue") }),
@@ -1522,8 +1522,8 @@ function le({ posts: n, site: t, lead: a = !0 }) {
 }
 function Je({ site: n, term: t, posts: a, archivesLink: i }) {
   var c;
-  const r = M(n), l = (c = q.find((p) => p.slug === t.slug)) == null ? void 0 : c.slug, [o, ...d] = a;
-  return /* @__PURE__ */ s(P, { children: [
+  const r = M(n), l = (c = T.find((p) => p.slug === t.slug)) == null ? void 0 : c.slug, [o, ...d] = a;
+  return /* @__PURE__ */ s(B, { children: [
     /* @__PURE__ */ e(re, { site: n, post: o, rubric: l, label: t.name, edgeSeed: t.slug }),
     d.length > 0 && /* @__PURE__ */ s("section", { className: "lx-section lx-section--flush", "data-rubric": l, children: [
       /* @__PURE__ */ s("h2", { className: "lx-section__title lx-section__title--small", children: [
@@ -1540,9 +1540,9 @@ function Je({ site: n, term: t, posts: a, archivesLink: i }) {
     ] })
   ] });
 }
-function Ye({ site: n, author: t, posts: a }) {
+function Ve({ site: n, author: t, posts: a }) {
   const i = A(t.avatar, "small");
-  return /* @__PURE__ */ s(P, { children: [
+  return /* @__PURE__ */ s(B, { children: [
     /* @__PURE__ */ s("header", { className: "lx-band lx-band--author", children: [
       /* @__PURE__ */ e(E, { seed: t.displayName, width: 1600, height: 620, cols: 110, className: "lx-band__art" }),
       /* @__PURE__ */ s("div", { className: "lx-band__inner", children: [
@@ -1552,12 +1552,12 @@ function Ye({ site: n, author: t, posts: a }) {
         t.bio && /* @__PURE__ */ e("p", { className: "lx-band__bio", children: t.bio }),
         t.socials && t.socials.length > 0 && /* @__PURE__ */ e("ul", { className: "lx-socials", children: t.socials.map((r) => /* @__PURE__ */ e("li", { children: /* @__PURE__ */ e("a", { href: r.url, rel: "me noopener", "aria-label": me(r.network), children: /* @__PURE__ */ e(he, { network: r.network }) }) }, r.network)) })
       ] }),
-      /* @__PURE__ */ e("svg", { className: "lx-band__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: T(k(t.id), 1600, 90) }) })
+      /* @__PURE__ */ e("svg", { className: "lx-band__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: q(k(t.id), 1600, 90) }) })
     ] }),
     /* @__PURE__ */ e("section", { className: "lx-section lx-section--flush", children: /* @__PURE__ */ e(le, { posts: a, site: n }) })
   ] });
 }
-function Ge({ site: n, message: t }) {
+function Ye({ site: n, message: t }) {
   const a = M(n);
   return /* @__PURE__ */ s("section", { className: "lx-lost", children: [
     /* @__PURE__ */ e(E, { seed: "hors-sentier", width: 1600, height: 900, cols: 120, className: "lx-lost__art" }),
@@ -1669,7 +1669,7 @@ const Ze = {
 }, at = {
   id: "leaux-altitude",
   name: "Leaux Altitude",
-  version: "1.7.4",
+  version: "1.7.5",
   description: "Dedicated theme for leaux.ovh: generative topographic art, one trail per section.",
   readme: _e,
   scssEntry: "theme.css",
@@ -1696,10 +1696,10 @@ const Ze = {
   templates: {
     base: Me,
     home: Re,
-    single: Ve,
+    single: Ge,
     category: Je,
-    author: Ye,
-    notFound: Ge
+    author: Ve,
+    notFound: Ye
   },
   // /theme-settings page: hero texts.
   settings: { navLabelKey: "settings.navLabel", defaultConfig: oe, component: Xe, schema: Ke },
