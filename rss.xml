@@ -6,8 +6,17 @@
     <link>https://leaux.ovh/</link>
     <description>Ce que l&apos;IA change au travail, ce que je construis, et ce que je vais chercher en montagne.</description>
     <language>fr</language>
-    <lastBuildDate>Fri, 20 Nov 2026 11:38:30 GMT</lastBuildDate>
+    <lastBuildDate>Sat, 21 Nov 2026 12:35:25 GMT</lastBuildDate>
     <atom:link href="https://leaux.ovh/rss.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Revue IA de la semaine : Anthropic en Bourse, les marchés tanguent</title>
+      <link>https://leaux.ovh/news-tech-ia/revue-ia-semaine-47-2026.html</link>
+      <guid isPermaLink="true">https://leaux.ovh/news-tech-ia/revue-ia-semaine-47-2026.html</guid>
+      <category>News tech IA</category>
+      <description><![CDATA[Anthropic réussit la plus grosse introduction en Bourse de l'histoire, GPT-6.2 et Gemini 4 Neon arrivent, les agents attaquent : l'IA du 13 au 20 novembre.]]></description>
+      <pubDate>Sat, 21 Nov 2026 12:31:46 GMT</pubDate>
+      <enclosure url="https://leaux.ovh/media/2026/11/revue-ia-semaine-47-anthropic-nasdaq-214915/large.webp" length="241680" type="image/webp"/>
+    </item>
     <item>
       <title>CLAUDE.md, AGENTS.md : quand un fichier texte devient un exécutable</title>
       <link>https://leaux.ovh/transition-ia/claude-md-agents-md-quand-un-fichier-texte-devient-un-executable.html</link>
@@ -178,15 +187,6 @@
       <description><![CDATA[Retour sur le TMB en juin, avec des crampons achetés au dernier moment : une tempête de neige au col du Bonhomme, des cols fermés, et une équipe de jeunes trekkeurs à guider jusqu'au bout.]]></description>
       <pubDate>Wed, 19 Jun 2024 18:00:00 GMT</pubDate>
       <enclosure url="https://leaux.ovh/media/2026/11/tmbn-neige-ciel-bleu-eb18e0/large.webp" length="243766" type="image/webp"/>
-    </item>
-    <item>
-      <title>Reprise du GR5, de Samoëns à Landry : la persévérance</title>
-      <link>https://leaux.ovh/passions/gr5-samoens-landry-la-perseverance.html</link>
-      <guid isPermaLink="true">https://leaux.ovh/passions/gr5-samoens-landry-la-perseverance.html</guid>
-      <category>Passions</category>
-      <description><![CDATA[Retour sur le GR5 là où je m'étais arrêté : un sac de 12 kilos, six jours de grand beau, la route des crêtes et ma première nuit de marche à la frontale.]]></description>
-      <pubDate>Mon, 11 Sep 2023 18:00:00 GMT</pubDate>
-      <enclosure url="https://leaux.ovh/media/2026/11/gr5b-lac-anterne-f9f085/large.webp" length="200306" type="image/webp"/>
     </item>
   </channel>
 </rss>
