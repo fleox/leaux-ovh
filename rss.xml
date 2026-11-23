@@ -6,15 +6,24 @@
     <link>https://leaux.ovh/</link>
     <description>Ce que l&apos;IA change au travail, ce que je construis, et ce que je vais chercher en montagne.</description>
     <language>fr</language>
-    <lastBuildDate>Sat, 21 Nov 2026 18:04:04 GMT</lastBuildDate>
+    <lastBuildDate>Mon, 23 Nov 2026 07:58:16 GMT</lastBuildDate>
     <atom:link href="https://leaux.ovh/rss.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Agent3D, le studio 3D que mon agent sait piloter</title>
+      <link>https://leaux.ovh/mes-projets/agent3d-le-studio-3d-que-mon-agent-sait-piloter.html</link>
+      <guid isPermaLink="true">https://leaux.ovh/mes-projets/agent3d-le-studio-3d-que-mon-agent-sait-piloter.html</guid>
+      <category>Mes projets</category>
+      <description><![CDATA[Bannières animées, héros de page, produits, paysages et mini-jeux en 3D : Agent3D est le studio 3D que votre agent IA sait piloter, sans serveur ni compte.]]></description>
+      <pubDate>Mon, 23 Nov 2026 07:57:49 GMT</pubDate>
+      <enclosure url="https://leaux.ovh/media/2026/11/agent3d-demo-5d8110/large.webp" length="75028" type="image/webp"/>
+    </item>
     <item>
       <title>La loi du goulot : pourquoi l&apos;IA écrit plus de code sans livrer plus</title>
       <link>https://leaux.ovh/transition-ia/la-loi-du-goulot-pourquoi-l-ia-ecrit-plus-de-code-sans-livrer-plus.html</link>
       <guid isPermaLink="true">https://leaux.ovh/transition-ia/la-loi-du-goulot-pourquoi-l-ia-ecrit-plus-de-code-sans-livrer-plus.html</guid>
       <category>Transition IA</category>
       <description><![CDATA[Avec les agents, les entreprises produisent 44 % de code en plus mais terminent à peine 14 % de tâches en plus. Le goulot : la relecture.]]></description>
-      <pubDate>Sat, 21 Nov 2026 18:00:06 GMT</pubDate>
+      <pubDate>Sat, 21 Nov 2026 18:04:02 GMT</pubDate>
       <enclosure url="https://leaux.ovh/media/2026/11/goulot-entrepot-colis-d349c8/large.webp" length="142440" type="image/webp"/>
     </item>
     <item>
@@ -178,15 +187,6 @@
       <description><![CDATA[De l'idée à la production : le chemin produit et technique pour faire tourner une IA d'entreprise performante et sécurisée sur nos propres serveurs, en France.]]></description>
       <pubDate>Sat, 20 Jun 2026 09:00:00 GMT</pubDate>
       <enclosure url="https://leaux.ovh/media/2026/11/ia-auto-hebergee-s2-baab05/large.webp" length="64646" type="image/webp"/>
-    </item>
-    <item>
-      <title>De Sixt-Fer-à-Cheval aux Houches : les rencontres</title>
-      <link>https://leaux.ovh/passions/sixt-fer-a-cheval-les-houches-les-rencontres.html</link>
-      <guid isPermaLink="true">https://leaux.ovh/passions/sixt-fer-a-cheval-les-houches-les-rencontres.html</guid>
-      <category>Passions</category>
-      <description><![CDATA[Un bout de GR5 que je connaissais par cœur, redécouvert dans la brume, et une rencontre qui a tout changé : Léo, jeune aventurier parti pour le GR5 en entier.]]></description>
-      <pubDate>Sat, 13 Sep 2025 18:00:00 GMT</pubDate>
-      <enclosure url="https://leaux.ovh/media/2026/11/sixt-sentier-brume-952293/large.webp" length="387320" type="image/webp"/>
     </item>
   </channel>
 </rss>
