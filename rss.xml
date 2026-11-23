@@ -6,7 +6,7 @@
     <link>https://leaux.ovh/</link>
     <description>Ce que l&apos;IA change au travail, ce que je construis, et ce que je vais chercher en montagne.</description>
     <language>fr</language>
-    <lastBuildDate>Mon, 23 Nov 2026 07:58:16 GMT</lastBuildDate>
+    <lastBuildDate>Mon, 23 Nov 2026 08:05:55 GMT</lastBuildDate>
     <atom:link href="https://leaux.ovh/rss.xml" rel="self" type="application/rss+xml"/>
     <item>
       <title>Agent3D, le studio 3D que mon agent sait piloter</title>
@@ -14,8 +14,8 @@
       <guid isPermaLink="true">https://leaux.ovh/mes-projets/agent3d-le-studio-3d-que-mon-agent-sait-piloter.html</guid>
       <category>Mes projets</category>
       <description><![CDATA[Bannières animées, héros de page, produits, paysages et mini-jeux en 3D : Agent3D est le studio 3D que votre agent IA sait piloter, sans serveur ni compte.]]></description>
-      <pubDate>Mon, 23 Nov 2026 07:57:49 GMT</pubDate>
-      <enclosure url="https://leaux.ovh/media/2026/11/agent3d-demo-5d8110/large.webp" length="75028" type="image/webp"/>
+      <pubDate>Mon, 23 Nov 2026 07:58:14 GMT</pubDate>
+      <enclosure url="https://leaux.ovh/media/2026/11/agent3d-header-20f52e/large.webp" length="53394" type="image/webp"/>
     </item>
     <item>
       <title>La loi du goulot : pourquoi l&apos;IA écrit plus de code sans livrer plus</title>
