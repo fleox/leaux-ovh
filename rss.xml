@@ -6,8 +6,17 @@
     <link>https://leaux.ovh/</link>
     <description>Ce que l&apos;IA change au travail, ce que je construis, et ce que je vais chercher en montagne.</description>
     <language>fr</language>
-    <lastBuildDate>Mon, 23 Nov 2026 08:05:55 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 24 Nov 2026 10:34:08 GMT</lastBuildDate>
     <atom:link href="https://leaux.ovh/rss.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>AgentPhoto, le studio photo que mon agent sait piloter</title>
+      <link>https://leaux.ovh/mes-projets/agentphoto-le-studio-photo-que-mon-agent-sait-piloter.html</link>
+      <guid isPermaLink="true">https://leaux.ovh/mes-projets/agentphoto-le-studio-photo-que-mon-agent-sait-piloter.html</guid>
+      <category>Mes projets</category>
+      <description><![CDATA[Retouche, détourage, looks et visuels pour les réseaux sociaux : AgentPhoto est le studio photo que votre agent IA sait piloter, avec une IA 100 % locale.]]></description>
+      <pubDate>Tue, 24 Nov 2026 10:33:41 GMT</pubDate>
+      <enclosure url="https://leaux.ovh/media/2026/11/agentphoto-header-dark-577d2f/large.webp" length="36472" type="image/webp"/>
+    </item>
     <item>
       <title>Agent3D, le studio 3D que mon agent sait piloter</title>
       <link>https://leaux.ovh/mes-projets/agent3d-le-studio-3d-que-mon-agent-sait-piloter.html</link>
@@ -177,15 +186,6 @@
       <category>Transition IA</category>
       <description><![CDATA[Deuxième semaine : un dépôt partagé, des Skills pour guider l'agent, de nouveaux outils, et le défi de faire tourner deux modèles sur le même serveur.]]></description>
       <pubDate>Fri, 26 Jun 2026 09:00:00 GMT</pubDate>
-      <enclosure url="https://leaux.ovh/media/2026/11/ia-auto-hebergee-s2-baab05/large.webp" length="64646" type="image/webp"/>
-    </item>
-    <item>
-      <title>Retour d&apos;expérience : la mise en place d&apos;une IA auto-hébergée en entreprise</title>
-      <link>https://leaux.ovh/transition-ia/retour-d-experience-ia-auto-hebergee-en-entreprise.html</link>
-      <guid isPermaLink="true">https://leaux.ovh/transition-ia/retour-d-experience-ia-auto-hebergee-en-entreprise.html</guid>
-      <category>Transition IA</category>
-      <description><![CDATA[De l'idée à la production : le chemin produit et technique pour faire tourner une IA d'entreprise performante et sécurisée sur nos propres serveurs, en France.]]></description>
-      <pubDate>Sat, 20 Jun 2026 09:00:00 GMT</pubDate>
       <enclosure url="https://leaux.ovh/media/2026/11/ia-auto-hebergee-s2-baab05/large.webp" length="64646" type="image/webp"/>
     </item>
   </channel>
