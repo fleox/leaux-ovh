@@ -6,15 +6,24 @@
     <link>https://leaux.ovh/</link>
     <description>Ce que l&apos;IA change au travail, ce que je construis, et ce que je vais chercher en montagne.</description>
     <language>fr</language>
-    <lastBuildDate>Tue, 24 Nov 2026 21:18:52 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 25 Nov 2026 16:26:20 GMT</lastBuildDate>
     <atom:link href="https://leaux.ovh/rss.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Sans coder, vraiment ? La même révolution, annoncée deux fois</title>
+      <link>https://leaux.ovh/edito/sans-coder-vraiment-la-meme-revolution-annoncee-deux-fois.html</link>
+      <guid isPermaLink="true">https://leaux.ovh/edito/sans-coder-vraiment-la-meme-revolution-annoncee-deux-fois.html</guid>
+      <category>Édito</category>
+      <description><![CDATA[Claude permet d'installer ses créations comme des applications, et la presse titre « sans coder ». Sauf que ce n'est ni nouveau, ni vraiment sans compétences.]]></description>
+      <pubDate>Wed, 25 Nov 2026 16:23:34 GMT</pubDate>
+      <enclosure url="https://leaux.ovh/media/2026/11/sans-coder-magicien-apps-23abcc/large.webp" length="74486" type="image/webp"/>
+    </item>
     <item>
       <title>Le code de l&apos;IA ne naît pas mauvais : il s&apos;use à chaque prompt</title>
       <link>https://leaux.ovh/transition-ia/le-code-de-l-ia-ne-nait-pas-mauvais-il-s-use-a-chaque-prompt.html</link>
       <guid isPermaLink="true">https://leaux.ovh/transition-ia/le-code-de-l-ia-ne-nait-pas-mauvais-il-s-use-a-chaque-prompt.html</guid>
       <category>Transition IA</category>
       <description><![CDATA[Les modèles écrivent un code de plus en plus propre, mais il se dégrade à chaque évolution. Le vrai sujet : qui tient l'architecture ?]]></description>
-      <pubDate>Tue, 24 Nov 2026 21:15:25 GMT</pubDate>
+      <pubDate>Tue, 24 Nov 2026 21:18:49 GMT</pubDate>
       <enclosure url="https://leaux.ovh/media/2026/11/code-ia-erosion-couts-41c70c/large.webp" length="27608" type="image/webp"/>
     </item>
     <item>
@@ -178,15 +187,6 @@
       <description><![CDATA[Une trentaine de skills, une dizaine de MCP, et un agent qui hésite : comment on a tout restructuré autour d'un router, de petits skills spécialisés et de Skills Python maison.]]></description>
       <pubDate>Tue, 08 Sep 2026 09:00:00 GMT</pubDate>
       <enclosure url="https://leaux.ovh/media/2026/11/cover-594b11/large.webp" length="33134" type="image/webp"/>
-    </item>
-    <item>
-      <title>De Sixt-Fer-à-Cheval aux Houches : prendre du recul</title>
-      <link>https://leaux.ovh/passions/sixt-fer-a-cheval-les-houches-prendre-du-recul.html</link>
-      <guid isPermaLink="true">https://leaux.ovh/passions/sixt-fer-a-cheval-les-houches-prendre-du-recul.html</guid>
-      <category>Passions</category>
-      <description><![CDATA[Après une année chargée, je refais ce trek pour la troisième fois, sans plan ni rythme imposé. Juste écouter mon corps, m'arrêter où ça me plaît, et reposer mon esprit.]]></description>
-      <pubDate>Wed, 26 Aug 2026 18:00:00 GMT</pubDate>
-      <enclosure url="https://leaux.ovh/media/2026/11/recul-panorama-col-6c059b/large.webp" length="230832" type="image/webp"/>
     </item>
   </channel>
 </rss>
