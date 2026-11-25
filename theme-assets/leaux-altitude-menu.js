@@ -442,3 +442,85 @@
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
   else start();
 })();
+
+/* Observatoire: hover/focus tooltips (progressive enhancement; charts read fine without it). */
+(function () {
+  /* Scroll reveal + KPI count-up. The class is set first so nothing is hidden when JS is off. */
+  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var root = document.querySelector(".lx-obs");
+  if (!root) return;
+  window.lxObsReady = true;
+  if ("IntersectionObserver" in window && !reduce) {
+    document.documentElement.classList.add("lx-obs-anim");
+    var countUp = function (el) {
+      var txt = el.textContent, m = txt.match(/\d[\d\u00a0\u202f ]*(?:,\d+)?/);
+      if (!m) return;
+      var raw = m[0], dec = (raw.split(",")[1] || "").length, target = parseFloat(raw.replace(/[\s\u00a0\u202f]/g, "").replace(",", "."));
+      var fmt = function (v) {
+        var s = v.toFixed(dec).split("."), int = s[0].replace(/\B(?=(\d{3})+(?!\d))/g, "\u00a0");
+        return txt.replace(raw, int + (dec ? "," + s[1] : ""));
+      };
+      var t0 = null, dur = 1100;
+      var step = function (t) {
+        if (t0 === null) t0 = t;
+        var k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+        el.textContent = k < 1 ? fmt(target * e) : txt;
+        if (k < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        en.target.classList.add("is-in");
+        en.target.querySelectorAll("[data-count]").forEach(countUp);
+        io.unobserve(en.target);
+      });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: .15 });
+    root.querySelectorAll(".lx-obs__card, .lx-obs__kpis").forEach(function (el) { io.observe(el); });
+  }
+
+  function place(tip, plot, x) {
+    tip.hidden = false;
+    var w = plot.clientWidth, half = tip.offsetWidth / 2;
+    tip.style.left = Math.max(half - 40, Math.min(w - half + 70, x)) + "px";
+  }
+  document.querySelectorAll("[data-lx-obs]").forEach(function (chart) {
+    var series = JSON.parse(chart.getAttribute("data-lx-obs"));
+    var plot = chart.querySelector(".lx-obs__plot"), tip = plot.querySelector(".lx-obs__hover");
+    var cross = document.createElement("div");
+    cross.className = "lx-obs__cross"; cross.hidden = true; plot.appendChild(cross);
+    function show(px) {
+      var rect = plot.getBoundingClientRect(), xp = (px - rect.left) / rect.width * 100, rows = [], at = null, label = "";
+      series.forEach(function (s) {
+        var best = null;
+        s.p.forEach(function (p) { if (!best || Math.abs(p[0] - xp) < Math.abs(best[0] - xp)) best = p; });
+        if (best && Math.abs(best[0] - xp) < 6) {
+          if (at === null || Math.abs(best[0] - xp) < Math.abs(at - xp)) { at = best[0]; label = best[2]; }
+          rows.push('<span class="' + s.c + '"><i></i>' + (series.length > 1 ? s.n + " : " : "") + best[3] + "</span>");
+        }
+      });
+      if (at === null) return hide();
+      tip.innerHTML = "<b>" + label + "</b>" + rows.join("<br>");
+      cross.hidden = false; cross.style.left = at + "%";
+      place(tip, plot, at / 100 * rect.width);
+    }
+    function hide() { tip.hidden = true; cross.hidden = true; }
+    plot.addEventListener("pointermove", function (e) { show(e.clientX); });
+    plot.addEventListener("pointerleave", hide);
+  });
+  document.querySelectorAll(".lx-obs__plot").forEach(function (plot) {
+    var tip = plot.querySelector(".lx-obs__hover");
+    plot.querySelectorAll("[data-tip]").forEach(function (el) {
+      function on() {
+        var r = el.getBoundingClientRect(), pr = plot.getBoundingClientRect();
+        tip.textContent = el.getAttribute("data-tip");
+        place(tip, plot, r.left - pr.left + r.width / 2);
+        tip.style.top = Math.max(0, r.top - pr.top - 44) + "px";
+      }
+      function off() { tip.hidden = true; tip.style.top = ""; }
+      el.addEventListener("pointerenter", on); el.addEventListener("focus", on);
+      el.addEventListener("pointerleave", off); el.addEventListener("blur", off);
+    });
+  });
+})();
