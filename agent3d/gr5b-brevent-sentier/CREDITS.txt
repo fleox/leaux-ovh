@@ -1,0 +1,6 @@
+Credits — Un sentier de pierres face aux glaciers du Mont-Blanc
+
+- "gr5b-brevent-sentier.webp" by Frédéric Leaux (local), licensed under All rights reserved.
+- Depth map of assets/textures/gr5b-brevent-sentier.jpg estimated with Depth Anything V2 Small (Apache-2.0). Image: "gr5b-brevent-sentier.jpg" by Frédéric Leaux, licensed under All rights reserved.
+
+Made with Agent3D.
