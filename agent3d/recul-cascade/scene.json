@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "id": "recul-cascade",
+  "title": "Une grande cascade qui tombe d'une falaise au milieu de la forêt",
+  "ariaLabel": "Une grande cascade qui tombe d'une falaise au milieu de la forêt — photo en 3D",
+  "target": {
+    "kind": "hero",
+    "aspect": "4:3",
+    "posterTime": 0
+  },
+  "camera": {
+    "type": "perspective",
+    "fov": 35,
+    "position": [
+      0,
+      0,
+      3.5
+    ],
+    "target": [
+      0,
+      0,
+      0
+    ]
+  },
+  "environment": {
+    "background": "#10163f"
+  },
+  "lights": [],
+  "objects": [
+    {
+      "id": "photo",
+      "kind": "photo",
+      "src": "assets/textures/recul-cascade.webp",
+      "depth": "assets/depth/recul-cascade-depth.png",
+      "mode": "parallax",
+      "width": 3.3,
+      "strength": 0.85,
+      "focus": 0.66,
+      "motion": {
+        "pointer": 1,
+        "gyro": true,
+        "auto": "sway",
+        "speed": 1
+      }
+    }
+  ]
+}
