@@ -1,0 +1,6 @@
+Credits — La tente montée sur un replat herbeux, au pied du col
+
+- "gr5b-tente-bonhomme.webp" by Frédéric Leaux (local), licensed under All rights reserved.
+- Depth map of assets/textures/gr5b-tente-bonhomme.jpg estimated with Depth Anything V2 Small (Apache-2.0). Image: "gr5b-tente-bonhomme.jpg" by Frédéric Leaux, licensed under All rights reserved.
+
+Made with Agent3D.
