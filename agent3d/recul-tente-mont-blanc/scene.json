@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "id": "recul-tente-mont-blanc",
+  "title": "La tente au premier plan, face au massif du Mont-Blanc et à la vallée",
+  "ariaLabel": "La tente au premier plan, face au massif du Mont-Blanc et à la vallée — photo en 3D",
+  "target": {
+    "kind": "hero",
+    "aspect": "3:4",
+    "posterTime": 0
+  },
+  "camera": {
+    "type": "perspective",
+    "fov": 35,
+    "position": [
+      0,
+      0,
+      3.5
+    ],
+    "target": [
+      0,
+      0,
+      0
+    ]
+  },
+  "environment": {
+    "background": "#10163f"
+  },
+  "lights": [],
+  "objects": [
+    {
+      "id": "photo",
+      "kind": "photo",
+      "src": "assets/textures/recul-tente-mont-blanc.webp",
+      "depth": "assets/depth/recul-tente-mont-blanc-depth.png",
+      "mode": "parallax",
+      "width": 1.9,
+      "strength": 0.45,
+      "focus": 0.75,
+      "motion": {
+        "pointer": 1,
+        "gyro": true,
+        "auto": "sway",
+        "speed": 1
+      }
+    }
+  ]
+}
