@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "id": "tmb-vallee",
+  "title": "Vallée d'altitude et alpages sous un ciel ensoleillé",
+  "ariaLabel": "Vallée d'altitude et alpages sous un ciel ensoleillé — photo en 3D",
+  "target": {
+    "kind": "hero",
+    "aspect": "4:3",
+    "posterTime": 0
+  },
+  "camera": {
+    "type": "perspective",
+    "fov": 35,
+    "position": [
+      0,
+      0,
+      3.5
+    ],
+    "target": [
+      0,
+      0,
+      0
+    ]
+  },
+  "environment": {
+    "background": "#10163f"
+  },
+  "lights": [],
+  "objects": [
+    {
+      "id": "photo",
+      "kind": "photo",
+      "src": "assets/textures/tmb-vallee.webp",
+      "depth": "assets/depth/tmb-vallee-depth.png",
+      "mode": "parallax",
+      "width": 3.24,
+      "strength": 0.75,
+      "focus": 0.62,
+      "motion": {
+        "pointer": 1,
+        "gyro": true,
+        "auto": "sway",
+        "speed": 1
+      }
+    }
+  ]
+}
