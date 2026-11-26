@@ -1,0 +1,6 @@
+Credits — La tente ouverte au réveil, au bord d'une falaise, sous un ciel dégagé
+
+- "recul-tente-reveil.webp" by Frédéric Leaux (local), licensed under All rights reserved.
+- Depth map of assets/textures/recul-tente-reveil.jpg estimated with Depth Anything V2 Small (Apache-2.0). Image: "recul-tente-reveil.jpg" by Frédéric Leaux, licensed under All rights reserved.
+
+Made with Agent3D.
