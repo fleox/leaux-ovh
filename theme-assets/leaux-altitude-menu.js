@@ -548,26 +548,35 @@
   });
 })();
 
-/* 3D photos (Agent3D): <agent3d-scene data-src data-runtime> only starts near the viewport.
-   The player module is loaded with the first scene, then each scene gets its src when it comes
-   within 600 px, so a post with many 3D photos only downloads the ones the reader reaches. */
+/* 3D photos (Agent3D). The post body holds only <figure class="lx-3d" data-3d-src data-3d-runtime
+   data-3d-aspect><img></figure> (AgentCMS sanitizes bodies and drops unknown elements such as
+   <agent3d-scene>). When a figure comes within 600 px of the viewport, the player module is loaded
+   (once) and an <agent3d-scene> is created around the image, which becomes its poster: a post with
+   many 3D photos only downloads the ones the reader reaches. */
 (function () {
-  var scenes = document.querySelectorAll("agent3d-scene[data-src]");
-  if (!scenes.length) return;
+  var figs = document.querySelectorAll("figure.lx-3d[data-3d-src]");
+  if (!figs.length) return;
   var player = false;
-  function start(el) {
-    if (!player && el.getAttribute("data-runtime")) {
+  function start(fig) {
+    var img = fig.querySelector("img"), runtime = fig.getAttribute("data-3d-runtime");
+    if (!player && runtime) {
       player = true;
       var s = document.createElement("script");
-      s.type = "module"; s.src = el.getAttribute("data-runtime");
+      s.type = "module"; s.src = runtime;
       document.head.appendChild(s);
     }
-    el.setAttribute("src", el.getAttribute("data-src"));
-    el.removeAttribute("data-src");
+    var el = document.createElement("agent3d-scene");
+    el.setAttribute("aspect", fig.getAttribute("data-3d-aspect") || "16:9");
+    el.setAttribute("role", "img");
+    if (img) { el.setAttribute("aria-label", img.alt); img.setAttribute("slot", "poster"); }
+    fig.insertBefore(el, img || null);
+    if (img) el.appendChild(img);
+    el.setAttribute("src", fig.getAttribute("data-3d-src"));
+    fig.removeAttribute("data-3d-src");
   }
-  if (!("IntersectionObserver" in window)) { scenes.forEach(start); return; }
+  if (!("IntersectionObserver" in window)) { figs.forEach(start); return; }
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (en) { if (en.isIntersecting) { io.unobserve(en.target); start(en.target); } });
   }, { rootMargin: "600px 0px" });
-  scenes.forEach(function (el) { io.observe(el); });
+  figs.forEach(function (f) { io.observe(f); });
 })();
