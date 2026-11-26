@@ -1,0 +1,6 @@
+Credits — Pause allongé au soleil, face à une chaîne de sommets enneigés
+
+- "gr5-pause-sommets.webp" by Frédéric Leaux (local), licensed under All rights reserved.
+- Depth map of assets/textures/gr5-pause-sommets.jpg estimated with Depth Anything V2 Small (Apache-2.0). Image: "gr5-pause-sommets.jpg" by Frédéric Leaux, licensed under All rights reserved.
+
+Made with Agent3D.
