@@ -1,0 +1,6 @@
+Credits — La tente montée dans l'herbe, le sac et le matelas étalés devant
+
+- "gr5b-tente-matin.webp" by Frédéric Leaux (local), licensed under All rights reserved.
+- Depth map of assets/textures/gr5b-tente-matin.jpg estimated with Depth Anything V2 Small (Apache-2.0). Image: "gr5b-tente-matin.jpg" by Frédéric Leaux, licensed under All rights reserved.
+
+Made with Agent3D.
