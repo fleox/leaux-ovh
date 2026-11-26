@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "id": "tmb-descente",
+  "title": "Sentier à travers les myrtilliers rougis par l'automne, face au massif du Mont-Blanc enneigé",
+  "ariaLabel": "Sentier à travers les myrtilliers rougis par l'automne, face au massif du Mont-Blanc enneigé — photo en 3D",
+  "target": {
+    "kind": "hero",
+    "aspect": "3:4",
+    "posterTime": 0
+  },
+  "camera": {
+    "type": "perspective",
+    "fov": 35,
+    "position": [
+      0,
+      0,
+      3.5
+    ],
+    "target": [
+      0,
+      0,
+      0
+    ]
+  },
+  "environment": {
+    "background": "#10163f"
+  },
+  "lights": [],
+  "objects": [
+    {
+      "id": "photo",
+      "kind": "photo",
+      "src": "assets/textures/tmb-descente.webp",
+      "depth": "assets/depth/tmb-descente-depth.png",
+      "mode": "parallax",
+      "width": 1.82,
+      "strength": 0.75,
+      "focus": 0.3,
+      "motion": {
+        "pointer": 1,
+        "gyro": true,
+        "auto": "sway",
+        "speed": 1
+      }
+    }
+  ]
+}
