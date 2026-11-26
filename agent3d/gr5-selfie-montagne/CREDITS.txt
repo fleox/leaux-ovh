@@ -1,0 +1,6 @@
+Credits — Selfie avec le sac à dos, devant des sommets rocheux et des névés
+
+- "gr5-selfie-montagne.webp" by Frédéric Leaux (local), licensed under All rights reserved.
+- Depth map of assets/textures/gr5-selfie-montagne.jpg estimated with Depth Anything V2 Small (Apache-2.0). Image: "gr5-selfie-montagne.jpg" by Frédéric Leaux, licensed under All rights reserved.
+
+Made with Agent3D.
