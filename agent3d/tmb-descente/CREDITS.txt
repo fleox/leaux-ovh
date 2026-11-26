@@ -1,0 +1,6 @@
+Credits — Sentier à travers les myrtilliers rougis par l'automne, face au massif du Mont-Blanc enneigé
+
+- "tmb-descente.webp" by Frédéric Leaux (local), licensed under All rights reserved.
+- Depth map of assets/textures/tmb-descente.jpg estimated with Depth Anything V2 Small (Apache-2.0). Image: "tmb-descente.jpg" by Frédéric Leaux, licensed under All rights reserved.
+
+Made with Agent3D.
