@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "id": "recul-brevent",
+  "title": "Les aiguilles de Chamonix et le glacier vus depuis le Brévent, au-dessus d'un pierrier",
+  "ariaLabel": "Les aiguilles de Chamonix et le glacier vus depuis le Brévent, au-dessus d'un pierrier — photo en 3D",
+  "target": {
+    "kind": "hero",
+    "aspect": "4:3",
+    "posterTime": 0
+  },
+  "camera": {
+    "type": "perspective",
+    "fov": 35,
+    "position": [
+      0,
+      0,
+      3.5
+    ],
+    "target": [
+      0,
+      0,
+      0
+    ]
+  },
+  "environment": {
+    "background": "#10163f"
+  },
+  "lights": [],
+  "objects": [
+    {
+      "id": "photo",
+      "kind": "photo",
+      "src": "assets/textures/recul-brevent.webp",
+      "depth": "assets/depth/recul-brevent-depth.png",
+      "mode": "parallax",
+      "width": 3.3,
+      "strength": 0.85,
+      "focus": 0.59,
+      "motion": {
+        "pointer": 1,
+        "gyro": true,
+        "auto": "sway",
+        "speed": 1
+      }
+    }
+  ]
+}
