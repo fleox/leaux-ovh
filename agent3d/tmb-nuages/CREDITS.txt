@@ -1,0 +1,6 @@
+Credits — Nuages accrochés aux sommets au-dessus d'une vallée boisée
+
+- "tmb-nuages.webp" by Frédéric Leaux (local), licensed under All rights reserved.
+- Depth map of assets/textures/tmb-nuages.jpg estimated with Depth Anything V2 Small (Apache-2.0). Image: "tmb-nuages.jpg" by Frédéric Leaux, licensed under All rights reserved.
+
+Made with Agent3D.
