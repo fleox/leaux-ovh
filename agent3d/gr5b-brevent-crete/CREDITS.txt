@@ -1,0 +1,6 @@
+Credits — Paysage minéral d'altitude, au-dessus d'une mer de nuages
+
+- "gr5b-brevent-crete.webp" by Frédéric Leaux (local), licensed under All rights reserved.
+- Depth map of assets/textures/gr5b-brevent-crete.jpg estimated with Depth Anything V2 Small (Apache-2.0). Image: "gr5b-brevent-crete.jpg" by Frédéric Leaux, licensed under All rights reserved.
+
+Made with Agent3D.
