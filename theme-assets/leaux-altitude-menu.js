@@ -547,3 +547,27 @@
     });
   });
 })();
+
+/* 3D photos (Agent3D): <agent3d-scene data-src data-runtime> only starts near the viewport.
+   The player module is loaded with the first scene, then each scene gets its src when it comes
+   within 600 px, so a post with many 3D photos only downloads the ones the reader reaches. */
+(function () {
+  var scenes = document.querySelectorAll("agent3d-scene[data-src]");
+  if (!scenes.length) return;
+  var player = false;
+  function start(el) {
+    if (!player && el.getAttribute("data-runtime")) {
+      player = true;
+      var s = document.createElement("script");
+      s.type = "module"; s.src = el.getAttribute("data-runtime");
+      document.head.appendChild(s);
+    }
+    el.setAttribute("src", el.getAttribute("data-src"));
+    el.removeAttribute("data-src");
+  }
+  if (!("IntersectionObserver" in window)) { scenes.forEach(start); return; }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) { if (en.isIntersecting) { io.unobserve(en.target); start(en.target); } });
+  }, { rootMargin: "600px 0px" });
+  scenes.forEach(function (el) { io.observe(el); });
+})();
