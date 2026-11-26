@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "id": "gr5-crepuscule-header",
+  "title": "Crêtes des Alpes en silhouette sous un ciel orangé, au crépuscule.",
+  "ariaLabel": "Crêtes des Alpes en silhouette sous un ciel orangé, au crépuscule. — photo en 3D",
+  "target": {
+    "kind": "hero",
+    "aspect": "1.82:1",
+    "posterTime": 0
+  },
+  "camera": {
+    "type": "perspective",
+    "fov": 35,
+    "position": [
+      0,
+      0,
+      3.5
+    ],
+    "target": [
+      0,
+      0,
+      0
+    ]
+  },
+  "environment": {
+    "background": "#10163f"
+  },
+  "lights": [],
+  "objects": [
+    {
+      "id": "photo",
+      "kind": "photo",
+      "src": "assets/textures/gr5-crepuscule-header.webp",
+      "depth": "assets/depth/gr5-crepuscule-header-depth.png",
+      "mode": "parallax",
+      "width": 4.4,
+      "strength": 0.8,
+      "focus": 0.45,
+      "motion": {
+        "pointer": 1,
+        "gyro": true,
+        "auto": "sway",
+        "speed": 1
+      }
+    }
+  ]
+}
