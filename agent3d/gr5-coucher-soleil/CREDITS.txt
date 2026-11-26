@@ -1,0 +1,6 @@
+Credits — Le soleil se couche derrière une crête, au-dessus des alpages
+
+- "gr5-coucher-soleil.webp" by Frédéric Leaux (local), licensed under All rights reserved.
+- Depth map of assets/textures/gr5-coucher-soleil.jpg estimated with Depth Anything V2 Small (Apache-2.0). Image: "gr5-coucher-soleil.jpg" by Frédéric Leaux, licensed under All rights reserved.
+
+Made with Agent3D.
