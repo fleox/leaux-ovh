@@ -1,0 +1,6 @@
+Credits — Tente montée dans une prairie en lisière de forêt
+
+- "gr5-tente-prairie.webp" by Frédéric Leaux (local), licensed under All rights reserved.
+- Depth map of assets/textures/gr5-tente-prairie.jpg estimated with Depth Anything V2 Small (Apache-2.0). Image: "gr5-tente-prairie.jpg" by Frédéric Leaux, licensed under All rights reserved.
+
+Made with Agent3D.
