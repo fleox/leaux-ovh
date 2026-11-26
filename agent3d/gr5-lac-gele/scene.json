@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "id": "gr5-lac-gele",
+  "title": "Lac de montagne encore à moitié gelé, entouré de pentes enneigées",
+  "ariaLabel": "Lac de montagne encore à moitié gelé, entouré de pentes enneigées — photo en 3D",
+  "target": {
+    "kind": "hero",
+    "aspect": "4:3",
+    "posterTime": 0
+  },
+  "camera": {
+    "type": "perspective",
+    "fov": 35,
+    "position": [
+      0,
+      0,
+      3.5
+    ],
+    "target": [
+      0,
+      0,
+      0
+    ]
+  },
+  "environment": {
+    "background": "#10163f"
+  },
+  "lights": [],
+  "objects": [
+    {
+      "id": "photo",
+      "kind": "photo",
+      "src": "assets/textures/gr5-lac-gele.webp",
+      "depth": "assets/depth/gr5-lac-gele-depth.png",
+      "mode": "parallax",
+      "width": 3.24,
+      "strength": 0.75,
+      "focus": 0.7,
+      "motion": {
+        "pointer": 1,
+        "gyro": true,
+        "auto": "sway",
+        "speed": 1
+      }
+    }
+  ]
+}
