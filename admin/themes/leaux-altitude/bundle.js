@@ -330,10 +330,10 @@ main:has(> .lx-pano:last-child) ~ .lx-footer .lx-footer__ridge { display: none; 
 .lx-prose li::marker { color: var(--lx-deep); font-weight: 700; }
 .lx-prose strong { font-weight: 650; }
 .lx-prose img { margin: 1.6em 0; }
-/* 3D photos (Agent3D, raw HTML in the body): the poster image keeps the frame until the scene starts (menu-loader.js). */
-.lx-prose .lx-3d { margin: 1.6em 0; }
-.lx-prose .lx-3d agent3d-scene { display: block; width: 100%; overflow: hidden; background: var(--lx-night); }
-.lx-prose .lx-3d img { margin: 0; }
+/* 3D photos (Agent3D): figure.lx-3d keeps the photo's frame (inline aspect-ratio); menu-loader.js turns it into a 3D scene near the viewport. */
+.lx-prose .lx-3d { margin: 1.6em 0; overflow: hidden; background: var(--lx-night); }
+.lx-prose .lx-3d agent3d-scene { display: block; width: 100%; height: 100%; }
+.lx-prose .lx-3d img { display: block; width: 100%; height: 100%; margin: 0; object-fit: cover; }
 .lx-prose hr { height: 16px; margin: 2.4em 0; border: 0; background: var(--lx-deep); clip-path: polygon(0 100%, 8% 30%, 15% 70%, 27% 0, 38% 80%, 49% 25%, 62% 75%, 74% 10%, 87% 70%, 100% 100%, 100% 100%); }
 .lx-prose blockquote { margin: 1.8em 0; padding: .1em 0 .1em clamp(18px, 3vw, 32px); border-left: 8px solid var(--lx-tint); font-size: 1.28em; font-style: italic; line-height: 1.34; }
 .lx-prose blockquote p:last-child { margin-bottom: 0; }
@@ -1293,30 +1293,39 @@ body:has(.lx-header:not(.is-hidden)) .lx-obs__nav { --lx-obs-top: 68px; }
   });
 })();
 
-/* 3D photos (Agent3D): <agent3d-scene data-src data-runtime> only starts near the viewport.
-   The player module is loaded with the first scene, then each scene gets its src when it comes
-   within 600 px, so a post with many 3D photos only downloads the ones the reader reaches. */
+/* 3D photos (Agent3D). The post body holds only <figure class="lx-3d" data-3d-src data-3d-runtime
+   data-3d-aspect><img></figure> (AgentCMS sanitizes bodies and drops unknown elements such as
+   <agent3d-scene>). When a figure comes within 600 px of the viewport, the player module is loaded
+   (once) and an <agent3d-scene> is created around the image, which becomes its poster: a post with
+   many 3D photos only downloads the ones the reader reaches. */
 (function () {
-  var scenes = document.querySelectorAll("agent3d-scene[data-src]");
-  if (!scenes.length) return;
+  var figs = document.querySelectorAll("figure.lx-3d[data-3d-src]");
+  if (!figs.length) return;
   var player = false;
-  function start(el) {
-    if (!player && el.getAttribute("data-runtime")) {
+  function start(fig) {
+    var img = fig.querySelector("img"), runtime = fig.getAttribute("data-3d-runtime");
+    if (!player && runtime) {
       player = true;
       var s = document.createElement("script");
-      s.type = "module"; s.src = el.getAttribute("data-runtime");
+      s.type = "module"; s.src = runtime;
       document.head.appendChild(s);
     }
-    el.setAttribute("src", el.getAttribute("data-src"));
-    el.removeAttribute("data-src");
+    var el = document.createElement("agent3d-scene");
+    el.setAttribute("aspect", fig.getAttribute("data-3d-aspect") || "16:9");
+    el.setAttribute("role", "img");
+    if (img) { el.setAttribute("aria-label", img.alt); img.setAttribute("slot", "poster"); }
+    fig.insertBefore(el, img || null);
+    if (img) el.appendChild(img);
+    el.setAttribute("src", fig.getAttribute("data-3d-src"));
+    fig.removeAttribute("data-3d-src");
   }
-  if (!("IntersectionObserver" in window)) { scenes.forEach(start); return; }
+  if (!("IntersectionObserver" in window)) { figs.forEach(start); return; }
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (en) { if (en.isIntersecting) { io.unobserve(en.target); start(en.target); } });
   }, { rootMargin: "600px 0px" });
-  scenes.forEach(function (el) { io.observe(el); });
+  figs.forEach(function (f) { io.observe(f); });
 })();
-`, we = '# Leaux Altitude\n\nDedicated AgentCMS theme for leaux.ovh. Ridgelines pass in front of the home title, each section is a summit on an orientation table, each post gets a contour map generated from its slug, and a reading climb follows the scroll.\n\nSection slugs and colors live in `src/rubrics.ts` and `src/theme.css` (`[data-rubric]`). Hero texts are editable on the theme settings page.\n\n## Custom fields\n\n| Field | Type | Effect |\n|---|---|---|\n| `header-photo` | yes / no | On a post with a featured image, `true` puts the image behind the header, with a parallax on scroll, instead of the contour map. The image is then not repeated under the header. |\n| `toc` | yes / no | `true` adds a table of contents built from the body\'s `h2` (numbered) and `h3` (indented); the headings get ids. Wide screens (≥ 1200 px): the text moves left, aligned with the title, and the contents stay open in a sticky column on the right, current section highlighted and the rail filling as you read. Narrower: a sticky bar under the header that shows the current section and a reading progress line, and drops the list down on tap. Without JS: an open list above the text. Shown only with at least 2 headings. |\n\n## Article components (raw HTML in Markdown)\n\n- Video card (YouTube link with thumbnail, no embed): `<div class="lx-video"><a class="lx-video__thumb" href="https://www.youtube.com/watch?v=ID" aria-label="Regarder « Titre » sur YouTube"><img src="https://i.ytimg.com/vi/ID/hqdefault.jpg" alt="" loading="lazy"></a><div><p class="lx-video__meta">Chaîne · 18 min · en anglais</p><p class="lx-video__title"><a href="https://www.youtube.com/watch?v=ID">Titre</a></p><p>Résumé…</p></div></div>`.\n- En bref (key points, first block of a long post): `<aside class="lx-brief" aria-label="En bref"><p class="lx-brief__tag">En bref</p><ul><li>… <strong>…</strong></li></ul></aside>`.\n\n- Pull quote: `<figure class="lx-pullquote"><blockquote><p>…</p></blockquote></figure>` (optional `<figcaption>`).\n- Case box: `<aside class="lx-case"><p class="lx-case__tag">Cas réel · date</p><p class="lx-case__title">…</p><p>…</p><p class="lx-case__src">Source : <a href="…">…</a></p></aside>`.\n- Key figures: `<div class="lx-stats"><div><strong>48 %</strong><span>…</span></div>…</div>`, optionally followed by `<p class="lx-case__src">Source : …</p>`.\n- Bar chart: `<figure class="lx-chart"><p class="lx-chart__title">…</p><p class="lx-chart__sub">…</p><div class="lx-chart__cols" style="--n:9"><div class="lx-chart__col is-lab" style="--v:.4" title="2020 : 18 322"><div class="lx-chart__bar"></div><span class="lx-chart__val">18 322</span></div>…</div><div class="lx-chart__axis" style="--n:9"><span>2020</span>…</div><p class="lx-case__src">Source : …</p></figure>`. `--v` is the bar height (0–1). Column modifiers: `is-hi` (highlighted), `is-part` (hatched, partial period), `is-lab` (value always shown; others on hover). Axis labels with `is-minor` hide on phones.\n- Paired horizontal bars: `<div class="lx-chart__rows"><div class="lx-chart__row"><span>Label</span><div class="lx-chart__hb" style="--v:.3"><i></i>1 200 <em>2025</em></div><div class="lx-chart__hb is-hi" style="--v:.8"><i></i>3 400 <em>2026</em></div></div></div>` with a `<ul class="lx-chart__legend"><li><i></i>2025</li><li><i class="is-hi"></i>2026</li></ul>`.\n\n## Section pages (1.6.0)\n\nThe band of each section page features its latest post: image as background (rubric-tinted gradient), kicker « Rubrique — Dernier article », title, excerpt, « Lire l\'article » button, date and reading time, ridge edge kept. The other posts follow under « Articles précédents ». The h1 of the page is the logo, with the section name visually hidden; `<title>` and meta description still come from the category.\n\n## Home (1.7.0)\n\nNewest post in the band (same design as section pages), one block per section (newest post large, two more beside it, link « Toute la rubrique »), « Mes projets » as round logos, « Par où monter ? » at the bottom. Project fields on posts of « Mes projets »: `project` (name), `project-logo` (URL of the `square` image format), `project-tagline` (optional). New image format `square` (320×320).\n\n## Home data (1.7.1)\n\nThe manifest sets `homeCategoryPosts: 12`: AgentCMS ≥ 0.4.4 passes the newest 12 posts of every category to the home (`props.categories`), used for the section blocks and the projects. `postsPerPage` no longer has to be large. Older AgentCMS: fallback on `props.posts`.\n\n## Transitions and parallax (1.7.2)\n\nThe list → post transition starts from the feature band, the home cards and the project logos too (`lxVtPair` in BaseLayout\'s head script). The band parallax uses CSS scroll-driven animations (off the main thread, smooth on phones); the JS version is a fallback for mouse users on browsers without them.\n\n\n### 1.7.3\n\nThe bands\' view timeline uses `view-timeline-inset: 0`. With the default (`auto`) it took html\'s `scroll-padding-top` (88 px, 132 px on posts with a table of contents), so the parallax had already started at load and the header photo sat ~27 px below the site header.\n\n### 1.7.4\n\nPost and page titles (`.lx-band--article h1`) use the same size as the home\'s featured title (`.lx-feature__title`): `clamp(2.5rem, 5.2vw, 5rem)`, 18ch wide — 75 px instead of 104 px at 1440 px. The 2.5rem floor keeps phones at 40 px.\n\n### 1.8.4\n\n- 3D photos (Agent3D) in post bodies: `<figure class="lx-3d"><agent3d-scene data-src="…/scene.json" data-runtime="…/agent3d-photo.js">` with a lazy poster `<img slot="poster">`. `menu-loader.js` loads the player module with the first scene that comes within 600 px of the viewport and sets each scene\'s `src` only then, so a post with many 3D photos only downloads what the reader reaches.\n\n### 1.8.3\n\n- Every photo band (post headers too) gets the home band\'s veil: dark on the text side (left on wide screens, bottom on phones), clear elsewhere. Images are uploaded untouched.\n\n### 1.8.2\n\n- Home `<title>`: « <site title> — IA, transformation et projets tech » (`homeTitle` in i18n.ts).\n- `data-nosnippet` on the featured-post labels, the header menu and the footer, so Google builds snippets from the meta description and the content; a space between the rubric chip and « Dernier article ».\n- Footer: optional portrait in a gradient ring next to the name (theme setting `footer.portrait`, a square image URL), the name on two lines beside it.\n- Field `photo-shade` (boolean): stronger veil over the hero, for light images or images with text.\n\n### 1.8.1\n\n- Home: an « Observatoire IA » block after « Mes projets », shown while the header menu links to `observatoire-ia.html`. Its 6 key figures and update date are copied at runtime from the published page (`.lx-obs__kpis`, `.lx-obs__updated`), each linking to its section, so the block follows every refresh of the page with no home regeneration.\n- Home: « Passions » moved to the last block.\n\n### 1.8.0\n\nObservatoire de l\'IA (page with the custom field `dashboard: true`): compact header (rubric chip « Observatoire », update date from the field `obs-updated`, title and lead side by side), full-width body outside the prose column, `.lx-obs` dashboard components (key figures with sparklines, per-section accents, line / column / bar / scatter charts in plain HTML + SVG, data tables), hover tooltips and a scroll reveal (lines draw, bars grow, figures count up; off with reduced motion, visible without JS). The section nav sticks under the header and follows it when it hides.\n\n### 1.7.5\n\nGoogle Tag Manager container replaced: `GTM-PJ68GND6` (was `GTM-KNDFD5GH`), same snippet after the footer.\n';
+`, we = '# Leaux Altitude\n\nDedicated AgentCMS theme for leaux.ovh. Ridgelines pass in front of the home title, each section is a summit on an orientation table, each post gets a contour map generated from its slug, and a reading climb follows the scroll.\n\nSection slugs and colors live in `src/rubrics.ts` and `src/theme.css` (`[data-rubric]`). Hero texts are editable on the theme settings page.\n\n## Custom fields\n\n| Field | Type | Effect |\n|---|---|---|\n| `header-photo` | yes / no | On a post with a featured image, `true` puts the image behind the header, with a parallax on scroll, instead of the contour map. The image is then not repeated under the header. |\n| `toc` | yes / no | `true` adds a table of contents built from the body\'s `h2` (numbered) and `h3` (indented); the headings get ids. Wide screens (≥ 1200 px): the text moves left, aligned with the title, and the contents stay open in a sticky column on the right, current section highlighted and the rail filling as you read. Narrower: a sticky bar under the header that shows the current section and a reading progress line, and drops the list down on tap. Without JS: an open list above the text. Shown only with at least 2 headings. |\n\n## Article components (raw HTML in Markdown)\n\n- Video card (YouTube link with thumbnail, no embed): `<div class="lx-video"><a class="lx-video__thumb" href="https://www.youtube.com/watch?v=ID" aria-label="Regarder « Titre » sur YouTube"><img src="https://i.ytimg.com/vi/ID/hqdefault.jpg" alt="" loading="lazy"></a><div><p class="lx-video__meta">Chaîne · 18 min · en anglais</p><p class="lx-video__title"><a href="https://www.youtube.com/watch?v=ID">Titre</a></p><p>Résumé…</p></div></div>`.\n- En bref (key points, first block of a long post): `<aside class="lx-brief" aria-label="En bref"><p class="lx-brief__tag">En bref</p><ul><li>… <strong>…</strong></li></ul></aside>`.\n\n- Pull quote: `<figure class="lx-pullquote"><blockquote><p>…</p></blockquote></figure>` (optional `<figcaption>`).\n- Case box: `<aside class="lx-case"><p class="lx-case__tag">Cas réel · date</p><p class="lx-case__title">…</p><p>…</p><p class="lx-case__src">Source : <a href="…">…</a></p></aside>`.\n- Key figures: `<div class="lx-stats"><div><strong>48 %</strong><span>…</span></div>…</div>`, optionally followed by `<p class="lx-case__src">Source : …</p>`.\n- Bar chart: `<figure class="lx-chart"><p class="lx-chart__title">…</p><p class="lx-chart__sub">…</p><div class="lx-chart__cols" style="--n:9"><div class="lx-chart__col is-lab" style="--v:.4" title="2020 : 18 322"><div class="lx-chart__bar"></div><span class="lx-chart__val">18 322</span></div>…</div><div class="lx-chart__axis" style="--n:9"><span>2020</span>…</div><p class="lx-case__src">Source : …</p></figure>`. `--v` is the bar height (0–1). Column modifiers: `is-hi` (highlighted), `is-part` (hatched, partial period), `is-lab` (value always shown; others on hover). Axis labels with `is-minor` hide on phones.\n- Paired horizontal bars: `<div class="lx-chart__rows"><div class="lx-chart__row"><span>Label</span><div class="lx-chart__hb" style="--v:.3"><i></i>1 200 <em>2025</em></div><div class="lx-chart__hb is-hi" style="--v:.8"><i></i>3 400 <em>2026</em></div></div></div>` with a `<ul class="lx-chart__legend"><li><i></i>2025</li><li><i class="is-hi"></i>2026</li></ul>`.\n\n## Section pages (1.6.0)\n\nThe band of each section page features its latest post: image as background (rubric-tinted gradient), kicker « Rubrique — Dernier article », title, excerpt, « Lire l\'article » button, date and reading time, ridge edge kept. The other posts follow under « Articles précédents ». The h1 of the page is the logo, with the section name visually hidden; `<title>` and meta description still come from the category.\n\n## Home (1.7.0)\n\nNewest post in the band (same design as section pages), one block per section (newest post large, two more beside it, link « Toute la rubrique »), « Mes projets » as round logos, « Par où monter ? » at the bottom. Project fields on posts of « Mes projets »: `project` (name), `project-logo` (URL of the `square` image format), `project-tagline` (optional). New image format `square` (320×320).\n\n## Home data (1.7.1)\n\nThe manifest sets `homeCategoryPosts: 12`: AgentCMS ≥ 0.4.4 passes the newest 12 posts of every category to the home (`props.categories`), used for the section blocks and the projects. `postsPerPage` no longer has to be large. Older AgentCMS: fallback on `props.posts`.\n\n## Transitions and parallax (1.7.2)\n\nThe list → post transition starts from the feature band, the home cards and the project logos too (`lxVtPair` in BaseLayout\'s head script). The band parallax uses CSS scroll-driven animations (off the main thread, smooth on phones); the JS version is a fallback for mouse users on browsers without them.\n\n\n### 1.7.3\n\nThe bands\' view timeline uses `view-timeline-inset: 0`. With the default (`auto`) it took html\'s `scroll-padding-top` (88 px, 132 px on posts with a table of contents), so the parallax had already started at load and the header photo sat ~27 px below the site header.\n\n### 1.7.4\n\nPost and page titles (`.lx-band--article h1`) use the same size as the home\'s featured title (`.lx-feature__title`): `clamp(2.5rem, 5.2vw, 5rem)`, 18ch wide — 75 px instead of 104 px at 1440 px. The 2.5rem floor keeps phones at 40 px.\n\n### 1.8.5\n\n- 3D photos (Agent3D) in post bodies, sanitizer-proof: the body holds `<figure class="lx-3d" data-3d-src="…/scene.json" data-3d-runtime="…/agent3d-photo.js" data-3d-aspect="4:3" style="aspect-ratio:4/3"><img src="…/poster.webp" alt="…" loading="lazy"></figure>` (AgentCMS drops unknown elements such as `<agent3d-scene>` when it sanitizes a body). `menu-loader.js` loads the player module with the first figure that comes within 600 px of the viewport and builds the `<agent3d-scene>` around the image (its poster) only then.\n\n### 1.8.4\n\n- First version of the lazy 3D photos (`<agent3d-scene data-src>` in the body; replaced by 1.8.5 because the sanitizer strips the element).\n\n### 1.8.3\n\n- Every photo band (post headers too) gets the home band\'s veil: dark on the text side (left on wide screens, bottom on phones), clear elsewhere. Images are uploaded untouched.\n\n### 1.8.2\n\n- Home `<title>`: « <site title> — IA, transformation et projets tech » (`homeTitle` in i18n.ts).\n- `data-nosnippet` on the featured-post labels, the header menu and the footer, so Google builds snippets from the meta description and the content; a space between the rubric chip and « Dernier article ».\n- Footer: optional portrait in a gradient ring next to the name (theme setting `footer.portrait`, a square image URL), the name on two lines beside it.\n- Field `photo-shade` (boolean): stronger veil over the hero, for light images or images with text.\n\n### 1.8.1\n\n- Home: an « Observatoire IA » block after « Mes projets », shown while the header menu links to `observatoire-ia.html`. Its 6 key figures and update date are copied at runtime from the published page (`.lx-obs__kpis`, `.lx-obs__updated`), each linking to its section, so the block follows every refresh of the page with no home regeneration.\n- Home: « Passions » moved to the last block.\n\n### 1.8.0\n\nObservatoire de l\'IA (page with the custom field `dashboard: true`): compact header (rubric chip « Observatoire », update date from the field `obs-updated`, title and lead side by side), full-width body outside the prose column, `.lx-obs` dashboard components (key figures with sparklines, per-section accents, line / column / bar / scatter charts in plain HTML + SVG, data tables), hover tooltips and a scroll reveal (lines draw, bars grow, figures count up; off with reduced motion, visible without JS). The section nav sticks under the header and follows it when it hides.\n\n### 1.7.5\n\nGoogle Tag Manager container replaced: `GTM-PJ68GND6` (was `GTM-KNDFD5GH`), same snippet after the footer.\n';
 function L(n, t) {
   const a = pe.getFixedT(xe(t || n.settings.language || "en"), "theme-leaux-altitude");
   return (i) => a(`public.${i}`);
@@ -1415,8 +1424,8 @@ function Se(n, t, a, i, r = 14) {
       const S = w / i, u = b / d;
       let g = o(S * 3 * p, u * 3) * 0.6 + o(S * 7 * p, u * 7) * 0.18;
       for (const z of c) {
-        const q = (S - z.x) * p, T = u - z.y;
-        g += z.a * Math.exp(-(q * q + T * T) / (2 * z.s));
+        const A = (S - z.x) * p, q = u - z.y;
+        g += z.a * Math.exp(-(A * A + q * q) / (2 * z.s));
       }
       h.push(g), g < m && (m = g), g > f && (f = g);
     }
@@ -1425,13 +1434,13 @@ function Se(n, t, a, i, r = 14) {
     const w = m + (f - m) * b / r, S = b % 4 === 0 ? k : x;
     for (let u = 0; u < d; u++)
       for (let g = 0; g < i; g++) {
-        const z = v(g, u), q = v(g + 1, u), T = v(g + 1, u + 1), A = v(g, u + 1), H = [], R = (M, V, Y, X, de, ce) => {
+        const z = v(g, u), A = v(g + 1, u), q = v(g + 1, u + 1), T = v(g, u + 1), H = [], R = (M, V, Y, X, de, ce) => {
           if (M < w != V < w) {
             const K = (w - M) / (V - M);
             H.push([(Y + (de - Y) * K) * _, (X + (ce - X) * K) * y]);
           }
         };
-        R(z, q, g, u, g + 1, u), R(q, T, g + 1, u, g + 1, u + 1), R(A, T, g, u + 1, g + 1, u + 1), R(z, A, g, u, g, u + 1);
+        R(z, A, g, u, g + 1, u), R(A, q, g + 1, u, g + 1, u + 1), R(T, q, g, u + 1, g + 1, u + 1), R(z, T, g, u, g, u + 1);
         for (let M = 0; M + 1 < H.length; M += 2)
           S.push(`M${j(H[M][0])} ${j(H[M][1])}L${j(H[M + 1][0])} ${j(H[M + 1][1])}`);
       }
@@ -1488,8 +1497,8 @@ function Me({ site: n, locale: t }) {
     ] })
   ] });
 }
-const je = 'window.lxVtPair=function(p){var q=[[".lx-feature__title a",function(a){var b=a.closest(".lx-band");return[b&&b.querySelector(".lx-band__art"),a.closest("h2")]}],[".lx-way__art,.lx-card__art",function(a){return[a,a.parentNode.querySelector("h3")]}],[".lx-projects__list a",function(a){return[a.querySelector(".lx-projects__logo"),a.querySelector(".lx-projects__name")]}]];for(var k=0;k<q.length;k++){var l=document.querySelectorAll(q[k][0]);for(var i=0;i<l.length;i++)if(l[i].pathname===p)return q[k][1](l[i])}return null};window.lxVtName=function(r){if(!r)return function(){};if(r[0])r[0].style.viewTransitionName="lx-art";if(r[1])r[1].style.viewTransitionName="lx-title";return function(){if(r[0])r[0].style.viewTransitionName="";if(r[1])r[1].style.viewTransitionName=""}};addEventListener("pagereveal",function(e){var n=window.navigation,f=n&&n.activation&&n.activation.from;if(!e.viewTransition||!f||!f.url)return;var c=lxVtName(lxVtPair(new URL(f.url).pathname));e.viewTransition.finished.finally(c)});if(window.matchMedia&&matchMedia("(prefers-reduced-motion: no-preference)").matches&&"IntersectionObserver"in window){document.documentElement.classList.add("lx-obs-anim");setTimeout(function(){if(!window.lxObsReady)document.documentElement.classList.remove("lx-obs-anim")},3000)}', Le = "GTM-PJ68GND6", qe = "window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());";
-function Te({ site: n, pageTitle: t, pageDescription: a, ogImage: i, currentPath: r, currentLocale: o, children: s }) {
+const je = 'window.lxVtPair=function(p){var q=[[".lx-feature__title a",function(a){var b=a.closest(".lx-band");return[b&&b.querySelector(".lx-band__art"),a.closest("h2")]}],[".lx-way__art,.lx-card__art",function(a){return[a,a.parentNode.querySelector("h3")]}],[".lx-projects__list a",function(a){return[a.querySelector(".lx-projects__logo"),a.querySelector(".lx-projects__name")]}]];for(var k=0;k<q.length;k++){var l=document.querySelectorAll(q[k][0]);for(var i=0;i<l.length;i++)if(l[i].pathname===p)return q[k][1](l[i])}return null};window.lxVtName=function(r){if(!r)return function(){};if(r[0])r[0].style.viewTransitionName="lx-art";if(r[1])r[1].style.viewTransitionName="lx-title";return function(){if(r[0])r[0].style.viewTransitionName="";if(r[1])r[1].style.viewTransitionName=""}};addEventListener("pagereveal",function(e){var n=window.navigation,f=n&&n.activation&&n.activation.from;if(!e.viewTransition||!f||!f.url)return;var c=lxVtName(lxVtPair(new URL(f.url).pathname));e.viewTransition.finished.finally(c)});if(window.matchMedia&&matchMedia("(prefers-reduced-motion: no-preference)").matches&&"IntersectionObserver"in window){document.documentElement.classList.add("lx-obs-anim");setTimeout(function(){if(!window.lxObsReady)document.documentElement.classList.remove("lx-obs-anim")},3000)}', Le = "GTM-PJ68GND6", Ae = "window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());";
+function qe({ site: n, pageTitle: t, pageDescription: a, ogImage: i, currentPath: r, currentLocale: o, children: s }) {
   const d = o || n.settings.language || "en", c = n.settings.title || "", p = t ? t.includes(c) ? t : `${t} — ${c}` : `${c} — ${L(n, d)("homeTitle")}`, h = n.settings.baseUrl && r ? ne(n.settings.baseUrl, r) : void 0;
   return /* @__PURE__ */ l("html", { lang: d, children: [
     /* @__PURE__ */ l("head", { children: [
@@ -1515,7 +1524,7 @@ function Te({ site: n, pageTitle: t, pageDescription: a, ogImage: i, currentPath
       /* @__PURE__ */ e("span", { id: "lx-end" }),
       /* @__PURE__ */ e(Me, { site: n, locale: d }),
       /* @__PURE__ */ e("script", { async: !0, src: `https://www.googletagmanager.com/gtm.js?id=${Le}` }),
-      /* @__PURE__ */ e("script", { dangerouslySetInnerHTML: { __html: qe } }),
+      /* @__PURE__ */ e("script", { dangerouslySetInnerHTML: { __html: Ae } }),
       /* @__PURE__ */ e("script", { type: "application/x-cms-body-end" })
     ] })
   ] });
@@ -1527,7 +1536,7 @@ function I({ seed: n, width: t = 480, height: a = 300, cols: i = 44, className: 
     /* @__PURE__ */ e("path", { className: "lx-topo__major", d: o.major })
   ] });
 }
-function Ae(n) {
+function Te(n) {
   return Math.max(1, Math.round(n.contentMarkdown.trim().split(/\s+/).length / 220));
 }
 function ie({ site: n, post: t, rubric: a, label: i, edgeSeed: r }) {
@@ -1551,7 +1560,7 @@ function ie({ site: n, post: t, rubric: a, label: i, edgeSeed: r }) {
         /* @__PURE__ */ l("p", { className: "lx-band__count", children: [
           t.dateLabel && /* @__PURE__ */ e("span", { children: t.dateLabel }),
           /* @__PURE__ */ l("span", { children: [
-            Ae(t),
+            Te(t),
             " ",
             o("minutes")
           ] })
@@ -1832,17 +1841,17 @@ function Xe(n) {
   }), entries: t };
 }
 function Ke({ site: n, post: t, bodyHtml: a, author: i, hero: r, primaryTerm: o, tags: s }) {
-  var S, u, g, z, q, T;
-  const d = L(n), c = P(r, "large"), p = t.type === "post", h = (S = E.find((A) => A.slug === (o == null ? void 0 : o.slug))) == null ? void 0 : S.slug, m = new Date(F(t));
+  var S, u, g, z, A, q;
+  const d = L(n), c = P(r, "large"), p = t.type === "post", h = (S = E.find((T) => T.slug === (o == null ? void 0 : o.slug))) == null ? void 0 : S.slug, m = new Date(F(t));
   let f = "";
   try {
     f = new Intl.DateTimeFormat(n.settings.language || "fr", { dateStyle: "long" }).format(m);
   } catch {
     f = m.toDateString();
   }
-  const _ = !!(p && c && ((u = t.fields) == null ? void 0 : u["header-photo"]) === !0), y = ((g = t.fields) == null ? void 0 : g.toc) === !0 ? Xe(a) : null, v = !!(y && y.entries.length >= 2), x = ((z = t.fields) == null ? void 0 : z.dashboard) === !0, k = typeof ((q = t.fields) == null ? void 0 : q["obs-updated"]) == "string" ? t.fields["obs-updated"] : "", b = t.contentMarkdown.trim().split(/\s+/).length, w = Math.max(1, Math.round(b / 220));
+  const _ = !!(p && c && ((u = t.fields) == null ? void 0 : u["header-photo"]) === !0), y = ((g = t.fields) == null ? void 0 : g.toc) === !0 ? Xe(a) : null, v = !!(y && y.entries.length >= 2), x = ((z = t.fields) == null ? void 0 : z.dashboard) === !0, k = typeof ((A = t.fields) == null ? void 0 : A["obs-updated"]) == "string" ? t.fields["obs-updated"] : "", b = t.contentMarkdown.trim().split(/\s+/).length, w = Math.max(1, Math.round(b / 220));
   return /* @__PURE__ */ l("article", { "data-rubric": x ? "news-tech-ia" : h, className: `lx-article${p ? "" : " lx-article--page"}${t.slug === "qui-suis-je" ? " lx-article--about" : ""}`, children: [
-    /* @__PURE__ */ l("header", { className: `lx-band lx-band--article${_ ? " lx-band--photo" : ""}${x ? " lx-band--obs" : ""}`, "data-shade": _ && ((T = t.fields) == null ? void 0 : T["photo-shade"]) === !0 ? "" : void 0, children: [
+    /* @__PURE__ */ l("header", { className: `lx-band lx-band--article${_ ? " lx-band--photo" : ""}${x ? " lx-band--obs" : ""}`, "data-shade": _ && ((q = t.fields) == null ? void 0 : q["photo-shade"]) === !0 ? "" : void 0, children: [
       _ ? /* @__PURE__ */ e("div", { className: "lx-band__art lx-band__photo", "aria-hidden": "true", children: /* @__PURE__ */ e("img", { src: c, alt: "" }) }) : /* @__PURE__ */ e(I, { seed: t.slug, width: 1600, height: 720, cols: 110, className: "lx-band__art" }),
       /* @__PURE__ */ l("div", { className: "lx-band__inner", children: [
         p && o && /* @__PURE__ */ e("a", { className: "lx-band__rubric", href: `/${ae(o)}`, children: o.name }),
@@ -1875,7 +1884,7 @@ function Ke({ site: n, post: t, bodyHtml: a, author: i, hero: r, primaryTerm: o,
       /* @__PURE__ */ e(Ge, { entries: y.entries, label: d("toc"), countLabel: d("tocParts") }),
       /* @__PURE__ */ e("div", { className: "lx-prose", "data-lx-prose": !0, dangerouslySetInnerHTML: { __html: y.html } })
     ] }) : /* @__PURE__ */ e("div", { className: "lx-prose", "data-lx-prose": !0, dangerouslySetInnerHTML: { __html: a } }),
-    p && s.length > 0 && /* @__PURE__ */ e("ul", { className: "lx-tags", "aria-label": d("tags"), children: s.map((A) => /* @__PURE__ */ e("li", { children: A.name }, A.id)) }),
+    p && s.length > 0 && /* @__PURE__ */ e("ul", { className: "lx-tags", "aria-label": d("tags"), children: s.map((T) => /* @__PURE__ */ e("li", { children: T.name }, T.id)) }),
     p && /* @__PURE__ */ l($, { children: [
       /* @__PURE__ */ e(Ie, { site: n, post: t, author: i, hero: r, primaryTerm: o }),
       /* @__PURE__ */ l("section", { className: "lx-related", "data-lx-related": !0, "data-current": t.id, "data-term": t.primaryTermId, hidden: !0, children: [
@@ -2052,7 +2061,7 @@ const nt = {
 }, lt = {
   id: "leaux-altitude",
   name: "Leaux Altitude",
-  version: "1.8.4",
+  version: "1.8.5",
   description: "Dedicated theme for leaux.ovh: generative topographic art, one trail per section.",
   readme: we,
   scssEntry: "theme.css",
@@ -2077,7 +2086,7 @@ const nt = {
     }
   },
   templates: {
-    base: Te,
+    base: qe,
     home: Ue,
     single: Ke,
     category: Ze,
