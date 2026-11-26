@@ -1,0 +1,6 @@
+Credits — Sentier en marches de pierre qui monte vers des aiguilles rocheuses
+
+- "tmb-sentier-rocheux.webp" by Frédéric Leaux (local), licensed under All rights reserved.
+- Depth map of assets/textures/tmb-sentier-rocheux.jpg estimated with Depth Anything V2 Small (Apache-2.0). Image: "tmb-sentier-rocheux.jpg" by Frédéric Leaux, licensed under All rights reserved.
+
+Made with Agent3D.
