@@ -574,6 +574,26 @@
     el.setAttribute("src", fig.getAttribute("data-3d-src"));
     fig.removeAttribute("data-3d-src");
   }
+  /* iOS Safari only sends device tilt after DeviceOrientationEvent.requestPermission(), called from
+     a tap (the player listens but never asks). A chip on each 3D photo asks once; once granted in this
+     tab session, the first tap anywhere renews it silently on the next pages. */
+  var DOE = window.DeviceOrientationEvent;
+  if (DOE && typeof DOE.requestPermission === "function") {
+    var granted = false, KEY = "lx3dTilt";
+    var done = function () { granted = true; try { sessionStorage.setItem(KEY, "1"); } catch (e) {} document.querySelectorAll(".lx-3d__tilt").forEach(function (b) { b.remove(); }); };
+    var ask = function () { return DOE.requestPermission().then(function (st) { if (st === "granted") done(); }).catch(function () {}); };
+    var remembered = false;
+    try { remembered = sessionStorage.getItem(KEY) === "1"; } catch (e) {}
+    if (remembered) document.addEventListener("touchend", function once() { document.removeEventListener("touchend", once); ask(); }, { passive: true });
+    figs.forEach(function (fig) {
+      if (remembered) return;
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "lx-3d__tilt";
+      b.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="3" width="10" height="18" rx="2" transform="rotate(-14 12 12)"/><path d="M3 9a9 9 0 0 0 0 6M21 9a9 9 0 0 1 0 6"/></svg>Bouger avec le téléphone';
+      b.addEventListener("click", function (e) { e.stopPropagation(); if (!granted) ask(); });
+      fig.appendChild(b);
+    });
+  }
   if (!("IntersectionObserver" in window)) { figs.forEach(start); return; }
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (en) { if (en.isIntersecting) { io.unobserve(en.target); start(en.target); } });

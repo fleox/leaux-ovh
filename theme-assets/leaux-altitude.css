@@ -327,7 +327,9 @@ main:has(> .lx-pano:last-child) ~ .lx-footer .lx-footer__ridge { display: none; 
 .lx-prose strong { font-weight: 650; }
 .lx-prose img { margin: 1.6em 0; }
 /* 3D photos (Agent3D): figure.lx-3d keeps the photo's frame (inline aspect-ratio); menu-loader.js turns it into a 3D scene near the viewport. */
-.lx-prose .lx-3d { margin: 1.6em 0; overflow: hidden; background: var(--lx-night); }
+.lx-prose .lx-3d { position: relative; margin: 1.6em 0; overflow: hidden; background: var(--lx-night); }
+.lx-3d__tilt { position: absolute; right: 10px; bottom: 10px; z-index: 3; display: inline-flex; align-items: center; gap: 7px; padding: 7px 12px 7px 9px; border: 0; border-radius: 999px; background: rgba(16, 22, 63, .72); color: #fff; font: 700 .78rem/1 var(--lx-display); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); cursor: pointer; }
+.lx-3d__tilt svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
 .lx-prose .lx-3d agent3d-scene { display: block; width: 100%; height: 100%; }
 .lx-prose .lx-3d img { display: block; width: 100%; height: 100%; margin: 0; object-fit: cover; }
 .lx-prose hr { height: 16px; margin: 2.4em 0; border: 0; background: var(--lx-deep); clip-path: polygon(0 100%, 8% 30%, 15% 70%, 27% 0, 38% 80%, 49% 25%, 62% 75%, 74% 10%, 87% 70%, 100% 100%, 100% 100%); }
