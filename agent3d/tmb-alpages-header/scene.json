@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "id": "tmb-alpages-header",
+  "title": "Alpages dorés et crêtes sous un ciel bleu sur le Tour du Mont-Blanc.",
+  "ariaLabel": "Alpages dorés et crêtes sous un ciel bleu sur le Tour du Mont-Blanc. — photo en 3D",
+  "target": {
+    "kind": "hero",
+    "aspect": "1.82:1",
+    "posterTime": 0
+  },
+  "camera": {
+    "type": "perspective",
+    "fov": 35,
+    "position": [
+      0,
+      0,
+      3.5
+    ],
+    "target": [
+      0,
+      0,
+      0
+    ]
+  },
+  "environment": {
+    "background": "#10163f"
+  },
+  "lights": [],
+  "objects": [
+    {
+      "id": "photo",
+      "kind": "photo",
+      "src": "assets/textures/tmb-alpages-header.webp",
+      "depth": "assets/depth/tmb-alpages-header-depth.png",
+      "mode": "parallax",
+      "width": 4.4,
+      "strength": 0.8,
+      "focus": 0.45,
+      "motion": {
+        "pointer": 1,
+        "gyro": true,
+        "auto": "sway",
+        "speed": 1
+      }
+    }
+  ]
+}
