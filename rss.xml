@@ -6,7 +6,7 @@
     <link>https://leaux.ovh/</link>
     <description>Blog de Frédéric Leaux, CTO et spécialiste de la transformation : l&apos;IA au travail, mes projets tech, une veille IA, l&apos;Observatoire de l&apos;IA et mes treks.</description>
     <language>fr</language>
-    <lastBuildDate>Thu, 26 Nov 2026 08:15:59 GMT</lastBuildDate>
+    <lastBuildDate>Thu, 26 Nov 2026 08:16:25 GMT</lastBuildDate>
     <atom:link href="https://leaux.ovh/rss.xml" rel="self" type="application/rss+xml"/>
     <item>
       <title>Applications « sans coder » : ce que les titres ne disent pas</title>
@@ -96,7 +96,7 @@
       <category>Édito</category>
       <description><![CDATA[Les agents écrivent déjà l'essentiel du code et les juniors ne sont plus recrutés. Le développeur tel qu'on le connaissait s'éteint : qui s'adaptera, et à quels métiers ?]]></description>
       <pubDate>Sun, 15 Nov 2026 11:18:29 GMT</pubDate>
-      <enclosure url="https://leaux.ovh/media/2026/11/extinction-asteroide-metiers-ia-2e1818/large.webp" length="145548" type="image/webp"/>
+      <enclosure url="https://leaux.ovh/media/2026/11/extinction-asteroide-metiers-ia-598d62/large.webp" length="191808" type="image/webp"/>
     </item>
     <item>
       <title>Le vrai prix des tokens : ce que l&apos;on ne paie pas encore</title>
