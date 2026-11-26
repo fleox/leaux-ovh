@@ -1,0 +1,6 @@
+Credits — Lever de soleil : le sommet du Mont-Blanc s'illumine en orange au-dessus d'une vallée encore dans l'ombre
+
+- "tmb-lever-soleil.webp" by Frédéric Leaux (local), licensed under All rights reserved.
+- Depth map of assets/textures/tmb-lever-soleil.jpg estimated with Depth Anything V2 Small (Apache-2.0). Image: "tmb-lever-soleil.jpg" by Frédéric Leaux, licensed under All rights reserved.
+
+Made with Agent3D.
