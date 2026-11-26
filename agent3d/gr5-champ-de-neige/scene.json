@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "id": "gr5-champ-de-neige",
+  "title": "Vaste champ de neige sous un ciel bleu, un sommet enneigé à l'horizon",
+  "ariaLabel": "Vaste champ de neige sous un ciel bleu, un sommet enneigé à l'horizon — photo en 3D",
+  "target": {
+    "kind": "hero",
+    "aspect": "4:3",
+    "posterTime": 0
+  },
+  "camera": {
+    "type": "perspective",
+    "fov": 35,
+    "position": [
+      0,
+      0,
+      3.5
+    ],
+    "target": [
+      0,
+      0,
+      0
+    ]
+  },
+  "environment": {
+    "background": "#10163f"
+  },
+  "lights": [],
+  "objects": [
+    {
+      "id": "photo",
+      "kind": "photo",
+      "src": "assets/textures/gr5-champ-de-neige.webp",
+      "depth": "assets/depth/gr5-champ-de-neige-depth.png",
+      "mode": "parallax",
+      "width": 3.24,
+      "strength": 0.75,
+      "focus": 0.3,
+      "motion": {
+        "pointer": 1,
+        "gyro": true,
+        "auto": "sway",
+        "speed": 1
+      }
+    }
+  ]
+}
