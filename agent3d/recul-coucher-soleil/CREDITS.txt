@@ -1,0 +1,6 @@
+Credits — La tente plantée dans l'alpage sous un coucher de soleil orange qui embrase les crêtes
+
+- "recul-coucher-soleil.webp" by Frédéric Leaux (local), licensed under All rights reserved.
+- Depth map of assets/textures/recul-coucher-soleil.jpg estimated with Depth Anything V2 Small (Apache-2.0). Image: "recul-coucher-soleil.jpg" by Frédéric Leaux, licensed under All rights reserved.
+
+Made with Agent3D.
