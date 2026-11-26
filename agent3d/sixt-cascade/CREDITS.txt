@@ -1,0 +1,6 @@
+Credits — Une grande cascade qui tombe d'une falaise, au cirque du Fer-à-Cheval
+
+- "sixt-cascade.webp" by Frédéric Leaux (local), licensed under All rights reserved.
+- Depth map of assets/textures/sixt-cascade.jpg estimated with Depth Anything V2 Small (Apache-2.0). Image: "sixt-cascade.jpg" by Frédéric Leaux, licensed under All rights reserved.
+
+Made with Agent3D.
