@@ -1,0 +1,6 @@
+Credits — Le sentier suit le fil de la crête, avec les Alpes à perte de vue
+
+- "gr5b-cretes-sentier.webp" by Frédéric Leaux (local), licensed under All rights reserved.
+- Depth map of assets/textures/gr5b-cretes-sentier.jpg estimated with Depth Anything V2 Small (Apache-2.0). Image: "gr5b-cretes-sentier.jpg" by Frédéric Leaux, licensed under All rights reserved.
+
+Made with Agent3D.
