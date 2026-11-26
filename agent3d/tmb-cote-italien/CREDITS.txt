@@ -1,0 +1,6 @@
+Credits — Aiguilles et glaciers du massif du Mont-Blanc côté italien, derrière un panneau de sentier
+
+- "tmb-cote-italien.webp" by Frédéric Leaux (local), licensed under All rights reserved.
+- Depth map of assets/textures/tmb-cote-italien.jpg estimated with Depth Anything V2 Small (Apache-2.0). Image: "tmb-cote-italien.jpg" by Frédéric Leaux, licensed under All rights reserved.
+
+Made with Agent3D.
