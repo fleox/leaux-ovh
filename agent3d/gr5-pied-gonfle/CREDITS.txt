@@ -1,0 +1,6 @@
+Credits — Une cheville rouge et gonflée, à côté d'une chaussure de randonnée boueuse
+
+- "gr5-pied-gonfle.webp" by Frédéric Leaux (local), licensed under All rights reserved.
+- Depth map of assets/textures/gr5-pied-gonfle.jpg estimated with Depth Anything V2 Small (Apache-2.0). Image: "gr5-pied-gonfle.jpg" by Frédéric Leaux, licensed under All rights reserved.
+
+Made with Agent3D.
