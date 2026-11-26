@@ -6,7 +6,7 @@
     <link>https://leaux.ovh/</link>
     <description>Blog de Frédéric Leaux, CTO et spécialiste de la transformation : l&apos;IA au travail, mes projets tech, une veille IA, l&apos;Observatoire de l&apos;IA et mes treks.</description>
     <language>fr</language>
-    <lastBuildDate>Thu, 26 Nov 2026 08:14:37 GMT</lastBuildDate>
+    <lastBuildDate>Thu, 26 Nov 2026 08:15:04 GMT</lastBuildDate>
     <atom:link href="https://leaux.ovh/rss.xml" rel="self" type="application/rss+xml"/>
     <item>
       <title>Applications « sans coder » : ce que les titres ne disent pas</title>
@@ -69,7 +69,7 @@
       <category>Transition IA</category>
       <description><![CDATA[Des dépôts GitHub piégés détournent Claude Code et les autres agents avec de simples fichiers de consignes. J'ai audité mon propre poste : voici ce qu'un attaquant y trouverait.]]></description>
       <pubDate>Fri, 20 Nov 2026 11:01:18 GMT</pubDate>
-      <enclosure url="https://leaux.ovh/media/2026/11/fichier-texte-agent-ia-1ed37f/large.webp" length="57522" type="image/webp"/>
+      <enclosure url="https://leaux.ovh/media/2026/11/fichier-texte-agent-ia-badf67/large.webp" length="83162" type="image/webp"/>
     </item>
     <item>
       <title>No AI Slop : l&apos;IA fait payer l&apos;addition au dernier maillon</title>
