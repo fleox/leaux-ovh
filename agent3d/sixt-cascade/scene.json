@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "id": "sixt-cascade",
+  "title": "Une grande cascade qui tombe d'une falaise, au cirque du Fer-à-Cheval",
+  "ariaLabel": "Une grande cascade qui tombe d'une falaise, au cirque du Fer-à-Cheval — photo en 3D",
+  "target": {
+    "kind": "hero",
+    "aspect": "3:4",
+    "posterTime": 0
+  },
+  "camera": {
+    "type": "perspective",
+    "fov": 35,
+    "position": [
+      0,
+      0,
+      3.5
+    ],
+    "target": [
+      0,
+      0,
+      0
+    ]
+  },
+  "environment": {
+    "background": "#10163f"
+  },
+  "lights": [],
+  "objects": [
+    {
+      "id": "photo",
+      "kind": "photo",
+      "src": "assets/textures/sixt-cascade.webp",
+      "depth": "assets/depth/sixt-cascade-depth.png",
+      "mode": "parallax",
+      "width": 1.82,
+      "strength": 0.75,
+      "focus": 0.59,
+      "motion": {
+        "pointer": 1,
+        "gyro": true,
+        "auto": "sway",
+        "speed": 1
+      }
+    }
+  ]
+}
