@@ -256,7 +256,8 @@ main:has(> .lx-pano:last-child) ~ .lx-footer .lx-footer__ridge { display: none; 
 .lx-band__photo img { width: 100%; height: 100%; object-fit: cover; }
 /* "photo-shade" field: an extra veil over light images (the file itself is never darkened). */
 .lx-band--photo[data-shade] .lx-band__photo::before { content: ""; position: absolute; inset: 0; background: rgba(16, 22, 63, .4); }
-.lx-band__photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(16,22,63,.25) 0%, rgba(16,22,63,.1) 35%, rgba(16,22,63,.72) 100%); }
+/* Readability veil, darker where the text sits (left on wide screens, bottom on phones); the image itself stays untouched. */
+.lx-band__photo::after { content: ""; position: absolute; inset: 0; }
 .lx-band--photo h1, .lx-band--photo .lx-band__lead, .lx-band--photo .lx-band__count { text-shadow: 0 2px 18px rgba(0,0,0,.45); }
 .lx-band--photo .lx-band__count a { color: inherit; }
 .lx-band__inner { max-width: 1320px; margin: 0 auto; padding: clamp(40px, 7vw, 96px) var(--lx-gutter) clamp(80px, 11vw, 150px); }
@@ -277,7 +278,7 @@ main:has(> .lx-pano:last-child) ~ .lx-footer .lx-footer__ridge { display: none; 
 .lx-band--feature { display: flex; align-items: flex-end; min-height: min(84vh, 800px); }
 .lx-band--feature .lx-band__inner { padding-top: clamp(40px, 6vw, 80px); padding-bottom: clamp(84px, 9vw, 130px); }
 .lx-band--feature .lx-band__inner { width: 100%; }
-.lx-band--feature.lx-band--photo .lx-band__photo::after { background:
+.lx-band--photo .lx-band__photo::after { background:
   radial-gradient(120% 90% at 0% 100%, color-mix(in srgb, var(--lx-tint) 26%, transparent) 0%, transparent 55%),
   linear-gradient(90deg, rgba(16,22,63,.9) 0%, rgba(16,22,63,.66) 42%, rgba(16,22,63,.12) 78%),
   linear-gradient(180deg, rgba(16,22,63,.35) 0%, rgba(16,22,63,0) 30%, rgba(16,22,63,.55) 100%); }
@@ -302,7 +303,7 @@ main:has(> .lx-pano:last-child) ~ .lx-footer .lx-footer__ridge { display: none; 
 .lx-section__title span { margin-left: .4em; font-size: .38em; font-weight: 600; font-stretch: 100%; letter-spacing: 0; color: var(--lx-muted); vertical-align: middle; }
 @media (max-width: 760px) {
   .lx-band--feature { min-height: min(82vh, 720px); }
-  .lx-band--feature.lx-band--photo .lx-band__photo::after { background:
+  .lx-band--photo .lx-band__photo::after { background:
     radial-gradient(140% 70% at 0% 100%, color-mix(in srgb, var(--lx-tint) 24%, transparent) 0%, transparent 60%),
     linear-gradient(180deg, rgba(16,22,63,.3) 0%, rgba(16,22,63,.35) 30%, rgba(16,22,63,.86) 70%, rgba(16,22,63,.92) 100%); }
   .lx-feature__title { font-size: clamp(2.1rem, 9.4vw, 3rem); }
@@ -1287,7 +1288,7 @@ body:has(.lx-header:not(.is-hidden)) .lx-obs__nav { --lx-obs-top: 68px; }
     });
   });
 })();
-`, we = '# Leaux Altitude\n\nDedicated AgentCMS theme for leaux.ovh. Ridgelines pass in front of the home title, each section is a summit on an orientation table, each post gets a contour map generated from its slug, and a reading climb follows the scroll.\n\nSection slugs and colors live in `src/rubrics.ts` and `src/theme.css` (`[data-rubric]`). Hero texts are editable on the theme settings page.\n\n## Custom fields\n\n| Field | Type | Effect |\n|---|---|---|\n| `header-photo` | yes / no | On a post with a featured image, `true` puts the image behind the header, with a parallax on scroll, instead of the contour map. The image is then not repeated under the header. |\n| `toc` | yes / no | `true` adds a table of contents built from the body\'s `h2` (numbered) and `h3` (indented); the headings get ids. Wide screens (≥ 1200 px): the text moves left, aligned with the title, and the contents stay open in a sticky column on the right, current section highlighted and the rail filling as you read. Narrower: a sticky bar under the header that shows the current section and a reading progress line, and drops the list down on tap. Without JS: an open list above the text. Shown only with at least 2 headings. |\n\n## Article components (raw HTML in Markdown)\n\n- Video card (YouTube link with thumbnail, no embed): `<div class="lx-video"><a class="lx-video__thumb" href="https://www.youtube.com/watch?v=ID" aria-label="Regarder « Titre » sur YouTube"><img src="https://i.ytimg.com/vi/ID/hqdefault.jpg" alt="" loading="lazy"></a><div><p class="lx-video__meta">Chaîne · 18 min · en anglais</p><p class="lx-video__title"><a href="https://www.youtube.com/watch?v=ID">Titre</a></p><p>Résumé…</p></div></div>`.\n- En bref (key points, first block of a long post): `<aside class="lx-brief" aria-label="En bref"><p class="lx-brief__tag">En bref</p><ul><li>… <strong>…</strong></li></ul></aside>`.\n\n- Pull quote: `<figure class="lx-pullquote"><blockquote><p>…</p></blockquote></figure>` (optional `<figcaption>`).\n- Case box: `<aside class="lx-case"><p class="lx-case__tag">Cas réel · date</p><p class="lx-case__title">…</p><p>…</p><p class="lx-case__src">Source : <a href="…">…</a></p></aside>`.\n- Key figures: `<div class="lx-stats"><div><strong>48 %</strong><span>…</span></div>…</div>`, optionally followed by `<p class="lx-case__src">Source : …</p>`.\n- Bar chart: `<figure class="lx-chart"><p class="lx-chart__title">…</p><p class="lx-chart__sub">…</p><div class="lx-chart__cols" style="--n:9"><div class="lx-chart__col is-lab" style="--v:.4" title="2020 : 18 322"><div class="lx-chart__bar"></div><span class="lx-chart__val">18 322</span></div>…</div><div class="lx-chart__axis" style="--n:9"><span>2020</span>…</div><p class="lx-case__src">Source : …</p></figure>`. `--v` is the bar height (0–1). Column modifiers: `is-hi` (highlighted), `is-part` (hatched, partial period), `is-lab` (value always shown; others on hover). Axis labels with `is-minor` hide on phones.\n- Paired horizontal bars: `<div class="lx-chart__rows"><div class="lx-chart__row"><span>Label</span><div class="lx-chart__hb" style="--v:.3"><i></i>1 200 <em>2025</em></div><div class="lx-chart__hb is-hi" style="--v:.8"><i></i>3 400 <em>2026</em></div></div></div>` with a `<ul class="lx-chart__legend"><li><i></i>2025</li><li><i class="is-hi"></i>2026</li></ul>`.\n\n## Section pages (1.6.0)\n\nThe band of each section page features its latest post: image as background (rubric-tinted gradient), kicker « Rubrique — Dernier article », title, excerpt, « Lire l\'article » button, date and reading time, ridge edge kept. The other posts follow under « Articles précédents ». The h1 of the page is the logo, with the section name visually hidden; `<title>` and meta description still come from the category.\n\n## Home (1.7.0)\n\nNewest post in the band (same design as section pages), one block per section (newest post large, two more beside it, link « Toute la rubrique »), « Mes projets » as round logos, « Par où monter ? » at the bottom. Project fields on posts of « Mes projets »: `project` (name), `project-logo` (URL of the `square` image format), `project-tagline` (optional). New image format `square` (320×320).\n\n## Home data (1.7.1)\n\nThe manifest sets `homeCategoryPosts: 12`: AgentCMS ≥ 0.4.4 passes the newest 12 posts of every category to the home (`props.categories`), used for the section blocks and the projects. `postsPerPage` no longer has to be large. Older AgentCMS: fallback on `props.posts`.\n\n## Transitions and parallax (1.7.2)\n\nThe list → post transition starts from the feature band, the home cards and the project logos too (`lxVtPair` in BaseLayout\'s head script). The band parallax uses CSS scroll-driven animations (off the main thread, smooth on phones); the JS version is a fallback for mouse users on browsers without them.\n\n\n### 1.7.3\n\nThe bands\' view timeline uses `view-timeline-inset: 0`. With the default (`auto`) it took html\'s `scroll-padding-top` (88 px, 132 px on posts with a table of contents), so the parallax had already started at load and the header photo sat ~27 px below the site header.\n\n### 1.7.4\n\nPost and page titles (`.lx-band--article h1`) use the same size as the home\'s featured title (`.lx-feature__title`): `clamp(2.5rem, 5.2vw, 5rem)`, 18ch wide — 75 px instead of 104 px at 1440 px. The 2.5rem floor keeps phones at 40 px.\n\n### 1.8.1\n\n- Home: an « Observatoire IA » block after « Mes projets », shown while the header menu links to `observatoire-ia.html`. Its 6 key figures and update date are copied at runtime from the published page (`.lx-obs__kpis`, `.lx-obs__updated`), each linking to its section, so the block follows every refresh of the page with no home regeneration.\n- Home: « Passions » moved to the last block.\n\n### 1.8.0\n\nObservatoire de l\'IA (page with the custom field `dashboard: true`): compact header (rubric chip « Observatoire », update date from the field `obs-updated`, title and lead side by side), full-width body outside the prose column, `.lx-obs` dashboard components (key figures with sparklines, per-section accents, line / column / bar / scatter charts in plain HTML + SVG, data tables), hover tooltips and a scroll reveal (lines draw, bars grow, figures count up; off with reduced motion, visible without JS). The section nav sticks under the header and follows it when it hides.\n\n### 1.7.5\n\nGoogle Tag Manager container replaced: `GTM-PJ68GND6` (was `GTM-KNDFD5GH`), same snippet after the footer.\n';
+`, we = '# Leaux Altitude\n\nDedicated AgentCMS theme for leaux.ovh. Ridgelines pass in front of the home title, each section is a summit on an orientation table, each post gets a contour map generated from its slug, and a reading climb follows the scroll.\n\nSection slugs and colors live in `src/rubrics.ts` and `src/theme.css` (`[data-rubric]`). Hero texts are editable on the theme settings page.\n\n## Custom fields\n\n| Field | Type | Effect |\n|---|---|---|\n| `header-photo` | yes / no | On a post with a featured image, `true` puts the image behind the header, with a parallax on scroll, instead of the contour map. The image is then not repeated under the header. |\n| `toc` | yes / no | `true` adds a table of contents built from the body\'s `h2` (numbered) and `h3` (indented); the headings get ids. Wide screens (≥ 1200 px): the text moves left, aligned with the title, and the contents stay open in a sticky column on the right, current section highlighted and the rail filling as you read. Narrower: a sticky bar under the header that shows the current section and a reading progress line, and drops the list down on tap. Without JS: an open list above the text. Shown only with at least 2 headings. |\n\n## Article components (raw HTML in Markdown)\n\n- Video card (YouTube link with thumbnail, no embed): `<div class="lx-video"><a class="lx-video__thumb" href="https://www.youtube.com/watch?v=ID" aria-label="Regarder « Titre » sur YouTube"><img src="https://i.ytimg.com/vi/ID/hqdefault.jpg" alt="" loading="lazy"></a><div><p class="lx-video__meta">Chaîne · 18 min · en anglais</p><p class="lx-video__title"><a href="https://www.youtube.com/watch?v=ID">Titre</a></p><p>Résumé…</p></div></div>`.\n- En bref (key points, first block of a long post): `<aside class="lx-brief" aria-label="En bref"><p class="lx-brief__tag">En bref</p><ul><li>… <strong>…</strong></li></ul></aside>`.\n\n- Pull quote: `<figure class="lx-pullquote"><blockquote><p>…</p></blockquote></figure>` (optional `<figcaption>`).\n- Case box: `<aside class="lx-case"><p class="lx-case__tag">Cas réel · date</p><p class="lx-case__title">…</p><p>…</p><p class="lx-case__src">Source : <a href="…">…</a></p></aside>`.\n- Key figures: `<div class="lx-stats"><div><strong>48 %</strong><span>…</span></div>…</div>`, optionally followed by `<p class="lx-case__src">Source : …</p>`.\n- Bar chart: `<figure class="lx-chart"><p class="lx-chart__title">…</p><p class="lx-chart__sub">…</p><div class="lx-chart__cols" style="--n:9"><div class="lx-chart__col is-lab" style="--v:.4" title="2020 : 18 322"><div class="lx-chart__bar"></div><span class="lx-chart__val">18 322</span></div>…</div><div class="lx-chart__axis" style="--n:9"><span>2020</span>…</div><p class="lx-case__src">Source : …</p></figure>`. `--v` is the bar height (0–1). Column modifiers: `is-hi` (highlighted), `is-part` (hatched, partial period), `is-lab` (value always shown; others on hover). Axis labels with `is-minor` hide on phones.\n- Paired horizontal bars: `<div class="lx-chart__rows"><div class="lx-chart__row"><span>Label</span><div class="lx-chart__hb" style="--v:.3"><i></i>1 200 <em>2025</em></div><div class="lx-chart__hb is-hi" style="--v:.8"><i></i>3 400 <em>2026</em></div></div></div>` with a `<ul class="lx-chart__legend"><li><i></i>2025</li><li><i class="is-hi"></i>2026</li></ul>`.\n\n## Section pages (1.6.0)\n\nThe band of each section page features its latest post: image as background (rubric-tinted gradient), kicker « Rubrique — Dernier article », title, excerpt, « Lire l\'article » button, date and reading time, ridge edge kept. The other posts follow under « Articles précédents ». The h1 of the page is the logo, with the section name visually hidden; `<title>` and meta description still come from the category.\n\n## Home (1.7.0)\n\nNewest post in the band (same design as section pages), one block per section (newest post large, two more beside it, link « Toute la rubrique »), « Mes projets » as round logos, « Par où monter ? » at the bottom. Project fields on posts of « Mes projets »: `project` (name), `project-logo` (URL of the `square` image format), `project-tagline` (optional). New image format `square` (320×320).\n\n## Home data (1.7.1)\n\nThe manifest sets `homeCategoryPosts: 12`: AgentCMS ≥ 0.4.4 passes the newest 12 posts of every category to the home (`props.categories`), used for the section blocks and the projects. `postsPerPage` no longer has to be large. Older AgentCMS: fallback on `props.posts`.\n\n## Transitions and parallax (1.7.2)\n\nThe list → post transition starts from the feature band, the home cards and the project logos too (`lxVtPair` in BaseLayout\'s head script). The band parallax uses CSS scroll-driven animations (off the main thread, smooth on phones); the JS version is a fallback for mouse users on browsers without them.\n\n\n### 1.7.3\n\nThe bands\' view timeline uses `view-timeline-inset: 0`. With the default (`auto`) it took html\'s `scroll-padding-top` (88 px, 132 px on posts with a table of contents), so the parallax had already started at load and the header photo sat ~27 px below the site header.\n\n### 1.7.4\n\nPost and page titles (`.lx-band--article h1`) use the same size as the home\'s featured title (`.lx-feature__title`): `clamp(2.5rem, 5.2vw, 5rem)`, 18ch wide — 75 px instead of 104 px at 1440 px. The 2.5rem floor keeps phones at 40 px.\n\n### 1.8.3\n\n- Every photo band (post headers too) gets the home band\'s veil: dark on the text side (left on wide screens, bottom on phones), clear elsewhere. Images are uploaded untouched.\n\n### 1.8.2\n\n- Home `<title>`: « <site title> — IA, transformation et projets tech » (`homeTitle` in i18n.ts).\n- `data-nosnippet` on the featured-post labels, the header menu and the footer, so Google builds snippets from the meta description and the content; a space between the rubric chip and « Dernier article ».\n- Footer: optional portrait in a gradient ring next to the name (theme setting `footer.portrait`, a square image URL), the name on two lines beside it.\n- Field `photo-shade` (boolean): stronger veil over the hero, for light images or images with text.\n\n### 1.8.1\n\n- Home: an « Observatoire IA » block after « Mes projets », shown while the header menu links to `observatoire-ia.html`. Its 6 key figures and update date are copied at runtime from the published page (`.lx-obs__kpis`, `.lx-obs__updated`), each linking to its section, so the block follows every refresh of the page with no home regeneration.\n- Home: « Passions » moved to the last block.\n\n### 1.8.0\n\nObservatoire de l\'IA (page with the custom field `dashboard: true`): compact header (rubric chip « Observatoire », update date from the field `obs-updated`, title and lead side by side), full-width body outside the prose column, `.lx-obs` dashboard components (key figures with sparklines, per-section accents, line / column / bar / scatter charts in plain HTML + SVG, data tables), hover tooltips and a scroll reveal (lines draw, bars grow, figures count up; off with reduced motion, visible without JS). The section nav sticks under the header and follows it when it hides.\n\n### 1.7.5\n\nGoogle Tag Manager container replaced: `GTM-PJ68GND6` (was `GTM-KNDFD5GH`), same snippet after the footer.\n';
 function L(n, t) {
   const a = pe.getFixedT(xe(t || n.settings.language || "en"), "theme-leaux-altitude");
   return (i) => a(`public.${i}`);
@@ -1362,7 +1363,7 @@ function N(n) {
   for (let a = 0; a < n.length; a++) t = Math.imul(t ^ n.charCodeAt(a), 16777619);
   return t >>> 0;
 }
-function J(n) {
+function G(n) {
   let t = n | 0;
   return () => {
     t = t + 1831565813 | 0;
@@ -1370,8 +1371,8 @@ function J(n) {
     return a = a + Math.imul(a ^ a >>> 7, 61 | a) ^ a, ((a ^ a >>> 14) >>> 0) / 4294967296;
   };
 }
-function G(n) {
-  const t = J(n), a = 64, i = Array.from({ length: a * a }, () => t()), r = (s, d) => i[(d % a + a) % a * a + (s % a + a) % a], o = (s) => s * s * (3 - 2 * s);
+function J(n) {
+  const t = G(n), a = 64, i = Array.from({ length: a * a }, () => t()), r = (s, d) => i[(d % a + a) % a * a + (s % a + a) % a], o = (s) => s * s * (3 - 2 * s);
   return (s, d) => {
     const c = Math.floor(s), p = Math.floor(d), h = o(s - c), m = o(d - p), f = r(c, p) * (1 - h) + r(c + 1, p) * h, _ = r(c, p + 1) * (1 - h) + r(c + 1, p + 1) * h;
     return f * (1 - m) + _ * m;
@@ -1379,7 +1380,7 @@ function G(n) {
 }
 const j = (n) => Math.round(n * 10) / 10;
 function Se(n, t, a, i, r = 14) {
-  const o = G(n), s = J(n ^ 2654435769), d = Math.round(i * a / t), c = [0, 1, 2].map(() => ({ x: 0.15 + s() * 0.7, y: 0.15 + s() * 0.7, s: 0.03 + s() * 0.07, a: 0.5 + s() * 0.7 })), p = t / a, h = [];
+  const o = J(n), s = G(n ^ 2654435769), d = Math.round(i * a / t), c = [0, 1, 2].map(() => ({ x: 0.15 + s() * 0.7, y: 0.15 + s() * 0.7, s: 0.03 + s() * 0.07, a: 0.5 + s() * 0.7 })), p = t / a, h = [];
   let m = 1 / 0, f = -1 / 0;
   for (let b = 0; b <= d; b++)
     for (let w = 0; w <= i; w++) {
@@ -1410,7 +1411,7 @@ function Se(n, t, a, i, r = 14) {
   return { minor: x.join(""), major: k.join("") };
 }
 function ee(n, t, a, i = 90) {
-  const r = G(n);
+  const r = J(n);
   let o = "";
   for (let s = 0; s <= i; s++) {
     const d = s / i, c = a * (0.92 - 0.78 * Math.pow(d, 1.3) + (r(d * 7, 3) - 0.5) * 0.34 * Math.sin(Math.PI * d) + (r(d * 19, 8) - 0.5) * 0.1 * Math.sin(Math.PI * d));
@@ -1419,7 +1420,7 @@ function ee(n, t, a, i = 90) {
   return o;
 }
 function C(n, t, a, i = 70) {
-  const r = G(n);
+  const r = J(n);
   let o = `M0 ${a}`;
   for (let s = 0; s <= i; s++) {
     const d = s / i, c = r(d * 5, 2) * 0.7 + r(d * 17, 5) * 0.3;
@@ -1428,7 +1429,7 @@ function C(n, t, a, i = 70) {
   return `${o}L${t} ${a}Z`;
 }
 function ze(n, t, a, i, r) {
-  const o = J(n), s = (v) => {
+  const o = G(n), s = (v) => {
     const x = [];
     for (let b = 1; b <= 9; b++) {
       const w = b / 9, S = b === 9 ? 0 : (o() - 0.5) * 0.09;
@@ -1760,7 +1761,7 @@ function Ue({ site: n, posts: t, staticPage: a, archivesLink: i, categories: r }
     /* @__PURE__ */ e(Ae, { site: n })
   ] });
 }
-function Je({ entries: n, label: t, countLabel: a }) {
+function Ge({ entries: n, label: t, countLabel: a }) {
   const i = n.filter((o) => o.level === 2).length || n.length;
   let r = 0;
   return /* @__PURE__ */ e("nav", { className: "lx-toc", "aria-labelledby": "lx-toc-title", "data-lx-toc": !0, children: /* @__PURE__ */ l("details", { className: "lx-toc__box", open: !0, children: [
@@ -1780,9 +1781,9 @@ function Je({ entries: n, label: t, countLabel: a }) {
     ] }) }, o.id)) })
   ] }) });
 }
-const Ge = { amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: " ", rsquo: "’", laquo: "«", raquo: "»" };
+const Je = { amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: " ", rsquo: "’", laquo: "«", raquo: "»" };
 function Ve(n) {
-  return n.replace(/<[^>]*>/g, "").replace(/&#(\d+);/g, (t, a) => String.fromCodePoint(Number(a))).replace(/&#x([0-9a-f]+);/gi, (t, a) => String.fromCodePoint(parseInt(a, 16))).replace(/&([a-z]+);/gi, (t, a) => Ge[a.toLowerCase()] ?? t).replace(/[ \t\r\n]+/g, " ").trim();
+  return n.replace(/<[^>]*>/g, "").replace(/&#(\d+);/g, (t, a) => String.fromCodePoint(Number(a))).replace(/&#x([0-9a-f]+);/gi, (t, a) => String.fromCodePoint(parseInt(a, 16))).replace(/&([a-z]+);/gi, (t, a) => Je[a.toLowerCase()] ?? t).replace(/[ \t\r\n]+/g, " ").trim();
 }
 function Ye(n) {
   return n.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 64).replace(/-+$/, "") || "section";
@@ -1843,7 +1844,7 @@ function Ke({ site: n, post: t, bodyHtml: a, author: i, hero: r, primaryTerm: o,
       (r == null ? void 0 : r.caption) && /* @__PURE__ */ e("figcaption", { children: r.caption })
     ] }),
     x ? /* @__PURE__ */ e("div", { className: "lx-dash", dangerouslySetInnerHTML: { __html: a } }) : v && y ? /* @__PURE__ */ l("div", { className: "lx-body lx-body--toc", children: [
-      /* @__PURE__ */ e(Je, { entries: y.entries, label: d("toc"), countLabel: d("tocParts") }),
+      /* @__PURE__ */ e(Ge, { entries: y.entries, label: d("toc"), countLabel: d("tocParts") }),
       /* @__PURE__ */ e("div", { className: "lx-prose", "data-lx-prose": !0, dangerouslySetInnerHTML: { __html: y.html } })
     ] }) : /* @__PURE__ */ e("div", { className: "lx-prose", "data-lx-prose": !0, dangerouslySetInnerHTML: { __html: a } }),
     p && s.length > 0 && /* @__PURE__ */ e("ul", { className: "lx-tags", "aria-label": d("tags"), children: s.map((E) => /* @__PURE__ */ e("li", { children: E.name }, E.id)) }),
@@ -2023,7 +2024,7 @@ const nt = {
 }, lt = {
   id: "leaux-altitude",
   name: "Leaux Altitude",
-  version: "1.8.2",
+  version: "1.8.3",
   description: "Dedicated theme for leaux.ovh: generative topographic art, one trail per section.",
   readme: we,
   scssEntry: "theme.css",

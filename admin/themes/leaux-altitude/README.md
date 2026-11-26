@@ -47,6 +47,17 @@ The bands' view timeline uses `view-timeline-inset: 0`. With the default (`auto`
 
 Post and page titles (`.lx-band--article h1`) use the same size as the home's featured title (`.lx-feature__title`): `clamp(2.5rem, 5.2vw, 5rem)`, 18ch wide — 75 px instead of 104 px at 1440 px. The 2.5rem floor keeps phones at 40 px.
 
+### 1.8.3
+
+- Every photo band (post headers too) gets the home band's veil: dark on the text side (left on wide screens, bottom on phones), clear elsewhere. Images are uploaded untouched.
+
+### 1.8.2
+
+- Home `<title>`: « <site title> — IA, transformation et projets tech » (`homeTitle` in i18n.ts).
+- `data-nosnippet` on the featured-post labels, the header menu and the footer, so Google builds snippets from the meta description and the content; a space between the rubric chip and « Dernier article ».
+- Footer: optional portrait in a gradient ring next to the name (theme setting `footer.portrait`, a square image URL), the name on two lines beside it.
+- Field `photo-shade` (boolean): stronger veil over the hero, for light images or images with text.
+
 ### 1.8.1
 
 - Home: an « Observatoire IA » block after « Mes projets », shown while the header menu links to `observatoire-ia.html`. Its 6 key figures and update date are copied at runtime from the published page (`.lx-obs__kpis`, `.lx-obs__updated`), each linking to its section, so the block follows every refresh of the page with no home regeneration.
