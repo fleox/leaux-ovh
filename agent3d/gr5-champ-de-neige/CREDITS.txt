@@ -1,0 +1,6 @@
+Credits — Vaste champ de neige sous un ciel bleu, un sommet enneigé à l'horizon
+
+- "gr5-champ-de-neige.webp" by Frédéric Leaux (local), licensed under All rights reserved.
+- Depth map of assets/textures/gr5-champ-de-neige.jpg estimated with Depth Anything V2 Small (Apache-2.0). Image: "gr5-champ-de-neige.jpg" by Frédéric Leaux, licensed under All rights reserved.
+
+Made with Agent3D.
