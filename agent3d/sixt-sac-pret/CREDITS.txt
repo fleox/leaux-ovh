@@ -1,0 +1,6 @@
+Credits — Le sac à dos prêt pour le départ, bâtons et matelas accrochés
+
+- "sixt-sac-pret.webp" by Frédéric Leaux (local), licensed under All rights reserved.
+- Depth map of assets/textures/sixt-sac-pret.jpg estimated with Depth Anything V2 Small (Apache-2.0). Image: "sixt-sac-pret.jpg" by Frédéric Leaux, licensed under All rights reserved.
+
+Made with Agent3D.
