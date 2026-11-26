@@ -450,6 +450,7 @@
   var root = document.querySelector(".lx-obs");
   if (!root) return;
   window.lxObsReady = true;
+  var io = null;
   if ("IntersectionObserver" in window && !reduce) {
     document.documentElement.classList.add("lx-obs-anim");
     var countUp = function (el) {
@@ -469,7 +470,7 @@
       };
       requestAnimationFrame(step);
     };
-    var io = new IntersectionObserver(function (entries) {
+    io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
         if (!en.isIntersecting) return;
         en.target.classList.add("is-in");
@@ -479,6 +480,28 @@
     }, { rootMargin: "0px 0px -8% 0px", threshold: .15 });
     root.querySelectorAll(".lx-obs__card, .lx-obs__kpis").forEach(function (el) { io.observe(el); });
   }
+
+  /* Home teaser: copy the key figures and the update date from the published page, links pointing to its sections. */
+  var home = document.querySelector("[data-lx-obs-home]");
+  if (home && window.fetch && window.DOMParser) {
+    var page = home.closest("section").querySelector(".lx-shelf__all").href.split("#")[0];
+    var drop = function () { var s = home.querySelector(".lx-obs-home__skel"); if (s) s.remove(); };
+    var load = function () {
+      fetch(page, { credentials: "same-origin" }).then(function (r) { if (!r.ok) throw r.status; return r.text(); }).then(function (html) {
+        var doc = new DOMParser().parseFromString(html, "text/html"), kpis = doc.querySelector(".lx-obs__kpis");
+        if (!kpis) return drop();
+        kpis.querySelectorAll("a[href^='#']").forEach(function (a) { a.setAttribute("href", page + a.getAttribute("href")); });
+        var ul = document.importNode(kpis, true), upd = doc.querySelector(".lx-obs__updated");
+        home.replaceChildren(ul);
+        if (upd) home.appendChild(document.importNode(upd, true));
+        if (io) io.observe(ul);
+      }).catch(drop);
+    };
+    if ("IntersectionObserver" in window) {
+      var near = new IntersectionObserver(function (en) { if (en[0].isIntersecting) { near.disconnect(); load(); } }, { rootMargin: "900px 0px" });
+      near.observe(home);
+    } else load();
+  } else if (home) home.replaceChildren();
 
   function place(tip, plot, x) {
     tip.hidden = false;
