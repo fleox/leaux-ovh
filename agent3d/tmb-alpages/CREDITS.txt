@@ -1,0 +1,6 @@
+Credits — Alpages dorés et crêtes sous un ciel bleu sur le Tour du Mont-Blanc
+
+- "tmb-alpages.webp" by Frédéric Leaux (local), licensed under All rights reserved.
+- Depth map of assets/textures/tmb-alpages.jpg estimated with Depth Anything V2 Small (Apache-2.0). Image: "tmb-alpages.jpg" by Frédéric Leaux, licensed under All rights reserved.
+
+Made with Agent3D.
