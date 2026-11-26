@@ -6,7 +6,7 @@
     <link>https://leaux.ovh/</link>
     <description>Blog de Frédéric Leaux, CTO et spécialiste de la transformation : l&apos;IA au travail, mes projets tech, une veille IA, l&apos;Observatoire de l&apos;IA et mes treks.</description>
     <language>fr</language>
-    <lastBuildDate>Thu, 26 Nov 2026 08:12:50 GMT</lastBuildDate>
+    <lastBuildDate>Thu, 26 Nov 2026 08:13:17 GMT</lastBuildDate>
     <atom:link href="https://leaux.ovh/rss.xml" rel="self" type="application/rss+xml"/>
     <item>
       <title>Applications « sans coder » : ce que les titres ne disent pas</title>
@@ -33,7 +33,7 @@
       <category>Mes projets</category>
       <description><![CDATA[Retouche, détourage, looks et visuels pour les réseaux sociaux : AgentPhoto est le studio photo que votre agent IA sait piloter, avec une IA 100 % locale.]]></description>
       <pubDate>Tue, 24 Nov 2026 10:34:04 GMT</pubDate>
-      <enclosure url="https://leaux.ovh/media/2026/11/agentphoto-header-dark-577d2f/large.webp" length="36472" type="image/webp"/>
+      <enclosure url="https://leaux.ovh/media/2026/11/agentphoto-header-6b04fa/large.webp" length="99666" type="image/webp"/>
     </item>
     <item>
       <title>Agent3D, le studio 3D que mon agent sait piloter</title>
