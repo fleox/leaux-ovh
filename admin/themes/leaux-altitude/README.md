@@ -47,6 +47,10 @@ The bands' view timeline uses `view-timeline-inset: 0`. With the default (`auto`
 
 Post and page titles (`.lx-band--article h1`) use the same size as the home's featured title (`.lx-feature__title`): `clamp(2.5rem, 5.2vw, 5rem)`, 18ch wide — 75 px instead of 104 px at 1440 px. The 2.5rem floor keeps phones at 40 px.
 
+### 1.8.6
+
+- 3D photos on iOS Safari: the device tilt needs `DeviceOrientationEvent.requestPermission()` from a tap, which the Agent3D player never calls. A « Bouger avec le téléphone » chip (iOS only) on each 3D photo asks once and disappears everywhere when granted; later pages of the same tab session renew the permission on the first tap.
+
 ### 1.8.5
 
 - 3D photos (Agent3D) in post bodies, sanitizer-proof: the body holds `<figure class="lx-3d" data-3d-src="…/scene.json" data-3d-runtime="…/agent3d-photo.js" data-3d-aspect="4:3" style="aspect-ratio:4/3"><img src="…/poster.webp" alt="…" loading="lazy"></figure>` (AgentCMS drops unknown elements such as `<agent3d-scene>` when it sanitizes a body). `menu-loader.js` loads the player module with the first figure that comes within 600 px of the viewport and builds the `<agent3d-scene>` around the image (its poster) only then.
