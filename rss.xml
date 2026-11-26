@@ -6,7 +6,7 @@
     <link>https://leaux.ovh/</link>
     <description>Blog de Frédéric Leaux, CTO et spécialiste de la transformation : l&apos;IA au travail, mes projets tech, une veille IA, l&apos;Observatoire de l&apos;IA et mes treks.</description>
     <language>fr</language>
-    <lastBuildDate>Thu, 26 Nov 2026 08:12:23 GMT</lastBuildDate>
+    <lastBuildDate>Thu, 26 Nov 2026 08:12:50 GMT</lastBuildDate>
     <atom:link href="https://leaux.ovh/rss.xml" rel="self" type="application/rss+xml"/>
     <item>
       <title>Applications « sans coder » : ce que les titres ne disent pas</title>
@@ -24,7 +24,7 @@
       <category>Transition IA</category>
       <description><![CDATA[Les modèles écrivent un code de plus en plus propre, mais il se dégrade à chaque évolution. Le vrai sujet : qui tient l'architecture ?]]></description>
       <pubDate>Tue, 24 Nov 2026 21:18:49 GMT</pubDate>
-      <enclosure url="https://leaux.ovh/media/2026/11/code-ia-erosion-couts-41c70c/large.webp" length="27608" type="image/webp"/>
+      <enclosure url="https://leaux.ovh/media/2026/11/code-ia-erosion-couts-c0751f/large.webp" length="58154" type="image/webp"/>
     </item>
     <item>
       <title>AgentPhoto, le studio photo que mon agent sait piloter</title>
