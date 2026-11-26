@@ -1,0 +1,6 @@
+Credits — Un randonneur en cape de pluie dans la neige et le brouillard, d'autres marcheurs derrière lui
+
+- "tmbn-brouillard-neige.webp" by Frédéric Leaux (local), licensed under All rights reserved.
+- Depth map of assets/textures/tmbn-brouillard-neige.jpg estimated with Depth Anything V2 Small (Apache-2.0). Image: "tmbn-brouillard-neige.jpg" by Frédéric Leaux, licensed under All rights reserved.
+
+Made with Agent3D.
