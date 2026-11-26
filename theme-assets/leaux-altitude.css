@@ -250,6 +250,8 @@ main:has(> .lx-pano:last-child) ~ .lx-footer .lx-footer__ridge { display: none; 
 .lx-band--photo .lx-band__art { opacity: 1; will-change: transform; }
 .lx-band--photo .lx-band__inner { width: 100%; will-change: transform; }
 .lx-band__photo img { width: 100%; height: 100%; object-fit: cover; }
+/* "photo-shade" field: an extra veil over light images (the file itself is never darkened). */
+.lx-band--photo[data-shade] .lx-band__photo::before { content: ""; position: absolute; inset: 0; background: rgba(16, 22, 63, .4); }
 .lx-band__photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(16,22,63,.25) 0%, rgba(16,22,63,.1) 35%, rgba(16,22,63,.72) 100%); }
 .lx-band--photo h1, .lx-band--photo .lx-band__lead, .lx-band--photo .lx-band__count { text-shadow: 0 2px 18px rgba(0,0,0,.45); }
 .lx-band--photo .lx-band__count a { color: inherit; }
@@ -487,7 +489,10 @@ html:has(.lx-toc) { scroll-padding-top: 132px; }
 .lx-footer__ridge { position: absolute; inset: auto 0 calc(100% - 1px); width: 100%; height: 90px; }
 .lx-footer__ridge path { fill: var(--lx-night); }
 .lx-footer__body { display: grid; grid-template-columns: 1fr auto; gap: 18px 40px; align-items: end; max-width: 1320px; margin: 0 auto; padding: 24px var(--lx-gutter) 90px; }
-.lx-footer__name { grid-column: 1 / -1; margin: 0; font-size: clamp(2.6rem, 9vw, 8rem); font-weight: 900; font-stretch: 125%; line-height: .9; letter-spacing: -.03em; }
+.lx-footer__name { grid-column: 1 / -1; display: flex; align-items: center; gap: clamp(14px, 2.2vw, 34px); margin: 0; font-size: clamp(2.6rem, 9vw, 8rem); font-weight: 900; font-stretch: 125%; line-height: .9; letter-spacing: -.03em; }
+.lx-footer__name > span:last-child { width: min-content; }
+.lx-footer__portrait { flex: none; position: relative; width: 1.62em; height: 1.62em; padding: .04em; border-radius: 50%; background: conic-gradient(from 210deg, #ff6b3d, #7c5cff, #4aa8ff, #ff6b3d); box-shadow: 0 .06em .2em rgba(0, 0, 0, .35); }
+.lx-footer__portrait img { display: block; width: 100%; height: 100%; box-sizing: border-box; border: .035em solid var(--lx-night); border-radius: 50%; object-fit: cover; }
 .lx-footer nav ul { display: flex; flex-wrap: wrap; gap: 8px 24px; list-style: none; margin: 0; padding: 0; }
 .lx-footer__note { margin: 0; color: #a7afd6; font-size: .95rem; }
 
