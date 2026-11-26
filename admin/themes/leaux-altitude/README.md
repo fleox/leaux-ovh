@@ -47,6 +47,10 @@ The bands' view timeline uses `view-timeline-inset: 0`. With the default (`auto`
 
 Post and page titles (`.lx-band--article h1`) use the same size as the home's featured title (`.lx-feature__title`): `clamp(2.5rem, 5.2vw, 5rem)`, 18ch wide — 75 px instead of 104 px at 1440 px. The 2.5rem floor keeps phones at 40 px.
 
+### 1.8.4
+
+- 3D photos (Agent3D) in post bodies: `<figure class="lx-3d"><agent3d-scene data-src="…/scene.json" data-runtime="…/agent3d-photo.js">` with a lazy poster `<img slot="poster">`. `menu-loader.js` loads the player module with the first scene that comes within 600 px of the viewport and sets each scene's `src` only then, so a post with many 3D photos only downloads what the reader reaches.
+
 ### 1.8.3
 
 - Every photo band (post headers too) gets the home band's veil: dark on the text side (left on wide screens, bottom on phones), clear elsewhere. Images are uploaded untouched.
