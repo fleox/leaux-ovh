@@ -1,0 +1,6 @@
+Credits — Un chamois perché sur un rocher, au-dessus des nuages
+
+- "gr5b-chamois.webp" by Frédéric Leaux (local), licensed under All rights reserved.
+- Depth map of assets/textures/gr5b-chamois.jpg estimated with Depth Anything V2 Small (Apache-2.0). Image: "gr5b-chamois.jpg" by Frédéric Leaux, licensed under All rights reserved.
+
+Made with Agent3D.
