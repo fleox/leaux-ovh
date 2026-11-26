@@ -1,0 +1,6 @@
+Credits — Un vallon herbeux traversé par le sentier, le soleil derrière les parois
+
+- "gr5b-vallon-soleil.webp" by Frédéric Leaux (local), licensed under All rights reserved.
+- Depth map of assets/textures/gr5b-vallon-soleil.jpg estimated with Depth Anything V2 Small (Apache-2.0). Image: "gr5b-vallon-soleil.jpg" by Frédéric Leaux, licensed under All rights reserved.
+
+Made with Agent3D.
