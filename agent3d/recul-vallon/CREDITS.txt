@@ -1,0 +1,6 @@
+Credits — Un vallon d'alpage parsemé de sapins, sous des falaises calcaires
+
+- "recul-vallon.webp" by Frédéric Leaux (local), licensed under All rights reserved.
+- Depth map of assets/textures/recul-vallon.jpg estimated with Depth Anything V2 Small (Apache-2.0). Image: "recul-vallon.jpg" by Frédéric Leaux, licensed under All rights reserved.
+
+Made with Agent3D.
