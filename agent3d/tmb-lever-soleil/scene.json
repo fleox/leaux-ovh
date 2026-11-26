@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "id": "tmb-lever-soleil",
+  "title": "Lever de soleil : le sommet du Mont-Blanc s'illumine en orange au-dessus d'une vallée encore dans l'ombre",
+  "ariaLabel": "Lever de soleil : le sommet du Mont-Blanc s'illumine en orange au-dessus d'une vallée encore dans l'ombre — photo en 3D",
+  "target": {
+    "kind": "hero",
+    "aspect": "4:3",
+    "posterTime": 0
+  },
+  "camera": {
+    "type": "perspective",
+    "fov": 35,
+    "position": [
+      0,
+      0,
+      3.5
+    ],
+    "target": [
+      0,
+      0,
+      0
+    ]
+  },
+  "environment": {
+    "background": "#10163f"
+  },
+  "lights": [],
+  "objects": [
+    {
+      "id": "photo",
+      "kind": "photo",
+      "src": "assets/textures/tmb-lever-soleil.webp",
+      "depth": "assets/depth/tmb-lever-soleil-depth.png",
+      "mode": "parallax",
+      "width": 3.24,
+      "strength": 0.75,
+      "focus": 0.59,
+      "motion": {
+        "pointer": 1,
+        "gyro": true,
+        "auto": "sway",
+        "speed": 1
+      }
+    }
+  ]
+}
