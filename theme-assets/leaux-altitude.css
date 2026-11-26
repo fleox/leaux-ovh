@@ -252,6 +252,11 @@ main:has(> .lx-pano:last-child) ~ .lx-footer .lx-footer__ridge { display: none; 
 .lx-band__photo img { width: 100%; height: 100%; object-fit: cover; }
 /* "photo-shade" field: an extra veil over light images (the file itself is never darkened). */
 .lx-band--photo[data-shade] .lx-band__photo::before { content: ""; position: absolute; inset: 0; background: rgba(16, 22, 63, .4); }
+/* 3D header ("header-3d" field): the scene fills the photo frame under the veils; the text lets the pointer through to it. */
+.lx-band__photo agent3d-scene { position: absolute; inset: 0; z-index: 0; display: block; width: 100%; height: 100%; }
+.lx-band__photo::before, .lx-band__photo::after { z-index: 1; pointer-events: none; }
+.lx-band--3d .lx-band__inner { pointer-events: none; }
+.lx-band--3d .lx-band__inner a, .lx-band--3d .lx-band__inner button { pointer-events: auto; }
 /* Readability veil, darker where the text sits (left on wide screens, bottom on phones); the image itself stays untouched. */
 .lx-band__photo::after { content: ""; position: absolute; inset: 0; }
 .lx-band--photo h1, .lx-band--photo .lx-band__lead, .lx-band--photo .lx-band__count { text-shadow: 0 2px 18px rgba(0,0,0,.45); }

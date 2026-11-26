@@ -600,3 +600,24 @@
   }, { rootMargin: "600px 0px" });
   figs.forEach(function (f) { io.observe(f); });
 })();
+
+/* 3D post header ("header-3d" field): on landscape screens ≥ 768 px, once the page has loaded, the
+   header photo becomes the poster of an Agent3D scene (scene-wide.json for very wide headers, where
+   the photo is framed larger so no edge shows). Phones in portrait keep the photo. */
+(function () {
+  var box = document.querySelector(".lx-band__photo[data-3d-dir]");
+  if (!box || !window.matchMedia || !matchMedia("(orientation: landscape) and (min-width: 768px)").matches) return;
+  function start() {
+    var img = box.querySelector("img"), r = box.getBoundingClientRect();
+    var dir = box.getAttribute("data-3d-dir"), runtime = box.getAttribute("data-3d-runtime");
+    if (runtime) { var s = document.createElement("script"); s.type = "module"; s.src = runtime; document.head.appendChild(s); }
+    var el = document.createElement("agent3d-scene");
+    el.setAttribute("role", "presentation");
+    if (img) { img.setAttribute("slot", "poster"); }
+    box.insertBefore(el, img || null);
+    if (img) el.appendChild(img);
+    el.setAttribute("src", dir + (r.width / Math.max(1, r.height) > 1.95 ? "scene-wide.json" : "scene.json"));
+  }
+  var later = function () { if (window.requestIdleCallback) requestIdleCallback(start, { timeout: 1500 }); else setTimeout(start, 200); };
+  if (document.readyState === "complete") later(); else window.addEventListener("load", later, { once: true });
+})();
