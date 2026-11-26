@@ -1,0 +1,6 @@
+Credits — La tente au premier plan, face au massif du Mont-Blanc et à la vallée
+
+- "recul-tente-mont-blanc.webp" by Frédéric Leaux (local), licensed under All rights reserved.
+- Depth map of assets/textures/recul-tente-mont-blanc.jpg estimated with Depth Anything V2 Small (Apache-2.0). Image: "recul-tente-mont-blanc.jpg" by Frédéric Leaux, licensed under All rights reserved.
+
+Made with Agent3D.
