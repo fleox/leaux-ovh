@@ -6,7 +6,7 @@
     <link>https://leaux.ovh/</link>
     <description>Blog de Frédéric Leaux, CTO et spécialiste de la transformation : l&apos;IA au travail, mes projets tech, une veille IA, l&apos;Observatoire de l&apos;IA et mes treks.</description>
     <language>fr</language>
-    <lastBuildDate>Thu, 26 Nov 2026 08:15:31 GMT</lastBuildDate>
+    <lastBuildDate>Thu, 26 Nov 2026 08:15:59 GMT</lastBuildDate>
     <atom:link href="https://leaux.ovh/rss.xml" rel="self" type="application/rss+xml"/>
     <item>
       <title>Applications « sans coder » : ce que les titres ne disent pas</title>
@@ -87,7 +87,7 @@
       <category>Transition IA</category>
       <description><![CDATA[Quand vos équipes confient des données à ChatGPT ou Claude, elles ne deviennent pas publiques. Mais elles quittent l'entreprise, et les fuites réelles viennent d'ailleurs.]]></description>
       <pubDate>Wed, 18 Nov 2026 11:03:10 GMT</pubDate>
-      <enclosure url="https://leaux.ovh/media/2026/11/ia-entreprise-donnees-cadenas-797ee9/large.webp" length="64086" type="image/webp"/>
+      <enclosure url="https://leaux.ovh/media/2026/11/ia-entreprise-donnees-cadenas-567e63/large.webp" length="101666" type="image/webp"/>
     </item>
     <item>
       <title>L&apos;extinction du développeur : le darwinisme à l&apos;ère de l&apos;IA</title>
