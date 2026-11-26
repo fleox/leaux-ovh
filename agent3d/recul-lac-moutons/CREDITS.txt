@@ -1,0 +1,6 @@
+Credits — Un troupeau de moutons qui broute au bord d'un lac de montagne
+
+- "recul-lac-moutons.webp" by Frédéric Leaux (local), licensed under All rights reserved.
+- Depth map of assets/textures/recul-lac-moutons.jpg estimated with Depth Anything V2 Small (Apache-2.0). Image: "recul-lac-moutons.jpg" by Frédéric Leaux, licensed under All rights reserved.
+
+Made with Agent3D.
