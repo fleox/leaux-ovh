@@ -1,0 +1,6 @@
+Credits — Un randonneur debout sur la terrasse du restaurant d'altitude fermé, en fin de journée
+
+- "gr5-terrasse-refuge.webp" by Frédéric Leaux (local), licensed under All rights reserved.
+- Depth map of assets/textures/gr5-terrasse-refuge.jpg estimated with Depth Anything V2 Small (Apache-2.0). Image: "gr5-terrasse-refuge.jpg" by Frédéric Leaux, licensed under All rights reserved.
+
+Made with Agent3D.
