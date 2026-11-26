@@ -1,0 +1,6 @@
+Credits — Le massif du Mont-Blanc et ses glaciers, depuis un sentier rocheux
+
+- "gr5b-massif-mont-blanc.webp" by Frédéric Leaux (local), licensed under All rights reserved.
+- Depth map of assets/textures/gr5b-massif-mont-blanc.jpg estimated with Depth Anything V2 Small (Apache-2.0). Image: "gr5b-massif-mont-blanc.jpg" by Frédéric Leaux, licensed under All rights reserved.
+
+Made with Agent3D.
