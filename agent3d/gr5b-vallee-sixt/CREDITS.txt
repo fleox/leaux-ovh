@@ -1,0 +1,6 @@
+Credits — Vue plongeante sur la vallée et ses villages, entourés de falaises
+
+- "gr5b-vallee-sixt.webp" by Frédéric Leaux (local), licensed under All rights reserved.
+- Depth map of assets/textures/gr5b-vallee-sixt.jpg estimated with Depth Anything V2 Small (Apache-2.0). Image: "gr5b-vallee-sixt.jpg" by Frédéric Leaux, licensed under All rights reserved.
+
+Made with Agent3D.
