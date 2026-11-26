@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "id": "gr5-chalet-pierre",
+  "title": "Pause au pied d'un chalet en pierre, face aux sommets enneigés",
+  "ariaLabel": "Pause au pied d'un chalet en pierre, face aux sommets enneigés — photo en 3D",
+  "target": {
+    "kind": "hero",
+    "aspect": "3:4",
+    "posterTime": 0
+  },
+  "camera": {
+    "type": "perspective",
+    "fov": 35,
+    "position": [
+      0,
+      0,
+      3.5
+    ],
+    "target": [
+      0,
+      0,
+      0
+    ]
+  },
+  "environment": {
+    "background": "#10163f"
+  },
+  "lights": [],
+  "objects": [
+    {
+      "id": "photo",
+      "kind": "photo",
+      "src": "assets/textures/gr5-chalet-pierre.webp",
+      "depth": "assets/depth/gr5-chalet-pierre-depth.png",
+      "mode": "parallax",
+      "width": 1.82,
+      "strength": 0.75,
+      "focus": 0.64,
+      "motion": {
+        "pointer": 1,
+        "gyro": true,
+        "auto": "sway",
+        "speed": 1
+      }
+    }
+  ]
+}
