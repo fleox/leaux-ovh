@@ -1,0 +1,6 @@
+Credits — Un randonneur seul monte une longue trace dans un névé, sous un ciel bleu et nuageux.
+
+- "tmbn-neige-ciel-bleu-header.webp" by Frédéric Leaux (local), licensed under All rights reserved.
+- Depth map of assets/textures/tmbn-neige-ciel-bleu-header.jpg estimated with Depth Anything V2 Small (Apache-2.0). Image: "tmbn-neige-ciel-bleu-header.jpg" by Frédéric Leaux, licensed under All rights reserved.
+
+Made with Agent3D.
