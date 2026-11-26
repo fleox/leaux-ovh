@@ -6,7 +6,7 @@
     <link>https://leaux.ovh/</link>
     <description>Blog de Frédéric Leaux, CTO et spécialiste de la transformation : l&apos;IA au travail, mes projets tech, une veille IA, l&apos;Observatoire de l&apos;IA et mes treks.</description>
     <language>fr</language>
-    <lastBuildDate>Thu, 26 Nov 2026 08:14:10 GMT</lastBuildDate>
+    <lastBuildDate>Thu, 26 Nov 2026 08:14:37 GMT</lastBuildDate>
     <atom:link href="https://leaux.ovh/rss.xml" rel="self" type="application/rss+xml"/>
     <item>
       <title>Applications « sans coder » : ce que les titres ne disent pas</title>
@@ -60,7 +60,7 @@
       <category>News tech IA</category>
       <description><![CDATA[Anthropic réussit la plus grosse introduction en Bourse de l'histoire, GPT-6.2 et Gemini 4 Neon arrivent, les agents attaquent : l'IA du 13 au 20 novembre.]]></description>
       <pubDate>Sat, 21 Nov 2026 12:35:22 GMT</pubDate>
-      <enclosure url="https://leaux.ovh/media/2026/11/revue-ia-semaine-47-anthropic-nasdaq-214915/large.webp" length="241680" type="image/webp"/>
+      <enclosure url="https://leaux.ovh/media/2026/11/revue-ia-semaine-47-anthropic-nasdaq-cebfdd/large.webp" length="415114" type="image/webp"/>
     </item>
     <item>
       <title>CLAUDE.md, AGENTS.md : quand un fichier texte devient un exécutable</title>
