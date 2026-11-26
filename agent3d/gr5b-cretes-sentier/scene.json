@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "id": "gr5b-cretes-sentier",
+  "title": "Le sentier suit le fil de la crête, avec les Alpes à perte de vue",
+  "ariaLabel": "Le sentier suit le fil de la crête, avec les Alpes à perte de vue — photo en 3D",
+  "target": {
+    "kind": "hero",
+    "aspect": "3:4",
+    "posterTime": 0
+  },
+  "camera": {
+    "type": "perspective",
+    "fov": 35,
+    "position": [
+      0,
+      0,
+      3.5
+    ],
+    "target": [
+      0,
+      0,
+      0
+    ]
+  },
+  "environment": {
+    "background": "#10163f"
+  },
+  "lights": [],
+  "objects": [
+    {
+      "id": "photo",
+      "kind": "photo",
+      "src": "assets/textures/gr5b-cretes-sentier.webp",
+      "depth": "assets/depth/gr5b-cretes-sentier-depth.png",
+      "mode": "parallax",
+      "width": 1.82,
+      "strength": 0.75,
+      "focus": 0.62,
+      "motion": {
+        "pointer": 1,
+        "gyro": true,
+        "auto": "sway",
+        "speed": 1
+      }
+    }
+  ]
+}
