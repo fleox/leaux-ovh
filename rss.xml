@@ -4,9 +4,9 @@
   <channel>
     <title>Frédéric Leaux</title>
     <link>https://leaux.ovh/</link>
-    <description>Ce que l&apos;IA change au travail, ce que je construis, et ce que je vais chercher en montagne.</description>
+    <description>Blog de Frédéric Leaux, CTO et spécialiste de la transformation : l&apos;IA au travail, mes projets tech, une veille IA, l&apos;Observatoire de l&apos;IA et mes treks.</description>
     <language>fr</language>
-    <lastBuildDate>Thu, 26 Nov 2026 06:53:32 GMT</lastBuildDate>
+    <lastBuildDate>Thu, 26 Nov 2026 08:12:23 GMT</lastBuildDate>
     <atom:link href="https://leaux.ovh/rss.xml" rel="self" type="application/rss+xml"/>
     <item>
       <title>Applications « sans coder » : ce que les titres ne disent pas</title>
@@ -15,7 +15,7 @@
       <category>Édito</category>
       <description><![CDATA[Claude permet d'installer ses créations comme des applications, et la presse titre « sans coder ». Sauf que ce n'est ni nouveau, ni vraiment sans compétences.]]></description>
       <pubDate>Wed, 25 Nov 2026 16:26:17 GMT</pubDate>
-      <enclosure url="https://leaux.ovh/media/2026/11/sans-coder-magicien-apps-23abcc/large.webp" length="74486" type="image/webp"/>
+      <enclosure url="https://leaux.ovh/media/2026/11/sans-coder-magicien-apps-2c7e03/large.webp" length="120978" type="image/webp"/>
     </item>
     <item>
       <title>Le code de l&apos;IA ne naît pas mauvais : il s&apos;use à chaque prompt</title>
