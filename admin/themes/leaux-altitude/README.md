@@ -47,6 +47,10 @@ The bands' view timeline uses `view-timeline-inset: 0`. With the default (`auto`
 
 Post and page titles (`.lx-band--article h1`) use the same size as the home's featured title (`.lx-feature__title`): `clamp(2.5rem, 5.2vw, 5rem)`, 18ch wide — 75 px instead of 104 px at 1440 px. The 2.5rem floor keeps phones at 40 px.
 
+### 1.8.7
+
+- 3D post header: field `header-3d` = folder of an Agent3D export on the site (`/agent3d/<name>/`, with `scene.json` and a `scene-wide.json` framed larger for headers wider than 1.95:1). On landscape screens ≥ 768 px, after the page load, the header photo becomes the poster of that scene under the readability veils; the text lets the pointer through. Phones in portrait keep the photo (the header there is much taller than the photo). Needs `header-photo: true`.
+
 ### 1.8.6
 
 - 3D photos on iOS Safari: the device tilt needs `DeviceOrientationEvent.requestPermission()` from a tap, which the Agent3D player never calls. A « Bouger avec le téléphone » chip (iOS only) on each 3D photo asks once and disappears everywhere when granted; later pages of the same tab session renew the permission on the first tap.
