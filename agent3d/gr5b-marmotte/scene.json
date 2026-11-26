@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "id": "gr5b-marmotte",
+  "title": "Une marmotte qui observe depuis un rocher, à la lisière de la forêt",
+  "ariaLabel": "Une marmotte qui observe depuis un rocher, à la lisière de la forêt — photo en 3D",
+  "target": {
+    "kind": "hero",
+    "aspect": "3:4",
+    "posterTime": 0
+  },
+  "camera": {
+    "type": "perspective",
+    "fov": 35,
+    "position": [
+      0,
+      0,
+      3.5
+    ],
+    "target": [
+      0,
+      0,
+      0
+    ]
+  },
+  "environment": {
+    "background": "#10163f"
+  },
+  "lights": [],
+  "objects": [
+    {
+      "id": "photo",
+      "kind": "photo",
+      "src": "assets/textures/gr5b-marmotte.webp",
+      "depth": "assets/depth/gr5b-marmotte-depth.png",
+      "mode": "parallax",
+      "width": 1.82,
+      "strength": 0.75,
+      "focus": 0.68,
+      "motion": {
+        "pointer": 1,
+        "gyro": true,
+        "auto": "sway",
+        "speed": 1
+      }
+    }
+  ]
+}
