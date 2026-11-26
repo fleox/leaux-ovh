@@ -1,0 +1,6 @@
+Credits — Une marmotte qui observe depuis un rocher, à la lisière de la forêt
+
+- "gr5b-marmotte.webp" by Frédéric Leaux (local), licensed under All rights reserved.
+- Depth map of assets/textures/gr5b-marmotte.jpg estimated with Depth Anything V2 Small (Apache-2.0). Image: "gr5b-marmotte.jpg" by Frédéric Leaux, licensed under All rights reserved.
+
+Made with Agent3D.
