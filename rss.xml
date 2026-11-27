@@ -6,8 +6,17 @@
     <link>https://leaux.ovh/</link>
     <description>Blog de Frédéric Leaux, CTO et spécialiste de la transformation : l&apos;IA au travail, mes projets tech, une veille IA, l&apos;Observatoire de l&apos;IA et mes treks.</description>
     <language>fr</language>
-    <lastBuildDate>Fri, 27 Nov 2026 08:33:22 GMT</lastBuildDate>
+    <lastBuildDate>Fri, 27 Nov 2026 17:14:52 GMT</lastBuildDate>
     <atom:link href="https://leaux.ovh/rss.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Revue IA de la semaine : l&apos;IA face à ses coûts</title>
+      <link>https://leaux.ovh/news-tech-ia/revue-ia-semaine-48-2026.html</link>
+      <guid isPermaLink="true">https://leaux.ovh/news-tech-ia/revue-ia-semaine-48-2026.html</guid>
+      <category>News tech IA</category>
+      <description><![CDATA[Nvidia sauvé par Washington, Anthropic sous son prix d'introduction, serveurs jusqu'à 45 % plus chers : l'IA du 20 au 27 novembre.]]></description>
+      <pubDate>Fri, 27 Nov 2026 17:14:24 GMT</pubDate>
+      <enclosure url="https://leaux.ovh/media/2026/11/equilibre-precaire-ia-dd487b/large.webp" length="409804" type="image/webp"/>
+    </item>
     <item>
       <title>Applications « sans coder » : ce que les titres ne disent pas</title>
       <link>https://leaux.ovh/edito/sans-coder-vraiment-la-meme-revolution-annoncee-deux-fois.html</link>
@@ -178,15 +187,6 @@
       <description><![CDATA[Déposer un fichier GPX dans le navigateur, le regarder survoler le relief en 3D et repartir avec la vidéo : gratuit, sans compte, et sans rien envoyer.]]></description>
       <pubDate>Mon, 05 Oct 2026 09:00:00 GMT</pubDate>
       <enclosure url="https://leaux.ovh/media/2026/11/gpx-map-3d-web-survol-b80679/large.webp" length="54514" type="image/webp"/>
-    </item>
-    <item>
-      <title>Piloter un agent IA interne (Hermes) avec des Skills Python plutôt que des MCP</title>
-      <link>https://leaux.ovh/transition-ia/piloter-un-agent-ia-interne-hermes-avec-des-skills-python.html</link>
-      <guid isPermaLink="true">https://leaux.ovh/transition-ia/piloter-un-agent-ia-interne-hermes-avec-des-skills-python.html</guid>
-      <category>Transition IA</category>
-      <description><![CDATA[Une trentaine de skills, une dizaine de MCP, et un agent qui hésite : comment on a tout restructuré autour d'un router, de petits skills spécialisés et de Skills Python maison.]]></description>
-      <pubDate>Tue, 08 Sep 2026 09:00:00 GMT</pubDate>
-      <enclosure url="https://leaux.ovh/media/2026/11/cover-594b11/large.webp" length="33134" type="image/webp"/>
     </item>
   </channel>
 </rss>
