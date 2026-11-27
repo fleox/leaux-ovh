@@ -578,7 +578,8 @@
      a tap (the player listens but never asks). A chip on each 3D photo asks once; once granted in this
      tab session, the first tap anywhere renews it silently on the next pages. */
   var DOE = window.DeviceOrientationEvent;
-  if (DOE && typeof DOE.requestPermission === "function") {
+  // Desktop Chrome exposes requestPermission too: only touch screens get the chip.
+  if (DOE && typeof DOE.requestPermission === "function" && window.matchMedia && matchMedia("(pointer: coarse)").matches) {
     var granted = false, KEY = "lx3dTilt";
     var done = function () { granted = true; try { sessionStorage.setItem(KEY, "1"); } catch (e) {} document.querySelectorAll(".lx-3d__tilt").forEach(function (b) { b.remove(); }); };
     var ask = function () { return DOE.requestPermission().then(function (st) { if (st === "granted") done(); }).catch(function () {}); };
