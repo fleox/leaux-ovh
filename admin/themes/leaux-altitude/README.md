@@ -47,6 +47,10 @@ The bands' view timeline uses `view-timeline-inset: 0`. With the default (`auto`
 
 Post and page titles (`.lx-band--article h1`) use the same size as the home's featured title (`.lx-feature__title`): `clamp(2.5rem, 5.2vw, 5rem)`, 18ch wide — 75 px instead of 104 px at 1440 px. The 2.5rem floor keeps phones at 40 px.
 
+### 1.8.10
+
+- Same fix as announced for 1.8.9, actually shipped (the 1.8.9 build missed the code change).
+
 ### 1.8.9
 
 - The « Bouger avec le téléphone » chip only shows on touch screens (`pointer: coarse`): desktop Chrome also exposes `DeviceOrientationEvent.requestPermission`.

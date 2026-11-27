@@ -1,5 +1,5 @@
-import { jsxs as l, jsx as e, Fragment as R } from "react/jsx-runtime";
-import { i18n as pe, pickPublicLocale as xe, canonicalUrl as ne, pickFormat as B, buildPostUrl as he, postSortMillis as D, buildTermUrl as ae, SocialIcon as me, socialLabel as ge, toast as ue } from "@agent-cms/runtime";
+import { jsxs as l, jsx as e, Fragment as D } from "react/jsx-runtime";
+import { i18n as pe, pickPublicLocale as xe, canonicalUrl as ne, pickFormat as B, buildPostUrl as he, postSortMillis as R, buildTermUrl as ae, SocialIcon as me, socialLabel as ge, toast as ue } from "@agent-cms/runtime";
 import { useState as Z, useEffect as fe } from "react";
 import { useTranslation as be } from "react-i18next";
 const ve = `@import url("https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&display=swap");
@@ -1340,7 +1340,8 @@ body:has(.lx-header:not(.is-hidden)) .lx-obs__nav { --lx-obs-top: 68px; }
      a tap (the player listens but never asks). A chip on each 3D photo asks once; once granted in this
      tab session, the first tap anywhere renews it silently on the next pages. */
   var DOE = window.DeviceOrientationEvent;
-  if (DOE && typeof DOE.requestPermission === "function") {
+  // Desktop Chrome exposes requestPermission too: only touch screens get the chip.
+  if (DOE && typeof DOE.requestPermission === "function" && window.matchMedia && matchMedia("(pointer: coarse)").matches) {
     var granted = false, KEY = "lx3dTilt";
     var done = function () { granted = true; try { sessionStorage.setItem(KEY, "1"); } catch (e) {} document.querySelectorAll(".lx-3d__tilt").forEach(function (b) { b.remove(); }); };
     var ask = function () { return DOE.requestPermission().then(function (st) { if (st === "granted") done(); }).catch(function () {}); };
@@ -1496,7 +1497,7 @@ body:has(.lx-header:not(.is-hidden)) .lx-obs__nav { --lx-obs-top: 68px; }
   lastW = document.documentElement.clientWidth; lastH = window.innerHeight;
   layout();
 })();
-`, we = '# Leaux Altitude\n\nDedicated AgentCMS theme for leaux.ovh. Ridgelines pass in front of the home title, each section is a summit on an orientation table, each post gets a contour map generated from its slug, and a reading climb follows the scroll.\n\nSection slugs and colors live in `src/rubrics.ts` and `src/theme.css` (`[data-rubric]`). Hero texts are editable on the theme settings page.\n\n## Custom fields\n\n| Field | Type | Effect |\n|---|---|---|\n| `header-photo` | yes / no | On a post with a featured image, `true` puts the image behind the header, with a parallax on scroll, instead of the contour map. The image is then not repeated under the header. |\n| `toc` | yes / no | `true` adds a table of contents built from the body\'s `h2` (numbered) and `h3` (indented); the headings get ids. Wide screens (≥ 1200 px): the text moves left, aligned with the title, and the contents stay open in a sticky column on the right, current section highlighted and the rail filling as you read. Narrower: a sticky bar under the header that shows the current section and a reading progress line, and drops the list down on tap. Without JS: an open list above the text. Shown only with at least 2 headings. |\n\n## Article components (raw HTML in Markdown)\n\n- Video card (YouTube link with thumbnail, no embed): `<div class="lx-video"><a class="lx-video__thumb" href="https://www.youtube.com/watch?v=ID" aria-label="Regarder « Titre » sur YouTube"><img src="https://i.ytimg.com/vi/ID/hqdefault.jpg" alt="" loading="lazy"></a><div><p class="lx-video__meta">Chaîne · 18 min · en anglais</p><p class="lx-video__title"><a href="https://www.youtube.com/watch?v=ID">Titre</a></p><p>Résumé…</p></div></div>`.\n- En bref (key points, first block of a long post): `<aside class="lx-brief" aria-label="En bref"><p class="lx-brief__tag">En bref</p><ul><li>… <strong>…</strong></li></ul></aside>`.\n\n- Pull quote: `<figure class="lx-pullquote"><blockquote><p>…</p></blockquote></figure>` (optional `<figcaption>`).\n- Case box: `<aside class="lx-case"><p class="lx-case__tag">Cas réel · date</p><p class="lx-case__title">…</p><p>…</p><p class="lx-case__src">Source : <a href="…">…</a></p></aside>`.\n- Key figures: `<div class="lx-stats"><div><strong>48 %</strong><span>…</span></div>…</div>`, optionally followed by `<p class="lx-case__src">Source : …</p>`.\n- Bar chart: `<figure class="lx-chart"><p class="lx-chart__title">…</p><p class="lx-chart__sub">…</p><div class="lx-chart__cols" style="--n:9"><div class="lx-chart__col is-lab" style="--v:.4" title="2020 : 18 322"><div class="lx-chart__bar"></div><span class="lx-chart__val">18 322</span></div>…</div><div class="lx-chart__axis" style="--n:9"><span>2020</span>…</div><p class="lx-case__src">Source : …</p></figure>`. `--v` is the bar height (0–1). Column modifiers: `is-hi` (highlighted), `is-part` (hatched, partial period), `is-lab` (value always shown; others on hover). Axis labels with `is-minor` hide on phones.\n- Paired horizontal bars: `<div class="lx-chart__rows"><div class="lx-chart__row"><span>Label</span><div class="lx-chart__hb" style="--v:.3"><i></i>1 200 <em>2025</em></div><div class="lx-chart__hb is-hi" style="--v:.8"><i></i>3 400 <em>2026</em></div></div></div>` with a `<ul class="lx-chart__legend"><li><i></i>2025</li><li><i class="is-hi"></i>2026</li></ul>`.\n\n## Section pages (1.6.0)\n\nThe band of each section page features its latest post: image as background (rubric-tinted gradient), kicker « Rubrique — Dernier article », title, excerpt, « Lire l\'article » button, date and reading time, ridge edge kept. The other posts follow under « Articles précédents ». The h1 of the page is the logo, with the section name visually hidden; `<title>` and meta description still come from the category.\n\n## Home (1.7.0)\n\nNewest post in the band (same design as section pages), one block per section (newest post large, two more beside it, link « Toute la rubrique »), « Mes projets » as round logos, « Par où monter ? » at the bottom. Project fields on posts of « Mes projets »: `project` (name), `project-logo` (URL of the `square` image format), `project-tagline` (optional). New image format `square` (320×320).\n\n## Home data (1.7.1)\n\nThe manifest sets `homeCategoryPosts: 12`: AgentCMS ≥ 0.4.4 passes the newest 12 posts of every category to the home (`props.categories`), used for the section blocks and the projects. `postsPerPage` no longer has to be large. Older AgentCMS: fallback on `props.posts`.\n\n## Transitions and parallax (1.7.2)\n\nThe list → post transition starts from the feature band, the home cards and the project logos too (`lxVtPair` in BaseLayout\'s head script). The band parallax uses CSS scroll-driven animations (off the main thread, smooth on phones); the JS version is a fallback for mouse users on browsers without them.\n\n\n### 1.7.3\n\nThe bands\' view timeline uses `view-timeline-inset: 0`. With the default (`auto`) it took html\'s `scroll-padding-top` (88 px, 132 px on posts with a table of contents), so the parallax had already started at load and the header photo sat ~27 px below the site header.\n\n### 1.7.4\n\nPost and page titles (`.lx-band--article h1`) use the same size as the home\'s featured title (`.lx-feature__title`): `clamp(2.5rem, 5.2vw, 5rem)`, 18ch wide — 75 px instead of 104 px at 1440 px. The 2.5rem floor keeps phones at 40 px.\n\n### 1.8.9\n\n- The « Bouger avec le téléphone » chip only shows on touch screens (`pointer: coarse`): desktop Chrome also exposes `DeviceOrientationEvent.requestPermission`.\n\n### 1.8.8\n\n- « Récit au scroll » (field `scroll-story: true`): each run of consecutive images in the body (figure.lx-3d, or a paragraph holding only an image) becomes a tall section with a sticky full-screen stage. While it is pinned the image grows from the column width to full screen, the next images of the run slide over it, then the last one shrinks back and the text resumes. Images far from the screen\'s shape are shown whole on a blurred copy of themselves. A still copy carries the transforms; a 3D photo fades in over it once settled full screen (the Agent3D player must never be scaled). Off with reduced motion.\n\n### 1.8.7\n\n- 3D post header: field `header-3d` = folder of an Agent3D export on the site (`/agent3d/<name>/`, with `scene.json` and a `scene-wide.json` framed larger for headers wider than 1.95:1). On landscape screens ≥ 768 px, after the page load, the header photo becomes the poster of that scene under the readability veils; the text lets the pointer through. Phones in portrait keep the photo (the header there is much taller than the photo). Needs `header-photo: true`.\n\n### 1.8.6\n\n- 3D photos on iOS Safari: the device tilt needs `DeviceOrientationEvent.requestPermission()` from a tap, which the Agent3D player never calls. A « Bouger avec le téléphone » chip (iOS only) on each 3D photo asks once and disappears everywhere when granted; later pages of the same tab session renew the permission on the first tap.\n\n### 1.8.5\n\n- 3D photos (Agent3D) in post bodies, sanitizer-proof: the body holds `<figure class="lx-3d" data-3d-src="…/scene.json" data-3d-runtime="…/agent3d-photo.js" data-3d-aspect="4:3" style="aspect-ratio:4/3"><img src="…/poster.webp" alt="…" loading="lazy"></figure>` (AgentCMS drops unknown elements such as `<agent3d-scene>` when it sanitizes a body). `menu-loader.js` loads the player module with the first figure that comes within 600 px of the viewport and builds the `<agent3d-scene>` around the image (its poster) only then.\n\n### 1.8.4\n\n- First version of the lazy 3D photos (`<agent3d-scene data-src>` in the body; replaced by 1.8.5 because the sanitizer strips the element).\n\n### 1.8.3\n\n- Every photo band (post headers too) gets the home band\'s veil: dark on the text side (left on wide screens, bottom on phones), clear elsewhere. Images are uploaded untouched.\n\n### 1.8.2\n\n- Home `<title>`: « <site title> — IA, transformation et projets tech » (`homeTitle` in i18n.ts).\n- `data-nosnippet` on the featured-post labels, the header menu and the footer, so Google builds snippets from the meta description and the content; a space between the rubric chip and « Dernier article ».\n- Footer: optional portrait in a gradient ring next to the name (theme setting `footer.portrait`, a square image URL), the name on two lines beside it.\n- Field `photo-shade` (boolean): stronger veil over the hero, for light images or images with text.\n\n### 1.8.1\n\n- Home: an « Observatoire IA » block after « Mes projets », shown while the header menu links to `observatoire-ia.html`. Its 6 key figures and update date are copied at runtime from the published page (`.lx-obs__kpis`, `.lx-obs__updated`), each linking to its section, so the block follows every refresh of the page with no home regeneration.\n- Home: « Passions » moved to the last block.\n\n### 1.8.0\n\nObservatoire de l\'IA (page with the custom field `dashboard: true`): compact header (rubric chip « Observatoire », update date from the field `obs-updated`, title and lead side by side), full-width body outside the prose column, `.lx-obs` dashboard components (key figures with sparklines, per-section accents, line / column / bar / scatter charts in plain HTML + SVG, data tables), hover tooltips and a scroll reveal (lines draw, bars grow, figures count up; off with reduced motion, visible without JS). The section nav sticks under the header and follows it when it hides.\n\n### 1.7.5\n\nGoogle Tag Manager container replaced: `GTM-PJ68GND6` (was `GTM-KNDFD5GH`), same snippet after the footer.\n';
+`, we = '# Leaux Altitude\n\nDedicated AgentCMS theme for leaux.ovh. Ridgelines pass in front of the home title, each section is a summit on an orientation table, each post gets a contour map generated from its slug, and a reading climb follows the scroll.\n\nSection slugs and colors live in `src/rubrics.ts` and `src/theme.css` (`[data-rubric]`). Hero texts are editable on the theme settings page.\n\n## Custom fields\n\n| Field | Type | Effect |\n|---|---|---|\n| `header-photo` | yes / no | On a post with a featured image, `true` puts the image behind the header, with a parallax on scroll, instead of the contour map. The image is then not repeated under the header. |\n| `toc` | yes / no | `true` adds a table of contents built from the body\'s `h2` (numbered) and `h3` (indented); the headings get ids. Wide screens (≥ 1200 px): the text moves left, aligned with the title, and the contents stay open in a sticky column on the right, current section highlighted and the rail filling as you read. Narrower: a sticky bar under the header that shows the current section and a reading progress line, and drops the list down on tap. Without JS: an open list above the text. Shown only with at least 2 headings. |\n\n## Article components (raw HTML in Markdown)\n\n- Video card (YouTube link with thumbnail, no embed): `<div class="lx-video"><a class="lx-video__thumb" href="https://www.youtube.com/watch?v=ID" aria-label="Regarder « Titre » sur YouTube"><img src="https://i.ytimg.com/vi/ID/hqdefault.jpg" alt="" loading="lazy"></a><div><p class="lx-video__meta">Chaîne · 18 min · en anglais</p><p class="lx-video__title"><a href="https://www.youtube.com/watch?v=ID">Titre</a></p><p>Résumé…</p></div></div>`.\n- En bref (key points, first block of a long post): `<aside class="lx-brief" aria-label="En bref"><p class="lx-brief__tag">En bref</p><ul><li>… <strong>…</strong></li></ul></aside>`.\n\n- Pull quote: `<figure class="lx-pullquote"><blockquote><p>…</p></blockquote></figure>` (optional `<figcaption>`).\n- Case box: `<aside class="lx-case"><p class="lx-case__tag">Cas réel · date</p><p class="lx-case__title">…</p><p>…</p><p class="lx-case__src">Source : <a href="…">…</a></p></aside>`.\n- Key figures: `<div class="lx-stats"><div><strong>48 %</strong><span>…</span></div>…</div>`, optionally followed by `<p class="lx-case__src">Source : …</p>`.\n- Bar chart: `<figure class="lx-chart"><p class="lx-chart__title">…</p><p class="lx-chart__sub">…</p><div class="lx-chart__cols" style="--n:9"><div class="lx-chart__col is-lab" style="--v:.4" title="2020 : 18 322"><div class="lx-chart__bar"></div><span class="lx-chart__val">18 322</span></div>…</div><div class="lx-chart__axis" style="--n:9"><span>2020</span>…</div><p class="lx-case__src">Source : …</p></figure>`. `--v` is the bar height (0–1). Column modifiers: `is-hi` (highlighted), `is-part` (hatched, partial period), `is-lab` (value always shown; others on hover). Axis labels with `is-minor` hide on phones.\n- Paired horizontal bars: `<div class="lx-chart__rows"><div class="lx-chart__row"><span>Label</span><div class="lx-chart__hb" style="--v:.3"><i></i>1 200 <em>2025</em></div><div class="lx-chart__hb is-hi" style="--v:.8"><i></i>3 400 <em>2026</em></div></div></div>` with a `<ul class="lx-chart__legend"><li><i></i>2025</li><li><i class="is-hi"></i>2026</li></ul>`.\n\n## Section pages (1.6.0)\n\nThe band of each section page features its latest post: image as background (rubric-tinted gradient), kicker « Rubrique — Dernier article », title, excerpt, « Lire l\'article » button, date and reading time, ridge edge kept. The other posts follow under « Articles précédents ». The h1 of the page is the logo, with the section name visually hidden; `<title>` and meta description still come from the category.\n\n## Home (1.7.0)\n\nNewest post in the band (same design as section pages), one block per section (newest post large, two more beside it, link « Toute la rubrique »), « Mes projets » as round logos, « Par où monter ? » at the bottom. Project fields on posts of « Mes projets »: `project` (name), `project-logo` (URL of the `square` image format), `project-tagline` (optional). New image format `square` (320×320).\n\n## Home data (1.7.1)\n\nThe manifest sets `homeCategoryPosts: 12`: AgentCMS ≥ 0.4.4 passes the newest 12 posts of every category to the home (`props.categories`), used for the section blocks and the projects. `postsPerPage` no longer has to be large. Older AgentCMS: fallback on `props.posts`.\n\n## Transitions and parallax (1.7.2)\n\nThe list → post transition starts from the feature band, the home cards and the project logos too (`lxVtPair` in BaseLayout\'s head script). The band parallax uses CSS scroll-driven animations (off the main thread, smooth on phones); the JS version is a fallback for mouse users on browsers without them.\n\n\n### 1.7.3\n\nThe bands\' view timeline uses `view-timeline-inset: 0`. With the default (`auto`) it took html\'s `scroll-padding-top` (88 px, 132 px on posts with a table of contents), so the parallax had already started at load and the header photo sat ~27 px below the site header.\n\n### 1.7.4\n\nPost and page titles (`.lx-band--article h1`) use the same size as the home\'s featured title (`.lx-feature__title`): `clamp(2.5rem, 5.2vw, 5rem)`, 18ch wide — 75 px instead of 104 px at 1440 px. The 2.5rem floor keeps phones at 40 px.\n\n### 1.8.10\n\n- Same fix as announced for 1.8.9, actually shipped (the 1.8.9 build missed the code change).\n\n### 1.8.9\n\n- The « Bouger avec le téléphone » chip only shows on touch screens (`pointer: coarse`): desktop Chrome also exposes `DeviceOrientationEvent.requestPermission`.\n\n### 1.8.8\n\n- « Récit au scroll » (field `scroll-story: true`): each run of consecutive images in the body (figure.lx-3d, or a paragraph holding only an image) becomes a tall section with a sticky full-screen stage. While it is pinned the image grows from the column width to full screen, the next images of the run slide over it, then the last one shrinks back and the text resumes. Images far from the screen\'s shape are shown whole on a blurred copy of themselves. A still copy carries the transforms; a 3D photo fades in over it once settled full screen (the Agent3D player must never be scaled). Off with reduced motion.\n\n### 1.8.7\n\n- 3D post header: field `header-3d` = folder of an Agent3D export on the site (`/agent3d/<name>/`, with `scene.json` and a `scene-wide.json` framed larger for headers wider than 1.95:1). On landscape screens ≥ 768 px, after the page load, the header photo becomes the poster of that scene under the readability veils; the text lets the pointer through. Phones in portrait keep the photo (the header there is much taller than the photo). Needs `header-photo: true`.\n\n### 1.8.6\n\n- 3D photos on iOS Safari: the device tilt needs `DeviceOrientationEvent.requestPermission()` from a tap, which the Agent3D player never calls. A « Bouger avec le téléphone » chip (iOS only) on each 3D photo asks once and disappears everywhere when granted; later pages of the same tab session renew the permission on the first tap.\n\n### 1.8.5\n\n- 3D photos (Agent3D) in post bodies, sanitizer-proof: the body holds `<figure class="lx-3d" data-3d-src="…/scene.json" data-3d-runtime="…/agent3d-photo.js" data-3d-aspect="4:3" style="aspect-ratio:4/3"><img src="…/poster.webp" alt="…" loading="lazy"></figure>` (AgentCMS drops unknown elements such as `<agent3d-scene>` when it sanitizes a body). `menu-loader.js` loads the player module with the first figure that comes within 600 px of the viewport and builds the `<agent3d-scene>` around the image (its poster) only then.\n\n### 1.8.4\n\n- First version of the lazy 3D photos (`<agent3d-scene data-src>` in the body; replaced by 1.8.5 because the sanitizer strips the element).\n\n### 1.8.3\n\n- Every photo band (post headers too) gets the home band\'s veil: dark on the text side (left on wide screens, bottom on phones), clear elsewhere. Images are uploaded untouched.\n\n### 1.8.2\n\n- Home `<title>`: « <site title> — IA, transformation et projets tech » (`homeTitle` in i18n.ts).\n- `data-nosnippet` on the featured-post labels, the header menu and the footer, so Google builds snippets from the meta description and the content; a space between the rubric chip and « Dernier article ».\n- Footer: optional portrait in a gradient ring next to the name (theme setting `footer.portrait`, a square image URL), the name on two lines beside it.\n- Field `photo-shade` (boolean): stronger veil over the hero, for light images or images with text.\n\n### 1.8.1\n\n- Home: an « Observatoire IA » block after « Mes projets », shown while the header menu links to `observatoire-ia.html`. Its 6 key figures and update date are copied at runtime from the published page (`.lx-obs__kpis`, `.lx-obs__updated`), each linking to its section, so the block follows every refresh of the page with no home regeneration.\n- Home: « Passions » moved to the last block.\n\n### 1.8.0\n\nObservatoire de l\'IA (page with the custom field `dashboard: true`): compact header (rubric chip « Observatoire », update date from the field `obs-updated`, title and lead side by side), full-width body outside the prose column, `.lx-obs` dashboard components (key figures with sparklines, per-section accents, line / column / bar / scatter charts in plain HTML + SVG, data tables), hover tooltips and a scroll reveal (lines draw, bars grow, figures count up; off with reduced motion, visible without JS). The section nav sticks under the header and follows it when it hides.\n\n### 1.7.5\n\nGoogle Tag Manager container replaced: `GTM-PJ68GND6` (was `GTM-KNDFD5GH`), same snippet after the footer.\n';
 function j(n, t) {
   const a = pe.getFixedT(xe(t || n.settings.language || "en"), "theme-leaux-altitude");
   return (r) => a(`public.${r}`);
@@ -1627,7 +1628,7 @@ function ee(n, t, a, r = 90) {
   }
   return o;
 }
-function I(n, t, a, r = 70) {
+function P(n, t, a, r = 70) {
   const i = J(n);
   let o = `M0 ${a}`;
   for (let s = 0; s <= r; s++) {
@@ -1656,7 +1657,7 @@ function ze(n, t, a, r, i) {
 function Me({ site: n, locale: t }) {
   const a = j(n, t), r = Ne(n.themeConfig);
   return /* @__PURE__ */ l("footer", { className: "lx-footer", "data-nosnippet": "", children: [
-    /* @__PURE__ */ e("svg", { className: "lx-footer__ridge", viewBox: "0 0 1600 120", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: I(N("footer"), 1600, 120) }) }),
+    /* @__PURE__ */ e("svg", { className: "lx-footer__ridge", viewBox: "0 0 1600 120", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: P(N("footer"), 1600, 120) }) }),
     /* @__PURE__ */ l("div", { className: "lx-footer__body", children: [
       /* @__PURE__ */ l("p", { className: "lx-footer__name", children: [
         r && /* @__PURE__ */ e("span", { className: "lx-footer__portrait", children: /* @__PURE__ */ e("img", { src: r, alt: "", loading: "lazy", width: 320, height: 320 }) }),
@@ -1700,7 +1701,7 @@ function Le({ site: n, pageTitle: t, pageDescription: a, ogImage: r, currentPath
     ] })
   ] });
 }
-function P({ seed: n, width: t = 480, height: a = 300, cols: r = 44, className: i }) {
+function I({ seed: n, width: t = 480, height: a = 300, cols: r = 44, className: i }) {
   const o = Se(N(n), t, a, r);
   return /* @__PURE__ */ l("svg", { className: `lx-topo ${i ?? ""}`, viewBox: `0 0 ${t} ${a}`, preserveAspectRatio: "xMidYMid slice", "aria-hidden": "true", children: [
     /* @__PURE__ */ e("path", { className: "lx-topo__minor", d: o.minor }),
@@ -1714,7 +1715,7 @@ function re({ site: n, post: t, rubric: a, label: r, edgeSeed: i }) {
   var d;
   const o = j(n), s = t ? B(t.hero, "large") : void 0;
   return /* @__PURE__ */ l("header", { className: `lx-band lx-band--category lx-band--feature${s ? " lx-band--photo" : ""}`, "data-rubric": a, "data-shade": s && ((d = t == null ? void 0 : t.fields) == null ? void 0 : d["photo-shade"]) === !0 ? "" : void 0, children: [
-    s ? /* @__PURE__ */ e("div", { className: "lx-band__art lx-band__photo", "aria-hidden": "true", children: /* @__PURE__ */ e("img", { src: s, alt: "", fetchPriority: "high" }) }) : /* @__PURE__ */ e(P, { seed: (t == null ? void 0 : t.slug) ?? i, width: 1600, height: 720, cols: 110, className: "lx-band__art" }),
+    s ? /* @__PURE__ */ e("div", { className: "lx-band__art lx-band__photo", "aria-hidden": "true", children: /* @__PURE__ */ e("img", { src: s, alt: "", fetchPriority: "high" }) }) : /* @__PURE__ */ e(I, { seed: (t == null ? void 0 : t.slug) ?? i, width: 1600, height: 720, cols: 110, className: "lx-band__art" }),
     /* @__PURE__ */ e("div", { className: "lx-band__inner", children: t ? /* @__PURE__ */ l("article", { className: "lx-feature", children: [
       /* @__PURE__ */ l("p", { className: "lx-feature__kicker", "data-nosnippet": "", children: [
         r && /* @__PURE__ */ e("span", { className: "lx-feature__rubric", children: r }),
@@ -1738,13 +1739,13 @@ function re({ site: n, post: t, rubric: a, label: r, edgeSeed: i }) {
         ] })
       ] })
     ] }) : /* @__PURE__ */ e("p", { className: "lx-band__lead", children: o("empty") }) }),
-    /* @__PURE__ */ e("svg", { className: "lx-band__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: I(N(i), 1600, 90) }) })
+    /* @__PURE__ */ e("svg", { className: "lx-band__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: P(N(i), 1600, 90) }) })
   ] });
 }
 function Te({ site: n }) {
   const t = j(n), a = 1600, r = 620;
   return /* @__PURE__ */ l("section", { className: "lx-pano", "aria-labelledby": "lx-pano-title", children: [
-    /* @__PURE__ */ e("svg", { className: "lx-pano__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: I(N("pano-top"), 1600, 90) }) }),
+    /* @__PURE__ */ e("svg", { className: "lx-pano__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: P(N("pano-top"), 1600, 90) }) }),
     /* @__PURE__ */ e("h2", { id: "lx-pano-title", className: "lx-pano__title", children: t("sections") }),
     /* @__PURE__ */ l("div", { className: "lx-pano__stage", children: [
       /* @__PURE__ */ e("svg", { viewBox: `0 0 ${a} ${r}`, preserveAspectRatio: "xMidYMax slice", "aria-hidden": "true", children: H.map((i) => {
@@ -1796,12 +1797,12 @@ function Ce({ site: n }) {
 }
 function He({ site: n, post: t, author: a, hero: r, primaryTerm: i }) {
   var x;
-  const o = F(n, he({ post: t, primaryTerm: i })), s = new Date(D(t)).toISOString(), d = t.updatedAt ? D({ updatedAt: t.updatedAt }) : 0, c = B(r, "large"), p = [
+  const o = F(n, he({ post: t, primaryTerm: i })), s = new Date(R(t)).toISOString(), d = t.updatedAt ? R({ updatedAt: t.updatedAt }) : 0, c = B(r, "large"), p = [
     { name: n.settings.title, item: F(n, "") },
     ...i ? [{ name: i.name, item: F(n, ae(i)) }] : [],
     { name: t.title, item: o }
   ];
-  return /* @__PURE__ */ l(R, { children: [
+  return /* @__PURE__ */ l(D, { children: [
     /* @__PURE__ */ e(
       W,
       {
@@ -1814,7 +1815,7 @@ function He({ site: n, post: t, author: a, hero: r, primaryTerm: i }) {
           mainEntityOfPage: o,
           inLanguage: n.settings.language || "fr",
           datePublished: s,
-          dateModified: d > D(t) ? new Date(d).toISOString() : s,
+          dateModified: d > R(t) ? new Date(d).toISOString() : s,
           ...c ? { image: c } : {},
           ...i ? { articleSection: i.name } : {},
           author: U(n, a),
@@ -1834,7 +1835,7 @@ function He({ site: n, post: t, author: a, hero: r, primaryTerm: i }) {
     )
   ] });
 }
-const Ie = ["transition-ia", "mes-projets", "observatoire", "news-tech-ia", "edito", "passions"], Pe = "observatoire-ia.html", Be = 3, $e = 12;
+const Pe = ["transition-ia", "mes-projets", "observatoire", "news-tech-ia", "edito", "passions"], Ie = "observatoire-ia.html", Be = 3, $e = 12;
 function oe({ rubric: n, t, id: a }) {
   return /* @__PURE__ */ l("div", { className: "lx-shelf__head", children: [
     /* @__PURE__ */ l("div", { children: [
@@ -1853,7 +1854,7 @@ function oe({ rubric: n, t, id: a }) {
 function te({ post: n, lead: t }) {
   const a = B(n.hero, t ? "large" : "small");
   return /* @__PURE__ */ l("article", { className: `lx-card${t ? " lx-card--lead" : ""}`, children: [
-    /* @__PURE__ */ e("a", { className: "lx-card__art", href: "/" + n.url, tabIndex: -1, "aria-hidden": "true", children: a ? /* @__PURE__ */ e("img", { src: a, alt: "", loading: "lazy" }) : /* @__PURE__ */ e(P, { seed: n.slug, cols: t ? 60 : 30 }) }),
+    /* @__PURE__ */ e("a", { className: "lx-card__art", href: "/" + n.url, tabIndex: -1, "aria-hidden": "true", children: a ? /* @__PURE__ */ e("img", { src: a, alt: "", loading: "lazy" }) : /* @__PURE__ */ e(I, { seed: n.slug, cols: t ? 60 : 30 }) }),
     /* @__PURE__ */ l("div", { className: "lx-card__text", children: [
       n.dateLabel && /* @__PURE__ */ e("p", { className: "lx-card__meta", children: n.dateLabel }),
       /* @__PURE__ */ e("h3", { children: /* @__PURE__ */ e("a", { href: "/" + n.url, children: n.title }) }),
@@ -1871,7 +1872,7 @@ function Fe({ rubric: n, posts: t, t: a }) {
     ] })
   ] });
 }
-function Re(n) {
+function De(n) {
   var a, r, i;
   const t = /* @__PURE__ */ new Map();
   for (const o of n) {
@@ -1887,24 +1888,24 @@ function Re(n) {
   }
   return [...t.values()];
 }
-function De(n) {
+function Re(n) {
   const t = n.replace(/[^\p{L}\p{N} ]/gu, " ").split(/\s+/).filter(Boolean);
   return (t.length > 1 ? t[0][0] + t[1][0] : (t[0] ?? "?").slice(0, 2)).toUpperCase();
 }
 function Oe({ rubric: n, projects: t, t: a }) {
   const r = `lx-shelf-${n.slug}`;
   return /* @__PURE__ */ l("section", { className: "lx-projects", "data-rubric": n.slug, "aria-labelledby": r, children: [
-    /* @__PURE__ */ e("svg", { className: "lx-projects__edge lx-projects__edge--top", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: I(N("projects-top"), 1600, 90) }) }),
-    /* @__PURE__ */ e(P, { seed: "projects", width: 1600, height: 700, cols: 90, className: "lx-projects__art" }),
+    /* @__PURE__ */ e("svg", { className: "lx-projects__edge lx-projects__edge--top", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: P(N("projects-top"), 1600, 90) }) }),
+    /* @__PURE__ */ e(I, { seed: "projects", width: 1600, height: 700, cols: 90, className: "lx-projects__art" }),
     /* @__PURE__ */ l("div", { className: "lx-projects__inner", children: [
       /* @__PURE__ */ e(oe, { rubric: n, t: a, id: r }),
       /* @__PURE__ */ e("ul", { className: "lx-projects__list", children: t.map((i) => /* @__PURE__ */ e("li", { children: /* @__PURE__ */ l("a", { href: "/" + i.post.url, children: [
-        /* @__PURE__ */ e("span", { className: "lx-projects__logo", children: i.logo ? /* @__PURE__ */ e("img", { src: i.logo, alt: "", loading: "lazy" }) : /* @__PURE__ */ e("span", { "aria-hidden": "true", children: De(i.name) }) }),
+        /* @__PURE__ */ e("span", { className: "lx-projects__logo", children: i.logo ? /* @__PURE__ */ e("img", { src: i.logo, alt: "", loading: "lazy" }) : /* @__PURE__ */ e("span", { "aria-hidden": "true", children: Re(i.name) }) }),
         /* @__PURE__ */ e("span", { className: "lx-projects__name", children: i.name }),
         i.tagline && /* @__PURE__ */ e("span", { className: "lx-projects__tag", children: i.tagline })
       ] }) }, i.name)) })
     ] }),
-    /* @__PURE__ */ e("svg", { className: "lx-projects__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: I(N("projects-bottom"), 1600, 90) }) })
+    /* @__PURE__ */ e("svg", { className: "lx-projects__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: P(N("projects-bottom"), 1600, 90) }) })
   ] });
 }
 function le(n, t) {
@@ -1942,14 +1943,14 @@ function Ue({ site: n, posts: t, staticPage: a, archivesLink: r, categories: i }
   if (a)
     return /* @__PURE__ */ e("div", { className: "lx-prose lx-prose--page", dangerouslySetInnerHTML: { __html: a.bodyHtml } });
   const [s, ...d] = t, c = O((p = s == null ? void 0 : s.category) == null ? void 0 : p.url);
-  return /* @__PURE__ */ l(R, { children: [
+  return /* @__PURE__ */ l(D, { children: [
     /* @__PURE__ */ e(Ce, { site: n }),
     /* @__PURE__ */ e(re, { site: n, post: s, rubric: c, label: (x = s == null ? void 0 : s.category) == null ? void 0 : x.name, edgeSeed: "home" }),
     /* @__PURE__ */ l("div", { className: "lx-shelves", children: [
-      Ie.map((h) => {
+      Pe.map((h) => {
         var u;
         if (h === "observatoire") {
-          const m = le(n.resolvedMenus.header, Pe);
+          const m = le(n.resolvedMenus.header, Ie);
           return m ? /* @__PURE__ */ e(We, { item: m, t: o }, h) : null;
         }
         const f = H.find((m) => m.slug === h);
@@ -1959,7 +1960,7 @@ function Ue({ site: n, posts: t, staticPage: a, archivesLink: r, categories: i }
           return O((w = m.category) == null ? void 0 : w.url) === h;
         }), S = _.filter((m) => m.id !== (s == null ? void 0 : s.id));
         if (h === "mes-projets") {
-          const m = Re(_);
+          const m = De(_);
           if (m.length) return /* @__PURE__ */ e(Oe, { rubric: f, projects: m, t: o }, h);
         }
         return S.length ? /* @__PURE__ */ e(Fe, { rubric: f, posts: S.slice(0, Be), t: o }, h) : null;
@@ -2013,7 +2014,7 @@ function Xe(n) {
 }
 function Ke({ site: n, post: t, bodyHtml: a, author: r, hero: i, primaryTerm: o, tags: s }) {
   var g, z, L, q, $, A, T, k;
-  const d = j(n), c = B(i, "large"), p = t.type === "post", x = (g = H.find((C) => C.slug === (o == null ? void 0 : o.slug))) == null ? void 0 : g.slug, h = new Date(D(t));
+  const d = j(n), c = B(i, "large"), p = t.type === "post", x = (g = H.find((C) => C.slug === (o == null ? void 0 : o.slug))) == null ? void 0 : g.slug, h = new Date(R(t));
   let f = "";
   try {
     f = new Intl.DateTimeFormat(n.settings.language || "fr", { dateStyle: "long" }).format(h);
@@ -2023,7 +2024,7 @@ function Ke({ site: n, post: t, bodyHtml: a, author: r, hero: i, primaryTerm: o,
   const _ = !!(p && c && ((z = t.fields) == null ? void 0 : z["header-photo"]) === !0), S = _ && typeof ((L = t.fields) == null ? void 0 : L["header-3d"]) == "string" ? t.fields["header-3d"].replace(/\/?$/, "/") : "", u = ((q = t.fields) == null ? void 0 : q.toc) === !0 ? Xe(a) : null, m = !!(u && u.entries.length >= 2), w = (($ = t.fields) == null ? void 0 : $.dashboard) === !0, v = ((A = t.fields) == null ? void 0 : A["scroll-story"]) === !0, y = typeof ((T = t.fields) == null ? void 0 : T["obs-updated"]) == "string" ? t.fields["obs-updated"] : "", E = t.contentMarkdown.trim().split(/\s+/).length, b = Math.max(1, Math.round(E / 220));
   return /* @__PURE__ */ l("article", { "data-rubric": w ? "news-tech-ia" : x, className: `lx-article${p ? "" : " lx-article--page"}${t.slug === "qui-suis-je" ? " lx-article--about" : ""}`, children: [
     /* @__PURE__ */ l("header", { className: `lx-band lx-band--article${_ ? " lx-band--photo" : ""}${S ? " lx-band--3d" : ""}${w ? " lx-band--obs" : ""}`, "data-shade": _ && ((k = t.fields) == null ? void 0 : k["photo-shade"]) === !0 ? "" : void 0, children: [
-      _ ? /* @__PURE__ */ e("div", { className: "lx-band__art lx-band__photo", "aria-hidden": "true", "data-3d-dir": S || void 0, "data-3d-runtime": S ? "/agent3d/agent3d-runtime/agent3d-photo.js" : void 0, children: /* @__PURE__ */ e("img", { src: c, alt: "" }) }) : /* @__PURE__ */ e(P, { seed: t.slug, width: 1600, height: 720, cols: 110, className: "lx-band__art" }),
+      _ ? /* @__PURE__ */ e("div", { className: "lx-band__art lx-band__photo", "aria-hidden": "true", "data-3d-dir": S || void 0, "data-3d-runtime": S ? "/agent3d/agent3d-runtime/agent3d-photo.js" : void 0, children: /* @__PURE__ */ e("img", { src: c, alt: "" }) }) : /* @__PURE__ */ e(I, { seed: t.slug, width: 1600, height: 720, cols: 110, className: "lx-band__art" }),
       /* @__PURE__ */ l("div", { className: "lx-band__inner", children: [
         p && o && /* @__PURE__ */ e("a", { className: "lx-band__rubric", href: `/${ae(o)}`, children: o.name }),
         w && /* @__PURE__ */ e("span", { className: "lx-band__rubric", children: "Observatoire" }),
@@ -2045,7 +2046,7 @@ function Ke({ site: n, post: t, bodyHtml: a, author: r, hero: i, primaryTerm: o,
           ] })
         ] })
       ] }),
-      /* @__PURE__ */ e("svg", { className: "lx-band__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: I(N(t.slug), 1600, 90) }) })
+      /* @__PURE__ */ e("svg", { className: "lx-band__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: P(N(t.slug), 1600, 90) }) })
     ] }),
     c && !_ && !w && /* @__PURE__ */ l("figure", { className: "lx-figure", children: [
       /* @__PURE__ */ e("img", { src: c, alt: (i == null ? void 0 : i.alt) ?? "" }),
@@ -2056,7 +2057,7 @@ function Ke({ site: n, post: t, bodyHtml: a, author: r, hero: i, primaryTerm: o,
       /* @__PURE__ */ e("div", { className: "lx-prose", "data-lx-prose": !0, "data-story": v ? "" : void 0, dangerouslySetInnerHTML: { __html: u.html } })
     ] }) : /* @__PURE__ */ e("div", { className: "lx-prose", "data-lx-prose": !0, "data-story": v ? "" : void 0, dangerouslySetInnerHTML: { __html: a } }),
     p && s.length > 0 && /* @__PURE__ */ e("ul", { className: "lx-tags", "aria-label": d("tags"), children: s.map((C) => /* @__PURE__ */ e("li", { children: C.name }, C.id)) }),
-    p && /* @__PURE__ */ l(R, { children: [
+    p && /* @__PURE__ */ l(D, { children: [
       /* @__PURE__ */ e(He, { site: n, post: t, author: r, hero: i, primaryTerm: o }),
       /* @__PURE__ */ l("section", { className: "lx-related", "data-lx-related": !0, "data-current": t.id, "data-term": t.primaryTermId, hidden: !0, children: [
         /* @__PURE__ */ e("h2", { children: d("continue") }),
@@ -2079,7 +2080,7 @@ function se({ posts: n, site: t, lead: a = !0 }) {
     const s = O((p = i.category) == null ? void 0 : p.url), d = a && o === 0, c = B(i.hero, d ? "large" : "medium");
     return /* @__PURE__ */ l("article", { className: `lx-way${d ? " lx-way--first" : ""}`, "data-rubric": s, children: [
       /* @__PURE__ */ e("span", { className: "lx-way__pin", "aria-hidden": "true" }),
-      /* @__PURE__ */ e("a", { className: "lx-way__art", href: "/" + i.url, tabIndex: -1, "aria-hidden": "true", children: c ? /* @__PURE__ */ e("img", { src: c, alt: "", loading: "lazy" }) : /* @__PURE__ */ e(P, { seed: i.slug, cols: d ? 64 : 44 }) }),
+      /* @__PURE__ */ e("a", { className: "lx-way__art", href: "/" + i.url, tabIndex: -1, "aria-hidden": "true", children: c ? /* @__PURE__ */ e("img", { src: c, alt: "", loading: "lazy" }) : /* @__PURE__ */ e(I, { seed: i.slug, cols: d ? 64 : 44 }) }),
       /* @__PURE__ */ l("div", { className: "lx-way__text", children: [
         /* @__PURE__ */ l("p", { className: "lx-way__meta", children: [
           i.dateLabel && /* @__PURE__ */ e("span", { children: i.dateLabel }),
@@ -2094,7 +2095,7 @@ function se({ posts: n, site: t, lead: a = !0 }) {
 function Ze({ site: n, term: t, posts: a, archivesLink: r }) {
   var c;
   const i = j(n), o = (c = H.find((p) => p.slug === t.slug)) == null ? void 0 : c.slug, [s, ...d] = a;
-  return /* @__PURE__ */ l(R, { children: [
+  return /* @__PURE__ */ l(D, { children: [
     /* @__PURE__ */ e(re, { site: n, post: s, rubric: o, label: t.name, edgeSeed: t.slug }),
     d.length > 0 && /* @__PURE__ */ l("section", { className: "lx-section lx-section--flush", "data-rubric": o, children: [
       /* @__PURE__ */ l("h2", { className: "lx-section__title lx-section__title--small", children: [
@@ -2113,9 +2114,9 @@ function Ze({ site: n, term: t, posts: a, archivesLink: r }) {
 }
 function Qe({ site: n, author: t, posts: a }) {
   const r = B(t.avatar, "small");
-  return /* @__PURE__ */ l(R, { children: [
+  return /* @__PURE__ */ l(D, { children: [
     /* @__PURE__ */ l("header", { className: "lx-band lx-band--author", children: [
-      /* @__PURE__ */ e(P, { seed: t.displayName, width: 1600, height: 620, cols: 110, className: "lx-band__art" }),
+      /* @__PURE__ */ e(I, { seed: t.displayName, width: 1600, height: 620, cols: 110, className: "lx-band__art" }),
       /* @__PURE__ */ l("div", { className: "lx-band__inner", children: [
         r && /* @__PURE__ */ e("img", { className: "lx-avatar", src: r, alt: "", width: 120, height: 120 }),
         /* @__PURE__ */ e("h1", { children: t.displayName }),
@@ -2123,7 +2124,7 @@ function Qe({ site: n, author: t, posts: a }) {
         t.bio && /* @__PURE__ */ e("p", { className: "lx-band__bio", children: t.bio }),
         t.socials && t.socials.length > 0 && /* @__PURE__ */ e("ul", { className: "lx-socials", children: t.socials.map((i) => /* @__PURE__ */ e("li", { children: /* @__PURE__ */ e("a", { href: i.url, rel: "me noopener", "aria-label": ge(i.network), children: /* @__PURE__ */ e(me, { network: i.network }) }) }, i.network)) })
       ] }),
-      /* @__PURE__ */ e("svg", { className: "lx-band__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: I(N(t.id), 1600, 90) }) })
+      /* @__PURE__ */ e("svg", { className: "lx-band__edge", viewBox: "0 0 1600 90", preserveAspectRatio: "none", "aria-hidden": "true", children: /* @__PURE__ */ e("path", { d: P(N(t.id), 1600, 90) }) })
     ] }),
     /* @__PURE__ */ e("section", { className: "lx-section lx-section--flush", children: /* @__PURE__ */ e(se, { posts: a, site: n }) })
   ] });
@@ -2131,7 +2132,7 @@ function Qe({ site: n, author: t, posts: a }) {
 function et({ site: n, message: t }) {
   const a = j(n);
   return /* @__PURE__ */ l("section", { className: "lx-lost", children: [
-    /* @__PURE__ */ e(P, { seed: "hors-sentier", width: 1600, height: 900, cols: 120, className: "lx-lost__art" }),
+    /* @__PURE__ */ e(I, { seed: "hors-sentier", width: 1600, height: 900, cols: 120, className: "lx-lost__art" }),
     /* @__PURE__ */ l("div", { className: "lx-lost__copy", children: [
       /* @__PURE__ */ e("p", { className: "lx-lost__code", children: "404" }),
       /* @__PURE__ */ e("h1", { children: a("notFoundTitle") }),
@@ -2232,7 +2233,7 @@ const nt = {
 }, lt = {
   id: "leaux-altitude",
   name: "Leaux Altitude",
-  version: "1.8.9",
+  version: "1.8.10",
   description: "Dedicated theme for leaux.ovh: generative topographic art, one trail per section.",
   readme: we,
   scssEntry: "theme.css",
