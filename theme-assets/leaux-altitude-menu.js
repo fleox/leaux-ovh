@@ -621,3 +621,116 @@
   var later = function () { if (window.requestIdleCallback) requestIdleCallback(start, { timeout: 1500 }); else setTimeout(start, 200); };
   if (document.readyState === "complete") later(); else window.addEventListener("load", later, { once: true });
 })();
+
+/* Scroll story ("scroll-story" field, .lx-prose[data-story]). Each run of consecutive images
+   (figure.lx-3d or a paragraph holding only an image) becomes a tall section with a sticky
+   full-screen stage: while it is pinned, the image grows from the column width to full screen,
+   the next images of the run slide over it one by one, then the last one shrinks back and the
+   text goes on. Images whose shape is far from the screen's are shown whole on a blurred copy
+   of themselves instead of being cropped. Off with reduced motion: the post stays as written. */
+(function () {
+  var prose = document.querySelector(".lx-prose[data-story]");
+  if (!prose || !window.requestAnimationFrame) return;
+  if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  function isMedia(n) {
+    if (n.nodeType !== 1) return false;
+    if (n.matches("figure.lx-3d")) return true;
+    return n.tagName === "P" && n.children.length === 1 && n.firstElementChild.tagName === "IMG" && !n.textContent.trim();
+  }
+  var groups = [], cur = null;
+  [].slice.call(prose.childNodes).forEach(function (n) {
+    if (n.nodeType === 3 && !n.textContent.trim()) return;
+    if (isMedia(n)) { if (!cur) { cur = []; groups.push(cur); } cur.push(n); } else cur = null;
+  });
+  if (!groups.length) return;
+  var clamp = function (v) { return v < 0 ? 0 : v > 1 ? 1 : v; };
+  var ease = function (v) { return v < .5 ? 2 * v * v : 1 - Math.pow(-2 * v + 2, 2) / 2; };
+  var vw = 0, vh = 0, colW = 0;
+  var stories = groups.map(function (group) {
+    var sec = document.createElement("div"); sec.className = "lx-story";
+    var stage = document.createElement("div"); stage.className = "lx-story__stage";
+    sec.appendChild(stage);
+    prose.insertBefore(sec, group[0]);
+    var items = group.map(function (node) {
+      var img = node.tagName === "P" ? node.firstElementChild : node.querySelector("img"), aspect = 0, live = null;
+      if (node.tagName === "P") {
+        aspect = (+img.getAttribute("width") / +img.getAttribute("height")) || (img.naturalWidth / img.naturalHeight) || 1.5;
+        node.remove();
+      } else {
+        var m = /([\d.]+)\s*[:/]\s*([\d.]+)/.exec(node.getAttribute("data-3d-aspect") || node.style.aspectRatio || "");
+        aspect = m ? +m[1] / +m[2] : 1.5;
+        node.style.aspectRatio = "";
+        live = node; live.classList.add("lx-story__live");
+      }
+      var item = document.createElement("div"); item.className = "lx-story__item";
+      // The still image carries every zoom / slide transform. A 3D scene is never transformed
+      // (the player sizes its canvas from its on-screen box): it fades in over the still once
+      // the image is settled full screen.
+      var still = document.createElement("div"); still.className = "lx-story__media lx-story__still";
+      var copy = document.createElement("img"); copy.src = img.getAttribute("src"); copy.alt = img.alt; copy.decoding = "async";
+      if (live) copy.setAttribute("aria-hidden", "true"), copy.alt = "";
+      still.appendChild(live ? copy : img);
+      item.style.setProperty("--bg", "url(\"" + copy.src + "\")");
+      item.appendChild(still);
+      if (live) item.appendChild(live);
+      stage.appendChild(item);
+      return { item: item, still: still, live: live, aspect: aspect, s0: 1 };
+    });
+    return { sec: sec, stage: stage, items: items, D: 0, E: 0, H: 0, X: 0 };
+  });
+  function layout() {
+    vw = document.documentElement.clientWidth; vh = window.innerHeight;
+    var cs = getComputedStyle(prose);
+    colW = prose.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+    var A = vw / vh;
+    stories.forEach(function (st) {
+      st.items.forEach(function (it) {
+        var a = it.aspect, contain = A / a > 1.7 || a / A > 1.7, w, h;
+        if (contain) { if (a > A) { w = vw; h = vw / a; } else { h = vh; w = vh * a; } }
+        else { if (a > A) { h = vh; w = vh * a; } else { w = vw; h = vw / a; } }
+        it.item.setAttribute("data-fit", contain ? "contain" : "cover");
+        [it.still, it.live].forEach(function (el) {
+          if (!el) return;
+          var ms = el.style;
+          ms.width = w + "px"; ms.height = h + "px"; ms.left = (vw - w) / 2 + "px"; ms.top = (vh - h) / 2 + "px";
+        });
+        it.s0 = Math.min(colW / w, .86 * vh / h);
+      });
+      st.E = .9 * vh; st.H = 1.1 * vh; st.X = .9 * vh;
+      st.D = st.E + st.items.length * st.H + st.X;
+      st.sec.style.height = (vh + st.D) + "px";
+    });
+    update();
+  }
+  function update() {
+    stories.forEach(function (st) {
+      var r = st.sec.getBoundingClientRect();
+      if (r.bottom < -50 || r.top > vh + 50) return;
+      var t = Math.max(0, Math.min(st.D, -r.top)), n = st.items.length;
+      var zoom = ease(clamp(t / st.E)) * (1 - ease(clamp((t - st.E - n * st.H) / st.X)));
+      st.stage.style.setProperty("--z", zoom.toFixed(3));
+      var u = t - st.E;
+      st.items.forEach(function (it, i) {
+        var sl = i === 0 ? 1 : clamp((u - (i - .45) * st.H) / (.45 * st.H));
+        var next = i + 1 < n ? clamp((u - (i + .55) * st.H) / (.45 * st.H)) : 0;
+        var s = it.s0 + (1 - it.s0) * zoom;
+        it.item.style.visibility = sl <= 0 || next >= 1 ? "hidden" : "visible";
+        it.item.style.transform = sl >= 1 ? "" : "translate3d(0," + ((1 - ease(sl)) * 100).toFixed(2) + "%,0)";
+        it.item.style.setProperty("--z", zoom.toFixed(3));
+        it.still.style.transform = "scale(" + (s * (1 - .06 * next)).toFixed(4) + ")";
+        it.still.style.filter = next > 0 ? "brightness(" + (1 - .45 * next).toFixed(3) + ")" : "";
+        if (it.live) it.live.classList.toggle("is-on", zoom > .995 && sl >= 1 && next <= 0);
+      });
+    });
+  }
+  var ticking = false;
+  window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(function () { ticking = false; update(); }); } }, { passive: true });
+  var lastW = 0, lastH = 0;
+  window.addEventListener("resize", function () {
+    // Mobile browsers resize the viewport height while their toolbars slide: ignore small height changes.
+    if (document.documentElement.clientWidth === lastW && Math.abs(window.innerHeight - lastH) < 140) return;
+    lastW = document.documentElement.clientWidth; lastH = window.innerHeight; layout();
+  });
+  lastW = document.documentElement.clientWidth; lastH = window.innerHeight;
+  layout();
+})();
