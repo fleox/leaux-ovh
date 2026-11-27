@@ -47,6 +47,10 @@ The bands' view timeline uses `view-timeline-inset: 0`. With the default (`auto`
 
 Post and page titles (`.lx-band--article h1`) use the same size as the home's featured title (`.lx-feature__title`): `clamp(2.5rem, 5.2vw, 5rem)`, 18ch wide — 75 px instead of 104 px at 1440 px. The 2.5rem floor keeps phones at 40 px.
 
+### 1.8.9
+
+- The « Bouger avec le téléphone » chip only shows on touch screens (`pointer: coarse`): desktop Chrome also exposes `DeviceOrientationEvent.requestPermission`.
+
 ### 1.8.8
 
 - « Récit au scroll » (field `scroll-story: true`): each run of consecutive images in the body (figure.lx-3d, or a paragraph holding only an image) becomes a tall section with a sticky full-screen stage. While it is pinned the image grows from the column width to full screen, the next images of the run slide over it, then the last one shrinks back and the text resumes. Images far from the screen's shape are shown whole on a blurred copy of themselves. A still copy carries the transforms; a 3D photo fades in over it once settled full screen (the Agent3D player must never be scaled). Off with reduced motion.
